@@ -1,0 +1,25 @@
+﻿@model List<BRApplication.Models.MarketPostModel>
+
+<div class="PostContainer">
+    <div class="NewPost">
+        <div class="PostHeader">
+            <img src="@Url.Content("~/Content/Images/BookStack.png")" alt="BookStack"/>&nbsp
+            Add Your Posting
+        </div>
+        <div class="SearchBook">
+            @Html.TextBox("txtSearchBook")
+            <input id="SearchButton" type="button" value="Search" />
+            <article>
+                <ul class="SearchResults wave">
+                    @for (int i=0; i < @Model.Count; i++) { 
+                        <li></li> 
+                    }
+            </article>
+        </div>
+    </div>
+</div>
+
+@* Must come after definition of the 'ul' element that we are binding to*@
+<script type="text/javascript">
+       stroll.bind('.SearchBook ul');
+</script>
