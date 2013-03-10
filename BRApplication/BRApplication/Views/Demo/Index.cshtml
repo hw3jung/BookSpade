@@ -1,0 +1,37 @@
+﻿@model BRApplication.Models.DemoModel
+
+
+@Html.Label("Please enter a status name to insert into DB : ") 
+@Html.TextBox("txtStatusName")
+
+<a href="javascript:void" onclick="InsertStatus()"> INSERT </a>
+
+<div id="DemoPartial">
+    @Html.Partial("DemoPartial", Model.StatusName)
+</div>
+
+<script type="text/javascript">
+    function InsertStatus() {
+        $.ajax({
+            url: '@Url.Action("InsertStatus", "Demo")',
+            data: {status: $("#txtStatusName").val()},
+            type: 'POST',
+            success: function (result) {
+               // alert(result);
+                UpdatePartial(result); 
+            }
+        });
+    }
+
+    function UpdatePartial(status) {
+        alert(status);
+        $.ajax({
+            url: '@Url.Action("UpdatePartial", "Demo")',
+            data: { status: status },
+            type: 'POST',
+            success: function (result) {
+                $("#DemoPartial").replaceWith(result); 
+            }
+        }); 
+    }
+</script>

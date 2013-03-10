@@ -1,0 +1,78 @@
+﻿@model BRApplication.Models.MarketPostModel
+
+<style type="text/css">
+    .MarketPost {
+        width:100%;
+        float:left;
+        clear:none; 
+        background: #E3E3E3;
+    }
+        .MarketPost > .MarketBuyPrice {
+            background-image:url('@Url.Content("~/Content/Images/MarketBuy.png")');
+            background-repeat:no-repeat; 
+            width: 68px;
+            height: 74px; 
+            text-align: center; 
+            margin-top: auto;
+            line-height: 74px; 
+            font-weight: bold;
+            font-family: calibri; 
+            float:left;
+        }
+
+    .MarketPost > a {
+        text-decoration: none;
+        font-weight: bold;
+        font-family: calibri;
+        font-size: 14px;
+        color: #633200; 
+    }
+
+    .MarketPost > a:hover {
+        cursor: pointer; 
+        color: #D6BB7C; 
+    }
+
+    .MarketPostDetail {
+        font-size:9px;
+        padding-left: 10px;
+    }
+     .MarketPostDetail ul {
+        width:100%;
+         
+    }
+
+    .MarketPostDetail ul li {
+        display:inline;
+        list-style-type:none;
+    }
+
+    .marketLabel {
+        font-weight:bold;
+    }
+    .marketValue {
+        
+    }
+
+</style>
+<div class="MarketPost">
+    <div class="MarketBuyPrice">
+        $@Model.Price 
+    </div>
+    <a href="http://www.facebook.com">@Model.Title</a>
+    <div class="MarketPostDetail">
+        <ul>
+            <li class="marketLabel">Author: </li> 
+            <li class="marketValue">@Model.Author</li>
+        </ul>
+        <ul>
+            <li class="marketLabel">Course: </li> 
+            <li class="marketValue">@Model.Course</li>&nbsp;|&nbsp|&nbsp;
+            <li class="marketLabel">Condition: </li> 
+            <li class="marketValue">@Model.Condition</li>
+        </ul>
+    </div>
+    <div>
+
+    </div>
+</div>

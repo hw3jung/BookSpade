@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+
+        @Styles.Render("~/Content/themes/orangy/jquery-ui-1.10.1.custom.css")
+        @Styles.Render("~/Content/effects/stroll/stroll.css")
+        @Styles.Render("~/Content/css")
+        
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/Scripts/jquery-1.9.1.js")
+        @Scripts.Render("~/Scripts/jquery-ui-1.10.1.custom.js")
+        @Scripts.Render("~/Scripts/stroll.js")
+        
+        <script src="//connect.facebook.net/en_US/all.js"></script> 
+        
+        <script>
+            $(function () {
+
+                $("#accordion").accordion();
+                $(".accordion").accordion();
+
+                var availableTags = [
+                    "ActionScript",
+                    "AppleScript",
+                    "Asp",
+                    "BASIC",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"
+                ];
+                $("#autocomplete").autocomplete({
+                    source: availableTags
+                });
+
+                $("input:text").autocomplete({
+                    source: availableTags
+                });
+
+                $("input:button").button();
+                $("input:submit").button(); 
+                $("#button").button();
+                $("a.header").button();
+                $("a.body").button();
+
+                $("#radioset").buttonset();
+
+                $("#tabs").tabs();
+
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    width: 400,
+                    buttons: [
+                        {
+                            text: "Ok",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+                });
+
+                // Link to open the dialog
+                $("#dialog-link").click(function (event) {
+                    $("#dialog").dialog("open");
+                    event.preventDefault();
+                });
+
+
+
+                $("#datepicker").datepicker({
+                    inline: true
+                });
+
+
+
+                $("#slider").slider({
+                    range: true,
+                    values: [17, 67]
+                });
+
+
+
+                $("#progressbar").progressbar({
+                    value: 20
+                });
+
+
+                // Hover states on the static widgets
+                $("#dialog-link, #icons li").hover(
+                    function () {
+                        $(this).addClass("ui-state-hover");
+                    },
+                    function () {
+                        $(this).removeClass("ui-state-hover");
+                    }
+                );
+            });
+        </script>
+
+
+    </head>
+    <body>
+        <header class="generic-background">
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        <div>@Html.Partial("FacebookLoginPartial")</div>
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+@*        <div class="sidebar">
+            <a class="body">Create Your Own Posting</a>
+        </div>*@
+        <div class="body">
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        </div>
+        <footer class="dark-background">
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+        @*@RenderSection("scripts", required: false)*@
+    </body>
+    
+</html>

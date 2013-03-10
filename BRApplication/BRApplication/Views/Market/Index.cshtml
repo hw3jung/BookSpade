@@ -1,0 +1,21 @@
+﻿@model List<BRApplication.Models.MarketPostModel> 
+
+<style type="text/css">
+    .MarketContainer {
+        width: 90%;
+        
+    }
+
+</style>
+
+<div class="MarketContainer">
+    @{
+        foreach (var m in Model) {
+               if (m.IsBuy) {
+                   @Html.Partial("SellPost_Partial", m); 
+                } else {
+                   @Html.Partial("BuyPost_Partial", m); 
+               }
+        }
+    }
+</div>

@@ -1,0 +1,70 @@
+﻿<div class="home">
+    <a class="header" href="" title="Buy Textbooks">Buy</a>
+    <a class="header" href="" title="Sell Textbooks">Sell</a>
+</div>
+
+@*@{
+    viewbag.title = "home page";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@viewbag.title.</h1>
+                <h2>@viewbag.message</h2>
+            </hgroup>
+            <p>
+                to learn more about asp.net mvc visit
+                <a href="http://asp.net/mvc" title="asp.net mvc website">http://asp.net/mvc</a>.
+                the page features <mark>videos, tutorials, and samples</mark> to help you get the most from asp.net mvc.
+                if you have any questions about asp.net mvc visit
+                <a href="http://forums.asp.net/1146.aspx/1?mvc" title="asp.net mvc forum">our forums</a>.
+            </p>
+        </div>
+    </section>
+}
+
+<div>
+    @html.textbox("txttest");
+    <input id="btn" type="submit" onclick="clickme" />
+</div>
+<script type="text/ecmascript">
+    $(function () {
+        function clickme() {
+            $.ajax({
+                url: @(url.action("insertit", "home")),
+                datatype: "post",
+                data: {x :$("txttest").val}
+            }); 
+        }
+    }); 
+</script>
+
+
+<h3>we suggest the following:</h3>
+<ol class="round">
+    <li class="one">
+        <h5>getting started</h5>
+        asp.net mvc gives you a powerful, patterns-based way to build dynamic websites that
+        enables a clean separation of concerns and that gives you full control over markup
+        for enjoyable, agile development. asp.net mvc includes many features that enable
+        fast, tdd-friendly development for creating sophisticated applications that use
+        the latest web standards.
+        <a href="http://go.microsoft.com/fwlink/?linkid=245151">learn more…</a>
+    </li>
+
+    <li class="two">
+        <h5>add nuget packages and jump-start your coding</h5>
+        nuget makes it easy to install and update free libraries and tools.
+        <a href="http://go.microsoft.com/fwlink/?linkid=245153">learn more…</a>
+    </li>
+
+    <li class="three">
+        <h5>find web hosting</h5>
+        you can easily find a web hosting company that offers the right mix of features
+        and price for your applications.
+        <a href="http://go.microsoft.com/fwlink/?linkid=245157">learn more…</a>
+    </li>
+</ol>
+-->*@
