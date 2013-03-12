@@ -5,6 +5,7 @@
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
+        <script src="//connect.facebook.net/en_US/all.js"></script> 
 
         @Styles.Render("~/Content/themes/orangy/jquery-ui-1.10.1.custom.css")
         @Styles.Render("~/Content/effects/stroll/stroll.css")
@@ -15,7 +16,6 @@
         @Scripts.Render("~/Scripts/jquery-ui-1.10.1.custom.js")
         @Scripts.Render("~/Scripts/stroll.js")
         
-        <script src="//connect.facebook.net/en_US/all.js"></script> 
         
         <script>
             $(function () {
@@ -143,6 +143,7 @@
                     </nav>
                 </div>
             </div>
+            @RenderSection("Script", required: false) 
         </header>
 @*        <div class="sidebar">
             <a class="body">Create Your Own Posting</a>

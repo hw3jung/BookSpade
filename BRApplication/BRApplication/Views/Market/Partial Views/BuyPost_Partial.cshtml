@@ -4,25 +4,25 @@
     <div class="MarketBuyPrice">
         $@Model.Price 
     </div>
+    <div class="BookImage">
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
+    </div>
     <a href="http://www.facebook.com">@Model.Title</a>
     <div class="MarketPostDetail">
         <div>
-            <span class="marketLabel">Author: </span> 
-            <span class="marketValue">@Model.Author</span>&nbsp;&nbsp;|&nbsp|
-            <span class="marketLabel">Course: </span> 
-            <span class="marketValue">@Model.Course</span>&nbsp;&nbsp;|&nbsp|
-            <span class="marketLabel">Condition: </span> 
-            <span class="marketValue">@Model.Condition</span>&nbsp;&nbsp;|&nbsp|
-            <span class="marketLabel">ISBN: </span> 
-            <span class="marketValue">@Model.ISBN </span>
+            <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+            <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+            <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+            <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
         </div>
         <div>
-            <span class="marketValue" style="text-align:right; font-size:8px; font-style:italic; float:left; padding-left:20px;">@Model.datePosted</span>
+            <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
     </div>
+    
 </div>
 
 
-
+    
 
 @*background-image:url('@Url.Content("~/Content/Images/MarketBuy.png")')*@

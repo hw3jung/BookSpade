@@ -1,13 +1,26 @@
 ﻿@model BRApplication.Models.MarketPostModel
 
-<style type="text/css">
-    .DvSubmit {
-        width:100%; 
-        text-align:right; 
-        border-top:3px solid #BA4B06;
-    }
+@section Script {
+    <script type="text/ecmascript">
+        $(function () {
+            $('#cbNegotiationPrice').click(function () {
+                if ($(this).is(':checked')) {
+                    $("#btnBuy").hide();
+                    $("#btnBid").show();
+                    $("#dvNegotiate").show();
+                } else {
+                    $("#btnBid").hide();
+                    $("#btnBuy").show();
+                    $("#dvNegotiate").hide();
+                }
+            });
+        }); 
+    </script>
+}
 
-</style>
+<form method="get" action="/search" id="search">
+  <input name="q" type="text" size="40" placeholder="Search..." />
+</form>
 
 <div class="PostContainer">
     <div class="post">
@@ -73,24 +86,9 @@
             </ul>
         </div>
         <div class="DvSubmit">
-             <input id="btnBuy" type="submit" value="Buy Now!" />
+             <input id="btnBuy" type="submit" value="Buy" />
              <input id="btnBid" type="submit" value="Submit" style="display:none;" />
         </div>
     </div>
 </div>
 
-<script type="text/ecmascript">
-    $(function () {
-        $('#cbNegotiationPrice').click(function () {
-            if ($(this).is(':checked')) {
-                $("#btnBuy").hide();
-                $("#btnBid").show();
-                $("#dvNegotiate").show();
-            } else {
-                $("#btnBid").hide();
-                $("#btnBuy").show();
-                $("#dvNegotiate").hide();
-            }
-        });
-    }); 
-</script>

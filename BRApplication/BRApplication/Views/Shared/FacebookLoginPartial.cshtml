@@ -1,61 +1,68 @@
-﻿  <div id="fb-root"></div>
+﻿        <div id="fb-root">
+           
+        </div>
         <!-- build1 is where we render our button based on connected status. -->
         <div id="build1"></div>
         <script>
-            function after_login_button() {
-                FB.getLoginStatus(function (response) {
-                    if (response.status == "connected") {
-                        //User logged in! Do your code here
-                    }
-                }, true);
-            }
-            window.fbAsyncInit = function () {
-                // init the FB JS SDK
-                FB.init({
-                    appId: '136888989813258', // App ID from the App Dashboard
-                 //   channelUrl: '//http://localhost:3229/channel.html', // Channel File for x-domain communication
-                    status: true, // check the login status upon init?
-                    cookie: true, // set sessions cookies to allow your server to access the session?
-                    xfbml: true,  // parse XFBML tags on this page?
-                    oauth: true
-                });
-                if (window != window.top) {
-                    FB.Canvas.setAutoResize();
-                }
-                FB.getLoginStatus(function(response) {
+
+            function login() {
+                FB.login(function (response) {
                     if (response.authResponse) {
                         // connected
+                        testAPI();
+                    } else {
+                        // cancelled
+                    }
+                });
+            }
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '136888989813258', // App ID
+                    channelUrl: '//http://localhost:3229/channel.html', // Channel File
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    xfbml: true,  // parse XFBML
+                    oauth: true
+                });
+
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
                         var Cbuild1 = document.getElementById('build1');
-                        Cbuild1.innerHTML = "";
+                        // Cbuild1.innerHTML = "";
                         Cbuild1.innerHTML = "<fb:login-button autologoutlink=\"true\"></fb:login-button>";
                         FB.XFBML.parse(Cbuild1);
                         var uid = response.authResponse.userID;
-                        
-                        FB.api('/me', function (response) {
-                         //   alert("UID: " + uid + " NAME: " + response.name);
-                        }); 
-
-                    } else {
-                        // not_authorized
+                    } else if (response.status === 'not_authorized') {
                         Cbuild1 = document.getElementById('build1');
-                        Cbuild1.innerHTML = "";
                         Cbuild1.innerHTML = "<fb:login-button></fb:login-button>";
                         FB.XFBML.parse(Cbuild1);
-                       // login();
+                      //  login(); 
+                    } else {
+                        Cbuild1 = document.getElementById('build1');
+                        Cbuild1.innerHTML = "<fb:login-button></fb:login-button>";
+                        FB.XFBML.parse(Cbuild1);
+                      //  login(); 
                     }
                 });
-                // Additional initialization code such as adding Event Listeners goes here
+
+                // Additional init code here
 
             };
 
-            //Send message to a user from an application
-            //https://developers.facebook.com/docs/reference/dialogs/requests/ //this was the best one
-            //https://developers.facebook.com/docs/channels/ //It has to be done through requests, unless we specifically ask for the user's email address then we can email 
+            // Load the SDK Asynchronously
+            (function (d) {
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
 
-            (function () {
-                var e = document.createElement('script'); e.async = true;
-                e.src = document.location.protocol +
-                  '//connect.facebook.net/en_US/all.js';
-                document.getElementById('fb-root').appendChild(e);
-            }());
+            function testAPI() {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me', function (response) {
+                    console.log('Good to see you, ' + response.name + '.');
+                });
+            }
+
         </script>

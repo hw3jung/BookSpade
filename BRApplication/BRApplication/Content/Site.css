@@ -842,15 +842,14 @@ tr.pager td {
 {
     text-align:center;
     width:100%;
-    height: 100%;
-    border: 0px solid red; 
+    height: 100%;    
 }
 
     .PostContainer > .post {
         margin: 0px auto; 
         width:90%;
         text-align:left;  
-        border: 0px solid green; 
+        border: 0px solid #7ac0da; 
         padding:10px; 
     }
 
@@ -861,17 +860,41 @@ tr.pager td {
         color:#4D2D02; 
         padding:5px; 
         padding-bottom:10px; 
-        border-bottom: 3px solid #BA4B06; 
+        border-bottom: 0px solid #BA4B06; 
     }
 
     .NewPost {
         margin: 0px auto; 
-        width:50%;
+        width:90%;
         height: 100%;
         text-align:left;  
-        border: 0px solid green; 
+        border: 0px solid black; 
         padding:10px;
     }
+      .datePosted {
+        text-align:right; 
+        font-size:8px; 
+        font-style:italic; 
+    }
+
+    .MarketPost > a {
+        font-weight:bold;
+        font-family: Calibri;
+        font-size: 15px;
+        color: #402203;
+    }
+
+    .marketLabel {
+        font-weight:bold; 
+        font-size: 11px; 
+        padding: 2px; 
+    }
+    .marketValue {
+        font-weight:normal; 
+        font-size: 10px; 
+        padding: 1px; 
+    }
+ 
 
     .SearchBook {
         width: 100%;
@@ -881,12 +904,14 @@ tr.pager td {
    
     .SearchResults {
         position: relative;
-        width: 53%;
+        width: 100%;
         height: 380px;
-	    margin-left: 12%;
+	    margin-left: 0%;
 	    padding: 0;
 	    overflow-y: scroll;
 	    list-style: none;
+        border-top: 2px solid #BA4B06;     
+        border-bottom: 2px solid #BA4B06; 
 
         -webkit-perspective: 400px;
 	       -moz-perspective: 400px;
@@ -894,14 +919,18 @@ tr.pager td {
 	         -o-perspective: 400px;
 	            perspective: 400px;
     }
-
         .SearchResults li {
+            float:left;
+            text-align:left;
+            clear:none;
+            width:100%;
             position: relative;
-            padding: 16px;
+            padding: 10px;
             background: #feeebd;
-            color: #252525;
+            color: #613301; /*#252525;*/
             font-size: 14px;
             z-index: 2;
+            border:0px solid red;
 
             -webkit-transform: translateZ(0px);
 		       -moz-transform: translateZ(0px);
@@ -909,9 +938,51 @@ tr.pager td {
 		         -o-transform: translateZ(0px);
 		            transform: translateZ(0px);
         }
+          .SearchResults li > .MarketPost > .MarketBuyPrice {
+                background-repeat:no-repeat; 
+                width: 68px;
+                height: 68px; 
+                text-align: center; 
+                margin-top: auto;
+                line-height: 68px; 
+                font-weight: bold;
+                font-family: calibri; 
+                float:left;
+                background:#FFF;
+                color:#000;
+                border:2px solid #333; 
+            }
+
+           .SearchResults li > .MarketPost > .BookImage {
+                background-repeat:no-repeat; 
+                width: 68px;
+                height: 68px; 
+                text-align: center; 
+                margin-top: auto;
+                line-height: 68px; 
+                font-weight: bold;
+                font-family: calibri; 
+                float:left;
+                margin-right:15px;
+                background:#DB5400;
+                color:#000;
+                border:2px solid #333;
+            }
+
+        .SearchResults li:hover {
+            background: #fdd558;
+        }
+
+        .SearchResults li:hover a {
+            color: #6B3700; 
+        }
 
         .SearchResults li:nth-child(even) {
 		    background: #fff;
+	    }
+
+        .SearchResults li:nth-child(even):hover {
+             background: #fdd558;
 	    }
 
     .DetailLine {
@@ -943,4 +1014,39 @@ tr.pager td {
         float: left;
     }
 
+    /*-- DvSubmit is specific to the detail posting page submit area --*/
+     .DvSubmit {
+        width:100%; 
+        text-align:right; 
+        border-top:3px solid #BA4B06;
+    }
+  
+
 /*-------------------------------------------------------------*/
+/* Search -----------------------------------------------------*/
+ 
+     #search {
+
+    }
+
+    #search input[type="text"] {
+        background: url(search-white.png) no-repeat 10px 6px #fcfcfc;
+        border: 1px solid #d1d1d1;
+        font: bold 12px calibri;
+        color: #000;
+        width: 500px;
+        padding: 4px 15px 6px 35px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+        text-shadow: 0 2px 3px rgba(0, 0, 0, 0);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+        -webkit-transition: all 0.7s ease 0s;
+        -moz-transition: all 0.7s ease 0s;
+        -o-transition: all 0.7s ease 0s;
+        transition: all 0.7s ease 0s;
+        }
+
+ /*------------------------------------------------------------*/  
