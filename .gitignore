@@ -40,8 +40,9 @@ local.properties
 *.user
 *.sln.docstates
 *.sln
+*.csproj
 *.suo
-*.csproj=
+*.cache
 web.config
 
 # Build results

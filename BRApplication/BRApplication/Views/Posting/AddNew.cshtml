@@ -9,22 +9,33 @@
         <div class="SearchBook">
             @Html.TextBox("txtSearchBook")
             <input id="SearchButton" type="button" value="Search" />
-            <article>
-                <ul class="SearchResults wave">
-                    @for (int i=0; i < @Model.Count; i++) { 
-                        <li>
-                            <div class="item">
-                                <div>@Model[i].Course</div>
-                                <div>@Model[i].Title</div>
-                            </div>
-                        </li>
-                    }
-            </article>
+        </div>
+        <article>
+            <ul class="SearchResults wave">
+                @for (int i=0; i < @Model.Count; i++) { 
+                    <li>
+                        <div class="item">
+                            <span class="Block">@Model[i].Course</span>
+                            <span class="Block Truncate One-line">@Model[i].Title</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <a class="link">Cannot find your book? Click Here</a>
+        </article>
+        <div class="NewBook">
+            @Html.TextBox("txtAddTitle")
         </div>
     </div>
 </div>
 
 @* Must come after definition of the 'ul' element that we are binding to*@
 <script type="text/javascript">
-       stroll.bind('.SearchBook ul');
+    stroll.bind('.NewPost ul');
+
+    $("li").click(function () {
+        $(this).siblings(".selected").removeClass("selected");
+        $(this).addClass("selected");
+    });
 </script>
+

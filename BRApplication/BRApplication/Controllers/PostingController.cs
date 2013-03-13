@@ -33,7 +33,7 @@ namespace BRApplication.Controllers
             /////////////
 
             List<MarketPostModel> testData = new List<MarketPostModel>();
-            int numPosts = 3;
+            int numPosts = 15;
             for (int i = 0; i < numPosts; i++)
             {
                 string Title = "Managerial Accounting - Ninth Canadian Edition" + i;
