@@ -904,7 +904,7 @@ tr.pager td {
         padding:10px;
     }
     
-      .datePosted {
+    .datePosted {
         text-align:right; 
         font-size:8px; 
         font-style:italic; 
@@ -922,14 +922,11 @@ tr.pager td {
         font-size: 11px; 
         padding: 2px; 
     }
+
     .marketValue {
         font-weight:normal; 
         font-size: 10px; 
         padding: 1px; 
-    }
-
-    .NewBook {
-        
     }
 
     .SearchBook {
@@ -938,14 +935,6 @@ tr.pager td {
         text-align: center;
     }
     
-    .SearchResults li:nth-child(even) {
-    	background: #fff;
-    }
-
-    .SearchResults li:hover {
-    	background: #ffdd57 url(images/ui-bg_spotlight_70_ffdd57_16x16.png) 50% 50% repeat-x;
-    }
-   
     .ExistingPosts .SearchResults {
         position: relative;
         width: 100%;
@@ -954,8 +943,8 @@ tr.pager td {
 	    padding: 0;
 	    overflow-y: scroll;
 	    list-style: none;
-        border-top: 2px solid #BA4B06;     
-        border-bottom: 2px solid #BA4B06; 
+        border-top: 2px solid #BA4B06;
+        border-bottom: 2px solid #BA4B06;
 
         -webkit-perspective: 400px;
 	       -moz-perspective: 400px;
@@ -972,10 +961,9 @@ tr.pager td {
             position: relative;
             padding: 10px;
             background: #feeebd;
-            color: #613301; /*#252525;*/
+            color: #613301; 
             font-size: 14px;
             z-index: 2;
-            border:0px solid red;
 
             -webkit-transform: translateZ(0px);
 		       -moz-transform: translateZ(0px);
@@ -1038,10 +1026,9 @@ tr.pager td {
 	            perspective: 400px;
     }
     
-
         .NewPost .SearchResults li {
             position: relative;
-            padding: 4.5%;
+            padding: 16px;
             background: #feeebd;
             color: #252525;
             font-size: 14px;
@@ -1054,11 +1041,21 @@ tr.pager td {
 		            transform: translateZ(0px);
         }
         
-        
-
         .selected {
             border: 1px outset black;
         }
+
+    .SearchResults li:nth-child(even) {
+    	background: #fff;
+    }
+
+    .SearchResults li:hover {
+    	background: #ffdd57 50% 50% repeat-x;
+    }
+
+    .NewBook {
+        
+    }
 
     .DetailLine {
         background-color: #FFEF91;
