@@ -1,4 +1,4 @@
-﻿@model List<BRApplication.Models.MarketPostModel>
+﻿@model List<BRApplication.Models.Textbook>
 
 <div class="PostContainer">
     <div class="NewPost">
@@ -10,32 +10,59 @@
             @Html.TextBox("txtSearchBook")
             <input id="SearchButton" type="button" value="Search" />
         </div>
-        <article>
-            <ul class="SearchResults wave">
-                @for (int i=0; i < @Model.Count; i++) { 
-                    <li>
-                        <div class="item">
-                            <span class="Block">@Model[i].Course</span>
-                            <span class="Block Truncate One-line">@Model[i].Title</span>
-                        </div>
-                    </li>
-                }
-            </ul>
+        <div class="ChooseBook">
+            <div id="BookListWrapper">
+                <ul id="BookList" class="SearchResults wave">
+                    @for (int i=0; i < @Model.Count; i++) { 
+                        <li>
+                            <div class="item">
+                                <span class="Block">@Model[i].Author</span>
+                                <span class="Block Truncate One-line">@Model[i].Title</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
             <a class="link">Cannot find your book? Click Here</a>
-        </article>
-        <div class="NewBook">
-            @Html.TextBox("txtAddTitle")
         </div>
+    </div>
+    <div class="hidden">
+        @Html.Partial("AddBook_Partial");
     </div>
 </div>
 
 @* Must come after definition of the 'ul' element that we are binding to*@
 <script type="text/javascript">
     stroll.bind('.NewPost ul');
-
+    
     $("li").click(function () {
         $(this).siblings(".selected").removeClass("selected");
         $(this).addClass("selected");
+    });
+    
+    // get the width of the book list minus scrollbar
+    var bookList = document.getElementById("BookList");
+    var origWidth = bookList.offsetWidth;
+    var scrollWidth = bookList.scrollWidth;
+
+    // width of our wrapper equals width of the scrollable part of the book list
+    document.getElementById("BookListWrapper").style.width = scrollWidth + "px";
+    bookList.style.width = origWidth + "px";
+
+    var addBook = false;
+
+    $(".link").click(function () {
+        addBook = !addBook;
+
+        var origHeight = $(".NewPost").css("height");
+
+        if (addBook) {
+            $(".hidden").show();
+            $(".NewPost").css("height", origHeight);
+        } else {
+            $(".hidden").hide();
+            $(".NewPost").css("height", "100%");
+        }
     });
 </script>
 

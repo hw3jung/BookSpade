@@ -32,24 +32,20 @@ namespace BRApplication.Controllers
             // Test Data
             /////////////
 
-            List<MarketPostModel> testData = new List<MarketPostModel>();
+            List<Textbook> testData = new List<Textbook>();
             int numPosts = 15;
             for (int i = 0; i < numPosts; i++)
             {
-                string Title = "Managerial Accounting - Ninth Canadian Edition" + i;
-                string Course = "AFM 10" + i;
-                string Condition = "Good";
-                string PostedBy = "John Smith";
-                DateTime Date = new DateTime(2013, 2, 21, 12, 0, 0);
-                string ISBN = "10 0-470-56479-2";
-                double price = 50.00;
-                string Author = "Walter T. Harrison";
-                MarketPostModel mpm = new MarketPostModel(Title, false, Course, Condition, PostedBy, Date, ISBN, Author, price);
-                testData.Add(mpm);
+                int textBookID = i;
+                string isbn = "10 0-470-56479-" + i;
+                string title = "Managerial Accounting - Ninth Canadian Edition" + i;
+                string author = "Author " + i;
+                string edition = "Edition " + i;
+                int courseID = i;
+                DateTime date = new DateTime(2013, 2, 21, 12, 0, 0);
+                Textbook textBook = new Textbook(textBookID, isbn, title, author, edition, courseID, true, false, date, date);
+                testData.Add(textBook);
             }
-
-            //////////
-            //////////
 
             return View(testData);
         }

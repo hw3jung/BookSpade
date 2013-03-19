@@ -2,21 +2,22 @@
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
-    height: 100%;   
+    height: 100%;
+    overflow-y: scroll;
 }
 
 body {
     background-color: #fff;
     color: #333;
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: 1em;
+    font-family: Calibri;
     margin: 0;
     padding: 0;
-    height: 100% /*400px*/;
+    height: 100%;
 }
 
 a {
-    font-family: Verdana;
+    font-family: Calibri;
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
@@ -52,7 +53,8 @@ a {
     }
 
     a.link {
-        width: 25%;
+        width: 20%;
+        font-size: 1.2em;
         text-align: center;
         display: inline-block;
     }
@@ -81,6 +83,7 @@ div {
         }
 
     div.body {
+        background: white;
         clear: both;
         width: 100%;
         height: 80%;
@@ -194,22 +197,28 @@ h5, h6 {
 }
 
 header {
+    margin: 0;
+    padding: 0;
     height: 15%;
 }
 
 footer {
-    clear: both;
     background-color: #e2e2e2;
-    font-size: .8em;
-    height: 5%
+    font-size: 1em;
+    height: 5%;
+    text-align: center;
 }
 
+    footer .copyright {
+        position: relative;
+        top: 25%;
+    }
 
 /* site title
 ----------------------------------------------------------*/
 .site-title {
     color: #c8c8c8;
-    font-family: Verdana;
+    font-family: Calibri;
     font-size: 2.3em;
     margin: 0;
     margin-top: 10%;
@@ -839,7 +848,7 @@ tr.pager td {
 }
 
 /*-------------------------------------------------------------*/
-/* string-related
+/* String-related
  -------------------------------------------------------------*/
 
 .Truncate {
@@ -857,14 +866,23 @@ tr.pager td {
 }
 
 /*-------------------------------------------------------------*/
+/* Miscellaneous
+ -------------------------------------------------------------*/
+
+.hidden {
+    height: 60%;
+    display: none;
+}
+
+/*-------------------------------------------------------------*/
 /* Post Detail
 ---------------------------------------------------------------*/
 
 .PostContainer
 {
     text-align:center;
-    width:100%;
-    height: 100%;    
+    width: 100%;
+    height: 100%;
 }
 
     .PostContainer > .post {
@@ -878,10 +896,8 @@ tr.pager td {
     .PostHeader {
         font-size: 20px;
         font-weight:bold; 
-        font-family:Calibri; 
+        font-family: Calibri; 
         color:#4D2D02; 
-        padding:5px; 
-        padding-bottom:10px; 
     }
 
     .NewPost .PostHeader {
@@ -891,9 +907,14 @@ tr.pager td {
     .ExistingPosts {
         margin: 0px auto; 
         width:90%;
-        height: 100%;
+        height: 80%;
         text-align:left;  
         padding:10px;
+    }
+
+    .ChoosePost {
+        width: 100%;
+        height: 80%;
     }
 
     .NewPost {
@@ -901,7 +922,6 @@ tr.pager td {
         width:50%;
         height: 100%;
         text-align:left;
-        padding:10px;
     }
     
     .datePosted {
@@ -934,7 +954,12 @@ tr.pager td {
         height: 10%;
         text-align: center;
     }
-    
+
+    .ChooseBook {
+        width: 100%;
+        height: 70%;
+    }
+
     .ExistingPosts .SearchResults {
         position: relative;
         width: 100%;
@@ -962,7 +987,7 @@ tr.pager td {
             padding: 10px;
             background: #feeebd;
             color: #613301; 
-            font-size: 14px;
+            font-size: 16px;
             z-index: 2;
 
             -webkit-transform: translateZ(0px);
@@ -980,7 +1005,7 @@ tr.pager td {
                 margin-top: auto;
                 line-height: 68px; 
                 font-weight: bold;
-                font-family: calibri; 
+                font-family: Calibri; 
                 float:left;
                 background:#FFF;
                 color:#000;
@@ -995,7 +1020,7 @@ tr.pager td {
                 margin-top: auto;
                 line-height: 68px; 
                 font-weight: bold;
-                font-family: calibri; 
+                font-family: Calibri; 
                 float:left;
                 margin-right:15px;
                 background:#DB5400;
@@ -1004,16 +1029,24 @@ tr.pager td {
         }
 
         .ExistingPosts .SearchResults li:hover a {
-            color: #6B3700; 
+            color: #6B3700;
         }
     
-    .NewPost .SearchResults {
+    #BookListWrapper {
         display: inline-block;
-        position: relative;
-        width: 53%;
+        width: 55%;
         height: 390px;
+        overflow: hidden;
+        margin-top: 2%;
         margin-left: 13%;
         margin-right: 2%;
+    }
+    
+    .NewPost .SearchResults {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 0%;
         margin-bottom: 0%;
 	    padding: 0;
 	    overflow-y: scroll;
@@ -1031,9 +1064,9 @@ tr.pager td {
             padding: 16px;
             background: #feeebd;
             color: #252525;
-            font-size: 14px;
+            font-size: 16px;
             z-index: 2;
-
+                
             -webkit-transform: translateZ(0px);
 		       -moz-transform: translateZ(0px);
 		        -ms-transform: translateZ(0px);
@@ -1054,8 +1087,36 @@ tr.pager td {
     }
 
     .NewBook {
-        
+        width: 100%;
+        height: 100%;
+        padding-top: 1%;
     }
+
+        .NewBook input {
+            visibility: inherit;
+            background-color: white;
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+            background-image: -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+            background-image: -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+            background-image: -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+            background-image: -ms-linear-gradient(top, #ffffff 85%,#eeeeee 99%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
+            background-image: linear-gradient(top, #ffffff 85%,#eeeeee 99%);
+            border: 1px solid #AAA;
+            margin: 0;
+            padding: 0;
+            cursor: text;
+            overflow: hidden;
+            height: auto !important;
+            height: 1%;
+            position: relative;
+            width: 250px;
+            height: 26px;
+            line-height: 26px;
+            padding: 4px 10px;
+            margin: 0;
+            margin-bottom: 15px;
+        }
 
     .DetailLine {
         background-color: #FFEF91;

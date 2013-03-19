@@ -148,17 +148,13 @@
             <a class="body">Create Your Own Posting</a>
         </div>*@
         <div class="body">
-            @RenderSection("featured", required: false)
             @RenderBody()
         </div>
         <footer class="dark-background">
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
-            </div>
+            <span class="copyright">
+                @DateTime.Now.Year - My ASP.NET MVC Application
+            </span>
         </footer>
-        @*@RenderSection("scripts", required: false)*@
     </body>
     
 </html>
