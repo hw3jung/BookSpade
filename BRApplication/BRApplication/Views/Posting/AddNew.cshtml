@@ -30,6 +30,10 @@
         @Html.Partial("AddBook_Partial");
     </div>
 </div>
+<div class="AddPost">
+    <input id="Price" class="InputGradient Info" type="text" placeholder="Price" />
+    <input id="SubmitButton" type="button" value="Add Post" />
+</div>
 
 @* Must come after definition of the 'ul' element that we are binding to*@
 <script type="text/javascript">
@@ -61,7 +65,7 @@
             $(".NewPost").css("height", origHeight);
         } else {
             $(".hidden").hide();
-            $(".NewPost").css("height", "100%");
+            $(".NewPost").css("height", "92%");
         }
     });
 </script>

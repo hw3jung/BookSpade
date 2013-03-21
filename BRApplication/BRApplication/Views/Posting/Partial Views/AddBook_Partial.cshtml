@@ -1,8 +1,21 @@
 ﻿<div class="NewBook">
-    <input id="Title" type="text" placeholder="Title" />
-    <input id="Author" type="text" placeholder="Author" />
-    <input id="Course" type="text" placeholder="Course" />
-    <input id="ISBN" type="text" placeholder="ISBN" />
-    <input id="Condition" type="text" placeholder="Condition" />
-    <input id="BookImageURL" type="text" placeholder="Book Image URL" />
+    <div class="NewBookInfo">
+        <div class="PostHeader">
+            <img src="@Url.Content("~/Content/Images/BookStack.png")" alt="BookStack"/>&nbsp
+            Add Your Book
+        </div>
+        <input id="Title" class="InputGradient Info" type="text" placeholder="Title" />
+        <input id="Author" class="InputGradient Info" type="text" placeholder="Author" />
+        <input id="Course" class="InputGradient Info" type="text" placeholder="Course" />
+        <input id="ISBN" class="InputGradient Info" type="text" placeholder="ISBN" />
+        <input id="Condition" class="InputGradient Info" type="text" placeholder="Condition" />
+        <div class="LastInput">
+            <input id="BookImageURL" class="InputGradient Info" type="text" placeholder="Book Image URL" />
+            <input id="SubmitButton" type="button" value="Add Book" />
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+    $(".LastInput .Info").css("display", "inline-block");
+</script>
