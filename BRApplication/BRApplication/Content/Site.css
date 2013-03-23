@@ -1223,3 +1223,16 @@ tr.pager td {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
     background-image: linear-gradient(top, #ffffff 85%,#eeeeee 99%);
 }
+
+/*------------------------------------------------------------------*/
+/* Facebook 
+--------------------------------------------------------------------*/
+
+    #facebook-button {
+    background: #ccc url('@Url.Content("~/Content/Images/login-with-facebook.png")') no-repeat top left;
+    background-size:154px 29px;
+    height: 29px;
+    width: 154px;
+    border:  none;
+    cursor: pointer;
+}
