@@ -7,8 +7,23 @@
         }
     </text>
 } else {
+    
     <ul>
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+       @* <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+@*        <li>@Html.ActionLink("Log in", "Login", "Account",  null,  new { id = "loginLink", target="_blank" })</li>*@
+        <li> 
+            
+            @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+                <fieldset id="socialLoginList">
+                    <button type="submit" name="provider" value="facebook" title="Log in using your Facebook account">Facebook</button>
+                </fieldset>
+            }
+        </li>
     </ul>
 }
+
+
+@*routeValues:*@
+@*htmlAttributes:*@

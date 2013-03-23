@@ -22,9 +22,9 @@ namespace BRApplication
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "",
-            //    appSecret: "");
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "136888989813258",
+                appSecret: "1935e09f431b9cd913c39b9e4a32f7d7");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }

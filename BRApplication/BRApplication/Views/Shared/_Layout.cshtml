@@ -5,7 +5,6 @@
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        <script src="//connect.facebook.net/en_US/all.js"></script> 
 
         @Styles.Render("~/Content/themes/orangy/jquery-ui-1.10.1.custom.css")
         @Styles.Render("~/Content/css")
@@ -131,7 +130,7 @@
                 </div>
                 <div class="float-right">
                     <section id="login">
-                        <div>@Html.Partial("FacebookLoginPartial")</div>
+                        <div>@Html.Partial("_LoginPartial")</div>
                     </section>
                     <nav>
                         <ul id="menu">
@@ -155,6 +154,7 @@
                 @DateTime.Now.Year - My ASP.NET MVC Application
             </span>
         </footer>
+        @RenderSection("scripts", required: false)
     </body>
     
 </html>

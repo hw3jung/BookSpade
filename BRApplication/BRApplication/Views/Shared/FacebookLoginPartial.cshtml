@@ -1,68 +1,91 @@
-﻿        <div id="fb-root">
-           
-        </div>
-        <!-- build1 is where we render our button based on connected status. -->
-        <div id="build1"></div>
+﻿        
+
         <script>
 
-            function login() {
-                FB.login(function (response) {
-                    if (response.authResponse) {
-                        // connected
-                        testAPI();
-                    } else {
-                        // cancelled
-                    }
-                });
-            }
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '136888989813258', // App ID
-                    channelUrl: '//http://localhost:3229/channel.html', // Channel File
-                    status: true, // check login status
-                    cookie: true, // enable cookies to allow the server to access the session
-                    xfbml: true,  // parse XFBML
-                    oauth: true
-                });
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '136888989813258', // App ID
+                        // channelUrl: '//http://localhost:3229/channel.html', // Channel File
+                        status: true, // check login status
+                        cookie: true, // enable cookies to allow the server to access the session
+                        xfbml: false,
+                        oauth: true// parse XFBML
+                    });
+                    FB.getLoginStatus(function (response) {
+                        //var connected = document.getElementById('connected');
+                        //var nconnected = document.getElementById('nconnected');
+                        if (response.status === 'connected') {
+                            testAPI();
+                            document.getElementById('nconnected').style.display = 'block';
+                            document.getElementById('fb-root').innerHTML = "<span>logged in</span>";
+                            var uid = response.authResponse.userID;
+                        } else if (response.status === 'not_authorized') {
+                            document.getElementById('connected').style.display = 'block';
+                            document.getElementById('nconnected').style.display = 'none';
+                            document.getElementById('fb-root').innerHTML = "<span>logged ou</span>";
+                          //  login();
+                        } else {
+                            document.getElementById('connected').style.display = 'block';
+                            document.getElementById('nconnected').style.display = 'none';
+                            document.getElementById('fb-root').innerHTML = "<span>logged ou</span>";
+                            //login();
+                        }
+                    });
+                    
+                    // Additional init code here
 
-                FB.getLoginStatus(function (response) {
-                    if (response.status === 'connected') {
-                        var Cbuild1 = document.getElementById('build1');
-                        // Cbuild1.innerHTML = "";
-                        Cbuild1.innerHTML = "<fb:login-button autologoutlink=\"true\"></fb:login-button>";
-                        FB.XFBML.parse(Cbuild1);
-                        var uid = response.authResponse.userID;
-                    } else if (response.status === 'not_authorized') {
-                        Cbuild1 = document.getElementById('build1');
-                        Cbuild1.innerHTML = "<fb:login-button></fb:login-button>";
-                        FB.XFBML.parse(Cbuild1);
-                      //  login(); 
-                    } else {
-                        Cbuild1 = document.getElementById('build1');
-                        Cbuild1.innerHTML = "<fb:login-button></fb:login-button>";
-                        FB.XFBML.parse(Cbuild1);
-                      //  login(); 
-                    }
-                });
+                };
+                function login() {
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            console.log('Welcome!  Fetching your information.... ');
+                            FB.api('/me', function (response) {
+                                console.log('Good to see you, ' + response.name + '.');
+                                FB.logout(function (response) {
+                                    console.log('Logged out.');
+                                });
+                            });
+                            document.getElementById('connected').style.display = 'block';
+                            document.getElementById('nconnected').style.display = 'none';
+                        } else {
+                            console.log('User cancelled login or did not fully authorize.');
+                        }
+                    }, { scope: 'email' });
+                }
 
-                // Additional init code here
+                function logout() {
+                    FB.logout(function (response) {
+                        console.log('User is now logged out');
+                        document.getElementById('connected').style.display = 'none';
+                        document.getElementById('nconnected').style.display = 'block';
+                    });
+                }
 
-            };
+                // Load the SDK Asynchronously
+                (function (d) {
+                    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                    if (d.getElementById(id)) { return; }
+                   // js = d.createElement('script');
+                    //js.id = id;
+                  //  js.async = true;
+                   //js.src = "//connect.facebook.net/en_US/all.js";
+                 //   ref.parentNode.insertBefore(js, ref);
+                }(document));
 
-            // Load the SDK Asynchronously
-            (function (d) {
-                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-                if (d.getElementById(id)) { return; }
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                ref.parentNode.insertBefore(js, ref);
-            }(document));
-
-            function testAPI() {
-                console.log('Welcome!  Fetching your information.... ');
-                FB.api('/me', function (response) {
-                    console.log('Good to see you, ' + response.name + '.');
-                });
-            }
-
+                function testAPI() {
+                    console.log('Welcome!  Fetching your information.... ');
+                    FB.api('/me', function (response) {
+                        console.log('Good to see you, ' + response.name + '.');
+                    });
+                } 
         </script>
+
+<div>
+        <div id="fb-root"></div>
+        <div id="connected" style="display:none;">
+            <a href="javascript:void" onclick="FB.login()">Login Using FB</a>
+        </div>
+        <div id="nconnected" style="display:none;">
+            <a href="javascript:void" onclick="FB.logout()">Logout</a>
+        </div>
+</div>        
