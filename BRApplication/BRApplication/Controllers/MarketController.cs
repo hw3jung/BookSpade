@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BRApplication.Models; 
+using BRApplication.Models;
+using BRApplication.Handlers;
+using System.Data;
+using System.Diagnostics;
 
 namespace BRApplication.Controllers
 {
@@ -12,48 +15,97 @@ namespace BRApplication.Controllers
         //
         // GET: /Market/
 
-        public ActionResult Index()
+        public string getCourseName(int textBookID, DataAccessLayer d)
         {
-            List<MarketPostModel> mpmLst = new List<MarketPostModel>();
-            MarketPostModel mpm1 = new MarketPostModel("My Awesome AFM 101 Textbook", false, "AFM 101", "Excellent", "Asma Patel", DateTime.Now, "978-3-16-148410-0", "Mark Twain", 300);
-            MarketPostModel mpm2 = new MarketPostModel("Buy this book, buy it NAO!", false, "MATH 135", "Good", "Johnny Depp", DateTime.Now, "978-3-16-148410-0", "John Jacob JingleHeimer", 150.99);
-            MarketPostModel mpm3 = new MarketPostModel("This is a nice lookin title isnt it ;)", false, "STAT 230", "Good", "Jack Johnson", DateTime.Now, "978-3-16-148410-0", "Kiets d a", 0.99);
-            MarketPostModel mpm4 = new MarketPostModel("Title #4 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm5 = new MarketPostModel("Title #5 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm6 = new MarketPostModel("Title #6 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm7 = new MarketPostModel("Title #7 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm8 = new MarketPostModel("Title #8 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm9 = new MarketPostModel("Title #9 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm10 = new MarketPostModel("Title #10 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm11 = new MarketPostModel("Title #11 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm12 = new MarketPostModel("Title #12 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm13 = new MarketPostModel("Title #13 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm14 = new MarketPostModel("Title #14 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm15 = new MarketPostModel("Title #15 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm16 = new MarketPostModel("Title #16 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm17 = new MarketPostModel("Title #17 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            MarketPostModel mpm18 = new MarketPostModel("Title #18 ", false, "ACTS 230", "Good", "Hugh Grant", DateTime.Now, "978-3-16-148410-0", "Homer J. Simpson", 500.99);
-            mpmLst.Add(mpm1);
-            mpmLst.Add(mpm2);
-            mpmLst.Add(mpm3);
-            mpmLst.Add(mpm4);
-            mpmLst.Add(mpm5);
-            mpmLst.Add(mpm6);
-            mpmLst.Add(mpm7);
-            mpmLst.Add(mpm8);
-            mpmLst.Add(mpm9);
-            mpmLst.Add(mpm10);
-            mpmLst.Add(mpm11);
-            mpmLst.Add(mpm12);
-            mpmLst.Add(mpm13);
-            mpmLst.Add(mpm14);
-            mpmLst.Add(mpm15);
-            mpmLst.Add(mpm16);
-            mpmLst.Add(mpm17);
-            mpmLst.Add(mpm18);
-
-            return View(mpmLst); 
+            DataTable dt = new DataTable();
+            dt = d.getCourseNameWithTextBookID(textBookID);
+            string ret = null;
+            DataRow row = dt.Rows[0];
+            ret = (string)row[0];
+            return ret;
         }
 
+        public string getTextBookTitle(int textBookID, DataAccessLayer d)
+        {
+            DataTable dt = new DataTable();
+            dt = d.select("TextBookID = " + textBookID, "TextBooks");
+            string ret = null;
+            DataRow row = dt.Rows[0];
+            ret = (string)row[2];
+            return ret;
+        }
+
+        public string getPostedBy(int profileID, DataAccessLayer d)
+        {
+            DataTable dt = new DataTable();
+            dt = d.select("ProfileID = " + profileID, "UserProfile");
+            string ret = null;
+            DataRow row = dt.Rows[0];
+            ret = (string)row[1];
+            return ret;
+        }
+
+        public string getISBN(int textBookID, DataAccessLayer d)
+        {
+            DataTable dt = new DataTable();
+            dt = d.select("textBookID = " + textBookID, "TextBooks");
+            string ret = null;
+            DataRow row = dt.Rows[0];
+            ret = (string)row[1];
+            return ret;
+        }
+
+        public string getAuthor(int textBookID, DataAccessLayer d)
+        {
+            DataTable dt = new DataTable();
+            dt = d.select("textBookID = " + textBookID, "TextBooks");
+            string ret = null;
+            DataRow row = dt.Rows[0];
+            ret = (string)row[3];
+            return ret;
+        }
+
+        public ActionResult Index()
+        {
+            DataAccessLayer dal = new DataAccessLayer();
+            List<MarketPostModel> mpmLst = new List<MarketPostModel>();
+
+            DataTable dt = new DataTable();
+            dt = dal.select("", "Posts");
+            /* 
+               1 1 1 True 50.00 17/02/4751 3:37:07 PM True False 22/03/2013 3:37:07 PM 22/03/2013 3:37:07 PM Good 
+               2 1 2 True 70.00 25/07/2099 3:38:44 PM True False 22/03/2013 3:38:44 PM 22/03/2013 3:38:44 PM Excellent 
+               3 2 2 False 60.00 07/08/2040 3:43:17 PM True False 22/03/2013 3:43:17 PM 22/03/2013 3:43:17 PM   */
+            
+            // TODO: for code refactoring: don't use number to explicitly select columns, use column names
+            foreach (DataRow row in dt.Rows)
+            {
+                int textBookID = (int)row[2];
+                string title = getTextBookTitle(textBookID, dal);
+                
+                bool isBuy = ((bool)row[3] == true) ? true : false;
+
+                string course = getCourseName(textBookID, dal);
+
+                string condition = (row[10] is System.DBNull) ? "" : (string)row[10];
+
+                int profileID = (int)row[1];
+                string postedBy = getPostedBy(profileID, dal);
+
+                DateTime datePosted = (DateTime)row[8];
+
+                string isbn = getISBN(textBookID, dal);
+
+                string author = getAuthor(textBookID, dal);
+
+                double price = Convert.ToDouble(row[4]);
+
+                // Marketing page, use !isBuy flag to show all sell posts
+                MarketPostModel mpm = new MarketPostModel(title, !isBuy, course, condition, postedBy, datePosted, isbn, author, price);
+                mpmLst.Add(mpm);
+            }
+            
+            return View(mpmLst); 
+        }
     }
 }
