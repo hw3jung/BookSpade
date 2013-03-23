@@ -23,8 +23,8 @@ namespace BRApplication
             //    consumerSecret: "");
 
             OAuthWebSecurity.RegisterFacebookClient(
-                appId: "136888989813258",
-                appSecret: "1935e09f431b9cd913c39b9e4a32f7d7");
+                appId: "410278782401754",
+                appSecret: "4d0fd841a025dd908191f50b86ec90f7");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }

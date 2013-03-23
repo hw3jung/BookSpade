@@ -246,7 +246,7 @@ namespace BRApplication.Controllers
 
         //
         // POST: /Account/ExternalLoginConfirmation
-
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
