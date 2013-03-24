@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using BRApplication.Filters;
 using BRApplication.Models;
+using BRApplication.Handlers;
+
 
 namespace BRApplication.Controllers
 {
@@ -213,81 +215,57 @@ namespace BRApplication.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
-
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
+            bool success = false;
+            string provider = null;
+            string providerUserId = null; 
+
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+
+            ExternalLoginModel elm = new ExternalLoginModel(
+                    result.ExtraData["name"].ToString(),
+                    result.ExtraData["link"].ToString(),
+                    result.ExtraData["id"].ToString(),
+                    result.ExtraData["gender"].ToString(),
+                    string.Empty, loginData);
+
+            AccountHandler acntHandler = new AccountHandler();
+
+
             if (!result.IsSuccessful)
             {
+                //Error message needs to be added (Modal dialogue/embeded error, we can't use console for this)
                 return RedirectToAction("ExternalLoginFailure");
             }
 
-            if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
+            if (OAuthWebSecurity.Login(result.Provider, result.ExtraData["name"], createPersistentCookie: false) || User.Identity.IsAuthenticated)
             {
+                success = acntHandler.AddUser(elm);
                 return RedirectToLocal(returnUrl);
             }
-
-            if (User.Identity.IsAuthenticated)
+           
+            else 
+            
             {
-                // If the current user is logged in add the new account
-                OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
-                return RedirectToLocal(returnUrl);
-            }
-            else
-            {
-                // User is new, ask for their desired membership name
-                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
+
+                success = acntHandler.AddUser(elm);
+                OAuthWebSecurity.TryDeserializeProviderUserId(elm.ExternalLoginData, out provider, out providerUserId);
+
+                //Create, send authentication cookie ;; The below line essentially sets Request.IsAuthenticated to true
+                //This needs to be reviewed and possibly revised.
+
+                if (success)
+                    FormsAuthentication.SetAuthCookie(elm.Name, createPersistentCookie: false);
+ 
+                //We need to come up with an error system. Maybe a jQuery Modal dialogue to let the user know they weren't successful? Or an Embedded in-site label?
+               
+                return RedirectToLocal(returnUrl); 
             }
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
-        {
-            string provider = null;
-            string providerUserId = null;
-
-            if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))
-            {
-                return RedirectToAction("Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
-                {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
-
-                        OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                        OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                        return RedirectToLocal(returnUrl);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
-                    }
-                }
-            }
-
-            ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
         }
 
         //
