@@ -259,8 +259,7 @@ namespace BRApplication.Controllers
                 //Create, send authentication cookie ;; The below line essentially sets Request.IsAuthenticated to true
                 //This needs to be reviewed and possibly revised.
 
-                if (success)
-                    FormsAuthentication.SetAuthCookie(elm.Name, createPersistentCookie: false);
+                FormsAuthentication.SetAuthCookie(elm.Name, createPersistentCookie: false);
  
                 //We need to come up with an error system. Maybe a jQuery Modal dialogue to let the user know they weren't successful? Or an Embedded in-site label?
                
