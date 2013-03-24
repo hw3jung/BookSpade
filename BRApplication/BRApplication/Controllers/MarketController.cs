@@ -68,7 +68,7 @@ namespace BRApplication.Controllers
         public ActionResult Index()
         {
             DataAccessLayer dal = new DataAccessLayer();
-            List<MarketPostModel> mpmLst = new List<MarketPostModel>();
+            List<MarketPost> mpmLst = new List<MarketPost>();
 
             DataTable dt = new DataTable();
             dt = dal.select("", "Posts");
@@ -98,10 +98,10 @@ namespace BRApplication.Controllers
 
                 string author = getAuthor(textBookID, dal);
 
-                double price = Convert.ToDouble(row[4]);
+                int price = Convert.ToInt32(row[4]);
 
                 // Marketing page, use !isBuy flag to show all sell posts
-                MarketPostModel mpm = new MarketPostModel(title, !isBuy, course, condition, postedBy, datePosted, isbn, author, price);
+                MarketPost mpm = new MarketPost(title, !isBuy, course, condition, postedBy, datePosted, isbn, author, price);
                 mpmLst.Add(mpm);
             }
             

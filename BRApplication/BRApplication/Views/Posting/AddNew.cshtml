@@ -1,4 +1,4 @@
-﻿@model List<BRApplication.Models.Textbook>
+﻿@model IEnumerable<BRApplication.Models.Textbook>
 
 <div class="PostContainer">
     <div class="NewPost">
@@ -13,11 +13,12 @@
         <div class="ChooseBook">
             <div id="BookListWrapper">
                 <ul id="BookList" class="SearchResults wave">
-                    @for (int i=0; i < @Model.Count; i++) { 
+                    @for (int i = 0; i < @Model.Count(); i++)
+                    { 
                         <li>
                             <div class="item">
-                                <span class="Block">@Model[i].Author</span>
-                                <span class="Block Truncate One-line">@Model[i].Title</span>
+                                <span id="Course" class="Block">@Model.ElementAt(i).CourseName</span>
+                                <span id="Title" class="Block Truncate One-line">@Model.ElementAt(i).Title</span>
                             </div>
                         </li>
                     }
@@ -31,8 +32,15 @@
     </div>
 </div>
 <div class="AddPost">
-    <input id="Price" class="InputGradient Info" type="text" placeholder="Price" />
+    <input id="Price" class="InputGradient Info" type="text" placeholder="Price ($)" />
     <input id="SubmitButton" type="button" value="Add Post" />
+</div>
+<div class="PostType">
+    <select id="PostType">
+        <option value="Buy" selected>Buy</option>
+        <option value="Sell">Sell</option>
+    </select>
+    <input id="Condition" class="InputGradient Info" type="text" placeholder="Condition" />
 </div>
 
 @* Must come after definition of the 'ul' element that we are binding to*@
@@ -43,7 +51,7 @@
         $(this).siblings(".selected").removeClass("selected");
         $(this).addClass("selected");
     });
-    
+
     // get the width of the book list minus scrollbar
     var bookList = document.getElementById("BookList");
     var origWidth = bookList.offsetWidth;
@@ -66,6 +74,61 @@
         } else {
             $(".hidden").hide();
             $(".NewPost").css("height", "92%");
+        }
+    });
+
+    $("#SubmitButton").click(function () {
+        var isBuy = $("#PostType").val() == "Buy";
+        var price = $("#Price").val().trim();
+        var condition = $("#Condition").val().trim();
+
+        if (addBook) {
+            var title = $(".NewBook #Title").val().trim();
+            var author = $(".NewBook #Author").val().trim();
+            var course = $(".NewBook #Course").val().trim();
+            var isbn = $(".NewBook #ISBN").val().trim();
+            var bookImageURL = $(".NewBook #BookImageURL").val().trim();
+
+            $.ajax({
+                url: '@Url.Action("SaveBook", "Posting")',
+                data: {
+                    isbn: isbn,
+                    title: title,
+                    author: author,
+                    course: course,
+                    bookImageURL: bookImageURL,
+                    isBuy: isBuy,
+                    price: price,
+                    condition: condition
+                },
+                type: 'POST',
+                success: function (result) {
+                    // TODO: do something with success
+                }
+            });
+        } else {
+            if (!$("li.selected").length) {
+                alert("Please select a book or add you own book");
+            } else {
+                var course = $("li.selected #Course").text().trim();
+                var title = $("li.selected #Title").text().trim();
+                
+                $.ajax({
+                    url: '@Url.Action("SavePost", "Posting")',
+                    data: {
+                        profileID: 0,
+                        course: course,
+                        title: title,
+                        isBuy: isBuy,
+                        price: price,
+                        condition: condition
+                    },
+                    type: 'POST',
+                    success: function (result) {
+                        // TODO: do something with success
+                    }
+                });
+            }
         }
     });
 </script>

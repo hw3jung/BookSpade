@@ -1135,6 +1135,26 @@ tr.pager td {
             margin-bottom: 2%;
         }
 
+    .PostType {
+        position: fixed;
+        height: 5%;
+        width: 18%;
+        bottom: 18%;
+        right: 2.5%;
+    }
+
+        .PostType select {
+            height: 100%;
+            width: 40%;
+        }
+
+        .PostType input {
+            text-align: center;
+            height: 90%;
+            width: 47%;
+            margin-left: 7%;
+        }
+
     .DetailLine {
         background-color: #FFEF91;
         border-bottom: 1px solid #E0D69D; 

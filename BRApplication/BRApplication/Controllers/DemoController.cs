@@ -39,6 +39,7 @@ namespace BRApplication.Controllers
                 return Json("Failed to insert status: " + status); 
         }
 
+        [HttpPost]
         public ActionResult UpdatePartial(string status)
         {
             return PartialView("DemoPartial", status); 

@@ -175,6 +175,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\AccountHandler.cs" />
+    <Compile Include="Handlers\CourseInfoHandler.cs" />
+    <Compile Include="Handlers\MarketPostHandler.cs" />
+    <Compile Include="Handlers\PostHandler.cs" />
+    <Compile Include="Handlers\TextbookHandler.cs" />
     <Compile Include="Handlers\DataAccessLayer.cs" />
     <Compile Include="Handlers\DemoHandler.cs" />
     <Compile Include="Handlers\TableWrapper.cs" />
@@ -184,6 +188,7 @@
     <Compile Include="Models\DemoModel.cs" />
     <Compile Include="Models\ExternalLoginModel.cs" />
     <Compile Include="Models\MarketPostModel.cs" />
+    <Compile Include="Models\MarketPost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Textbook.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -376,9 +381,9 @@
     <Content Include="Views\Demo\Index.cshtml" />
     <Content Include="Views\Demo\Partial Views\DemoPartial.cshtml" />
     <Content Include="Views\Shared\FacebookLoginPartial.cshtml" />
-    <Content Include="Views\Home\Posting\Index.cshtml" />
+    <Content Include="Views\Posting\Index.cshtml" />
     <Content Include="Views\Market\Index.cshtml" />
-    <Content Include="Views\Home\Posting\AddNew.cshtml" />
+    <Content Include="Views\Posting\AddNew.cshtml" />
     <Content Include="Views\Market\Partial Views\BuyPost_Partial.cshtml" />
     <Content Include="Views\Market\Partial Views\SellPost_Partial.cshtml" />
     <Content Include="Views\Posting\Partial Views\AddBook_Partial.cshtml" />

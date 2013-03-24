@@ -16,17 +16,35 @@ namespace BRApplication.Models
         // Foreign Key TextBookID
         public int TextBookID { get; set; }
 
-        public bool PostType { get; set; }
-        public float Price { get; set; }
+        public bool IsBuy { get; set; }
+        public int Price { get; set; }
+        public string Condition { get; set; }
         public DateTime ExpiryDate { get; set; }
+        
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        internal bool insert()
+        public Post(int profileID, 
+                    int textbookID, 
+                    bool isBuy, 
+                    int price,
+                    string condition)
         {
-            throw new NotImplementedException();
+            this.ProfileID = profileID;
+            this.TextBookID = textbookID;
+            this.IsBuy = isBuy;
+            this.Price = price;
+            this.Condition = condition;
+
+            DateTime now = DateTime.Now;
+            this.ExpiryDate = now.AddMonths(8);
+
+            this.IsActive = true;
+            this.IsDeleted = false;
+            this.CreatedDate = DateTime.Now;
+            this.ModifiedDate = DateTime.Now;
         }
     }
 }
