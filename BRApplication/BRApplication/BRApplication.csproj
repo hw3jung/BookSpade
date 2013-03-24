@@ -187,7 +187,6 @@
     <Compile Include="Models\CustomViewEngine.cs" />
     <Compile Include="Models\DemoModel.cs" />
     <Compile Include="Models\ExternalLoginModel.cs" />
-    <Compile Include="Models\MarketPostModel.cs" />
     <Compile Include="Models\MarketPost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Textbook.cs" />
