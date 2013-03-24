@@ -11,6 +11,6 @@ namespace BRApplication.Handlers
         public static bool insert(CourseInfo newCourseInfo)
         {
             throw new NotImplementedException();
-        }
+        }  
     }
 }
