@@ -22,28 +22,9 @@ namespace BRApplication.Controllers
 
         public ActionResult AddNew()
         {
-            // Uncomment when db is ready
-            //IEnumerable<Textbook> textBookCollection = TextbookHandler.getAllTextbooks();
-
-            //// Testdata
-            List<Textbook> testData = new List<Textbook>();
-
-            int numPosts = 15;
-            for (int i = 0; i < numPosts; i++)
-            {
-                string isbn = "10 0-470-56479-" + i;
-                string title = "Managerial Accounting - Ninth Canadian Edition" + i;
-                string author = "Author " + i;
-                string courseName = "AFM 23" + i;
-                Textbook textBook = new Textbook(isbn, title, author, courseName, "", 100); 
-                testData.Add(textBook);
-            }
-            //////////////////////////////////
+            IEnumerable<Textbook> textBookCollection = TextbookHandler.getAllTextbooks();
             
-            // Uncomment when db is ready
-            //return View(textBookCollection);
-
-            return View(testData);
+            return View(textBookCollection);
         }
 
         [HttpPost]
@@ -56,10 +37,11 @@ namespace BRApplication.Controllers
                                      int price,
                                      string condition)
         {
-            int courseID = CourseInfo.getCourseID(course);
+            int courseID = CourseInfoHandler.getCourseID(course);
             if (courseID == -1)
             {
-                CourseInfo newCourse = new CourseInfo(course);
+                // TODO: Implement description for each course
+                CourseInfo newCourse = new CourseInfo(course, String.Empty);
                 CourseInfoHandler.insert(newCourse);
             }
 

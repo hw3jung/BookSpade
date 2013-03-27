@@ -14,10 +14,11 @@ namespace BRApplication.Models
         public string Course { get; set; }
         public string Condition { get; set; }
         public string PostedBy { get; set; }
-        public DateTime datePosted { get; set; }
+        public string BookImageURL { get; set; }
         public int Price { get; set; }
+        public DateTime datePosted { get; set; }
 
-        public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, int price)
+        public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, string bookImageURL, int price)
         {
             this.Title = title; 
             this.IsBuy = isBuy;
@@ -27,6 +28,7 @@ namespace BRApplication.Models
             this.datePosted = dateposted;
             this.ISBN = isbn;
             this.Author = author;
+            this.BookImageURL = bookImageURL;
             this.Price = price; 
         }
     }

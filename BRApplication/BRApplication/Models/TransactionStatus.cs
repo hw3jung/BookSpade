@@ -9,10 +9,5 @@ namespace BRApplication.Models
     {
         public int StatusID { get; set; }
         public string StatusName { get; set; }
-
-        internal bool insert()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

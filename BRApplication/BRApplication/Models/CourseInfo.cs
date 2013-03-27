@@ -16,17 +16,13 @@ namespace BRApplication.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public CourseInfo(string courseName) {
+        public CourseInfo(string courseName, string description) {
             this.CourseName = courseName;
+            this.Description = description;
             this.IsActive = true;
             this.IsDeleted = false;
             this.CreatedDate = DateTime.Now;
             this.ModifiedDate = DateTime.Now;
-        }
-
-        public static int getCourseID(string courseName)
-        {
-            throw new NotImplementedException();
         }
     }
 }

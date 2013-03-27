@@ -186,13 +186,12 @@
     <Compile Include="Models\CourseInfo.cs" />
     <Compile Include="Models\CustomViewEngine.cs" />
     <Compile Include="Models\DemoModel.cs" />
-    <Compile Include="Models\ExternalLoginModel.cs" />
+    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\MarketPost.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Textbook.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
-    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

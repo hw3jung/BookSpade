@@ -225,7 +225,7 @@ namespace BRApplication.Controllers
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
 
-            ExternalLoginModel elm = new ExternalLoginModel(
+            UserProfile elm = new UserProfile(
                     result.ExtraData["name"].ToString(),
                     result.ExtraData["link"].ToString(),
                     result.ExtraData["id"].ToString(),

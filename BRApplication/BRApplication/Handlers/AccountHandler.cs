@@ -10,7 +10,7 @@ namespace BRApplication.Handlers
 {
     public class AccountHandler
     {
-        public bool AddUser(ExternalLoginModel elm)
+        public bool AddUser(UserProfile elm)
         {
             bool success = false;
 
@@ -39,6 +39,43 @@ namespace BRApplication.Handlers
             }
 
             return success; 
+        }
+
+        public static UserProfile getUserProfile(int profileID)
+        {
+            UserProfile profile = null;
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("ProfileID = '{0}'", profileID), "UserProfile");
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+
+                    string facebookID = Convert.ToString(row["FacebookID"]);
+                    string name = Convert.ToString(row["Name"]);
+                    string email = Convert.ToString(row["Email"]);
+                    string facebookProfileLink = Convert.ToString(row["FacebookProfileLink"]);
+                    string gender = Convert.ToString(row["Gender"]);
+
+                    profile = new UserProfile(name, facebookProfileLink, facebookID, gender, email, String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving the user profile --- " + ex.Message);
+            }
+
+            return profile;
+        }
+
+        public static string getUserName(int profileID)
+        {
+            UserProfile profile = getUserProfile(profileID);
+
+            return profile.Name;
         }
     }
 }

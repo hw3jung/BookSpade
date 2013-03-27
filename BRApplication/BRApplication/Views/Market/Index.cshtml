@@ -1,4 +1,4 @@
-﻿@model List<BRApplication.Models.MarketPost> 
+﻿@model IEnumerable<BRApplication.Models.MarketPost> 
 
 <div class="PostContainer">
     <div style="width:90%; text-align:center;">
@@ -13,11 +13,11 @@
                     foreach (var m in Model) {
                            if (m.IsBuy) {
                                <li>
-                                     @Html.Partial("SellPost_Partial", m)
-                               </li>
-                            } else {
-                               <li>
                                      @Html.Partial("BuyPost_Partial", m) 
+                               </li>
+                           } else {
+                               <li>
+                                     @Html.Partial("SellPost_Partial", m)
                                </li>
                            }
                     }

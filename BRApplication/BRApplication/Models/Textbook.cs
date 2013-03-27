@@ -17,11 +17,6 @@ namespace BRApplication.Models
         public int StorePrice { get; set; }
         public string CourseName { get; set; }
 
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
-
         public Textbook(string isbn, 
                         string title, 
                         string author, 
@@ -35,10 +30,6 @@ namespace BRApplication.Models
             this.CourseName = courseName;
             this.BookImageURL = bookImageURL;
             this.StorePrice = storePrice;
-            this.IsActive = true;
-            this.IsDeleted = false;
-            this.CreatedDate = DateTime.Now;
-            this.ModifiedDate = DateTime.Now;
         }
     }
 }
