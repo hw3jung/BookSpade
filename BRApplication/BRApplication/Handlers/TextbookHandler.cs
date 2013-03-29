@@ -133,6 +133,83 @@ namespace BRApplication.Handlers
             return allTextbooks;
         }
 
+        public static int[] getTextbookIDsByISBN(string isbn)
+        {
+            List<int> textbookIDs = new List<int>();
+            
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("ISBN LIKE '%{0}%'", isbn), "TextBooks", new string[] { "TextBookID" });
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int textbookID = Convert.ToInt32(row["TextBookID"]);
+                    
+                    textbookIDs.Add(textbookID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbook IDs by ISBN --- " + ex.Message);
+            }
+
+            return textbookIDs.ToArray();
+        }
+
+        public static int[] getTextbookIDsByCourse(string courseName)
+        {
+            List<int> textbookIDs = new List<int>();
+
+            try
+            {
+                int[] courseIDs = CourseInfoHandler.getCourseIDs(courseName);
+
+                foreach (int courseID in courseIDs)
+                {
+                    DataAccessLayer DAL = new DataAccessLayer();
+                    DataTable dt = DAL.select(String.Format("CourseID = '{0}'", courseID), "TextBooks", new string[] { "TextBookID" });
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int textbookID = Convert.ToInt32(row["TextBookID"]);
+
+                        textbookIDs.Add(textbookID);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbook IDs by course name --- " + ex.Message);
+            }
+
+            return textbookIDs.ToArray();
+        }
+
+        public static int[] getTextbookIDsByTitle(string title)
+        {
+            List<int> textbookIDs = new List<int>();
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("BookTitle LIKE '%{0}%'", title), "TextBooks", new string[] { "TextBookID" });
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int textbookID = Convert.ToInt32(row["TextBookID"]);
+
+                    textbookIDs.Add(textbookID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbook IDs by book title --- " + ex.Message);
+            }
+
+            return textbookIDs.ToArray();
+        }
+
         public static string getCourseName(int textBookID)
         {
             Textbook textbook = getTextbook(textBookID);

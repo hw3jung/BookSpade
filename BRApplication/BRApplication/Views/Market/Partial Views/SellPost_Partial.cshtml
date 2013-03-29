@@ -1,1 +1,23 @@
-﻿
+﻿@model BRApplication.Models.MarketPost
+
+<div class="MarketPost">
+    <div class="MarketBuyPrice">
+        $@Model.Price 
+    </div>
+    <div class="BookImage">
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
+    </div>
+    <a href="http://www.facebook.com">@Model.Title</a>
+    <div class="MarketPostDetail">
+        <div>
+            <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+            <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+            <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+            <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
+        </div>
+        <div>
+            <span class="marketValue datePosted">@Model.datePosted</span>
+        </div>
+    </div>
+    
+</div>

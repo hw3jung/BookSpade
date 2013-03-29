@@ -77,15 +77,30 @@ namespace BRApplication.Handlers
         }
 
         // WhereClause is either "" or of the form "Col = value AND/OR Col2 = value2..."
-        public DataTable select(string WhereClause, string TableName)
+        public DataTable select(string WhereClause, string TableName, string[] ColumnNames = null)
         {
+            ColumnNames = ColumnNames ?? new string[] { "*" };
+            
             string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BookRack"].ToString();
             SqlConnection conn = new SqlConnection(connString);
             DataTable dt = new DataTable();
             SqlCommand cmd = conn.CreateCommand();
             try
             {
-                string selectCommand = "SELECT * FROM {0}" ;
+                string selectCommand = "SELECT ";
+
+                int i = 0;
+                int numColumns = ColumnNames.Count();
+                while (i < numColumns)
+                {
+                    selectCommand += ColumnNames[i];
+                    if ((i + 1) == numColumns) break;
+
+                    selectCommand += ", ";
+                    i++;
+                }
+
+                selectCommand += " FROM {0}";
                 
                 if (WhereClause != "")
                 {

@@ -87,6 +87,30 @@ namespace BRApplication.Handlers
             return courseID;
         }
 
+        public static int[] getCourseIDs(string courseName)
+        {
+            List<int> courseIDs = new List<int>();
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("CourseName LIKE '%{0}%'", courseName), "CourseInfo", new string[] { "CourseID" });
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int courseID = Convert.ToInt32(row["CourseID"]);
+
+                    courseIDs.Add(courseID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving course IDs by course name --- " + ex.Message);
+            }
+
+            return courseIDs.ToArray();
+        }
+
         public static string getCourseName(int courseID)
         {
             CourseInfo course = getCourseInfo(courseID);

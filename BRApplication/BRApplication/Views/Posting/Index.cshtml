@@ -5,12 +5,10 @@
         $(function () {
             $('#cbNegotiationPrice').click(function () {
                 if ($(this).is(':checked')) {
-                    $("#btnBuy").hide();
-                    $("#btnBid").show();
+                    //$("#btnBid").show();
                     $("#dvNegotiate").show();
                 } else {
-                    $("#btnBid").hide();
-                    $("#btnBuy").show();
+                    //$("#btnBid").hide();
                     $("#dvNegotiate").hide();
                 }
             });
@@ -79,14 +77,15 @@
             <ul>
                 <li class="label">Offer</li>
                 <li class="value">
-                    @Html.TextBox("txtBidPrice")
-                     
+                    <div>
+                        @Html.TextBox("txtBidPrice")
+                        <input id="btnBid" type="submit" value="Submit" />
+                    </div>
                 </li>
             </ul>
         </div>
         <div class="DvSubmit">
              <input id="btnBuy" type="submit" value="Buy" />
-             <input id="btnBid" type="submit" value="Submit" style="display:none;" />
         </div>
     </div>
 </div>
