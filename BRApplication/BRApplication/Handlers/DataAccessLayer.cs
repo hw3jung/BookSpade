@@ -12,7 +12,7 @@ namespace BRApplication.Handlers
     public class DataAccessLayer
     {
         // White list of valid table names to prevent SQL injection
-        String[] WhiteListOfTableNames = new String[] { "Posts", "CourseInfo", "TextBooks", "Transactions", "TransactionStatus", "UserProfile" };
+        String[] WhiteListOfTableNames = new String[] { "Posts", "CourseInfo", "TextBooks", "Transactions", "TransactionStatus", "UserProfile", "Bids" };
 
         public bool insert(Dictionary<string, string> ColumnValuePairs, string TableName)
         {

@@ -1184,6 +1184,39 @@ tr.pager td {
         float: left;
     }
 
+    .BidBox {
+        background-color: #FF9933;
+        padding:25px;
+        font-weight:bold;
+        font-family: Calibri;
+        font-size: 17px;
+        color: #402203;
+    }
+
+    .BidHeader table {
+        line-height: 2em;
+    }
+
+    .BidHeader table tr {
+        /*padding: 0 4px 0 4px;*/
+        text-align:left;
+    }
+
+
+    .BidLine table {
+        line-height: 2em;
+    }
+
+    .BidLine table tr {
+        /*padding: 0 4px 0 4px;*/
+        text-align:left;
+    }
+
+    .BidLine table tr:hover {
+        background-color: #FFCC00;
+    }
+
+
     /*-- DvSubmit is specific to the detail posting page submit area --*/
      .DvSubmit {
         width:100%; 

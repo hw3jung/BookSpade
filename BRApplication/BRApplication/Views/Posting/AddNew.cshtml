@@ -78,7 +78,7 @@
                     
                     @for (int i = 0; i < @Model.Count(); i++)
                     { 
-                        <li class="tooltip" onmouseover="tooltip.pop(this, '<span style=\'color:black;\'>ISBN: @Model.ElementAt(i).ISBN<br />Book Title: @Model.ElementAt(i).Title<br />Author(s): @Model.ElementAt(i).Author<br />Course: @Model.ElementAt(i).CourseName<br />Store Price: &#36;@Model.ElementAt(i).StorePrice</span>')">
+                        <li class="tooltip" onmouseover="tooltip.pop(this, '<span style=\'color:black;\'><div style=\'float:left;\'><img src=\'@Model.ElementAt(i).BookImageURL\' width=\'100px\' /></div><div style=\'float:left;\'>ISBN: @Model.ElementAt(i).ISBN<br />Book Title: @Model.ElementAt(i).Title<br />Author(s): @Model.ElementAt(i).Author<br />Course: @Model.ElementAt(i).CourseName<br />Store Price: &#36;@Model.ElementAt(i).StorePrice</div></span>')">
                             <div class="item">
                                 <span id="Course" class="Block">@Model.ElementAt(i).CourseName</span>
                                 <span id="Title" class="Block Truncate One-line">@Model.ElementAt(i).Title</span>

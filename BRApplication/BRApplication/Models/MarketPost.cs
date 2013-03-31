@@ -17,8 +17,9 @@ namespace BRApplication.Models
         public string BookImageURL { get; set; }
         public int Price { get; set; }
         public DateTime datePosted { get; set; }
+        public IEnumerable<Bid> Bids { get; set; }
 
-        public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, string bookImageURL, int price)
+        public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, string bookImageURL, int price, IEnumerable<Bid> bids)
         {
             this.Title = title; 
             this.IsBuy = isBuy;
@@ -29,7 +30,8 @@ namespace BRApplication.Models
             this.ISBN = isbn;
             this.Author = author;
             this.BookImageURL = bookImageURL;
-            this.Price = price; 
+            this.Price = price;
+            this.Bids = bids;
         }
     }
 }

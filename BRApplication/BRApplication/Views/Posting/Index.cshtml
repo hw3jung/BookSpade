@@ -7,9 +7,11 @@
                 if ($(this).is(':checked')) {
                     //$("#btnBid").show();
                     $("#dvNegotiate").show();
+                    $("#bidBox").show();
                 } else {
                     //$("#btnBid").hide();
                     $("#dvNegotiate").hide();
+                    $("#bidBox").hide();
                 }
             });
         }); 
@@ -83,6 +85,19 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <div class="BidBox" id="bidBox" style="display:none;">
+            <div class="BidHeader">
+                Current List of Bids for this Posting:
+                <table>
+                    <tr>
+                        <td> Buyer </td>
+                        <td> Seller </td>
+                        <td> Price </td>
+                    </tr>
+                </table>
+            </div>
+            @Html.Partial("Bid_Partial", Model)
         </div>
         <div class="DvSubmit">
              <input id="btnBuy" type="submit" value="Buy" />

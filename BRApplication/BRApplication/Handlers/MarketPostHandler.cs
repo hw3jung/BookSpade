@@ -36,8 +36,9 @@ namespace BRApplication.Handlers
                         string isbn = textbook.ISBN;
                         string author = textbook.Author;
                         string bookImageURL = textbook.BookImageURL;
+                        List<Bid> bids = new List<Bid>();
 
-                        MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price);
+                        MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                         marketPosts.Add(marketPost);
                     }
                 }
@@ -127,8 +128,9 @@ namespace BRApplication.Handlers
                     string isbn = textbook.ISBN;
                     string author = textbook.Author;
                     string bookImageURL = textbook.BookImageURL;
+                    List<Bid> bids = new List<Bid>();
 
-                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price);
+                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     allMarketPosts.Add(marketPost);
                 }
             }
@@ -168,8 +170,9 @@ namespace BRApplication.Handlers
                     string condition = Convert.ToString(row["BookCondition"]);
                     int price = Convert.ToInt32(row["Price"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                    IEnumerable<Bid> bids = BidHandler.getBids(postID);
 
-                    marketPost = new MarketPost(title, isBuy, course, condition, userName, datePosted, isbn, author, bookImageURL, price);
+                    marketPost = new MarketPost(title, isBuy, course, condition, userName, datePosted, isbn, author, bookImageURL, price, bids);
                 }
             }
             catch (Exception ex)
