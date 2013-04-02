@@ -14,6 +14,7 @@ namespace BRApplication.Models
         public string Gender { get; set; }
         public string Email { get; set; }
         public string ExternalLoginData { get; set; }
+        public bool Verified { get; set; }
 
         public UserProfile(string name, string facebookProfileLink, string facebookID, string gender, string email, string externalLoginData)
         {

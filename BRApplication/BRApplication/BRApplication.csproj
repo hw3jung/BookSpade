@@ -336,6 +336,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\stroll.js" />
     <Content Include="Scripts\stroll.min.js" />
+    <Content Include="Scripts\ToolTip.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

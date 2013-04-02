@@ -55,7 +55,7 @@ namespace BRApplication.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
+            Session.Remove("facebooktoken");
             return RedirectToAction("Index", "Home");
         }
 
@@ -223,7 +223,18 @@ namespace BRApplication.Controllers
             string providerUserId = null; 
 
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            bool facebookVerified;
+
+            Session["test"] = "lalala"; 
+            
+            
             string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+
+            if (result.ExtraData.Keys.Contains("accesstoken"))
+            {
+                string accesstoken = result.ExtraData["accesstoken"];
+                Session["facebooktoken"] = result.ExtraData["accesstoken"];
+            }
 
             UserProfile elm = new UserProfile(
                     result.ExtraData["name"].ToString(),
@@ -233,6 +244,18 @@ namespace BRApplication.Controllers
                     string.Empty, loginData);
 
             AccountHandler acntHandler = new AccountHandler();
+
+            var client = new Facebook.FacebookClient(Session["facebooktoken"].ToString());
+            dynamic response = client.Get("me", new { fields = "verified" });
+
+            if (response.ContainsKey("verified"))
+            {
+                facebookVerified = response["verified"];
+            }
+            else
+            {
+                facebookVerified = false;
+            }
 
 
             if (!result.IsSuccessful)
@@ -244,6 +267,7 @@ namespace BRApplication.Controllers
             if (OAuthWebSecurity.Login(result.Provider, result.ExtraData["name"], createPersistentCookie: false) || User.Identity.IsAuthenticated)
             {
                 success = acntHandler.AddUser(elm);
+                FormsAuthentication.SetAuthCookie(elm.Name, createPersistentCookie: false);
                 return RedirectToLocal(returnUrl);
             }
            
@@ -253,14 +277,17 @@ namespace BRApplication.Controllers
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
 
+               
                 success = acntHandler.AddUser(elm);
+                elm.Verified = facebookVerified; 
+
                 OAuthWebSecurity.TryDeserializeProviderUserId(elm.ExternalLoginData, out provider, out providerUserId);
 
                 //Create, send authentication cookie ;; The below line essentially sets Request.IsAuthenticated to true
                 //This needs to be reviewed and possibly revised.
 
                 FormsAuthentication.SetAuthCookie(elm.Name, createPersistentCookie: false);
- 
+             //   OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
                 //We need to come up with an error system. Maybe a jQuery Modal dialogue to let the user know they weren't successful? Or an Embedded in-site label?
                
                 return RedirectToLocal(returnUrl); 

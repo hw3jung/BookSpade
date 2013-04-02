@@ -71,6 +71,60 @@ namespace BRApplication.Handlers
             return profile;
         }
 
+        public static UserProfile getUserProfile_Facebook(string facebookID)
+        {
+            UserProfile profile = null;
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("FacebookID = '{0}'", facebookID), "UserProfile");
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+
+                    string FacebookID = Convert.ToString(row["FacebookID"]);
+                    string name = Convert.ToString(row["Name"]);
+                    string email = Convert.ToString(row["Email"]);
+                    string facebookProfileLink = Convert.ToString(row["FacebookProfileLink"]);
+                    string gender = Convert.ToString(row["Gender"]);
+                    string profileID = Convert.ToString(row["ProfileID"]); 
+
+                    profile = new UserProfile(name, facebookProfileLink, FacebookID, gender, email, String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving the user profile --- " + ex.Message);
+            }
+
+            return profile;
+        }
+
+
+        public static bool updateUserProfile_Email(string facebookID, string Email)
+        {
+            bool success = false;
+
+            try
+            {
+                Dictionary<string, string> Profile = new Dictionary<string,string>();
+                Profile.Add("Email", Email); 
+
+                DataAccessLayer DAL = new DataAccessLayer();
+                DAL.update("UserProfile", String.Format("FacebookID = '{0}'", facebookID), Profile);
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in updating user profile with ethe given email --- " + ex.Message);
+            }
+
+            return success;
+        }
+
+
         public static string getUserName(int profileID)
         {
             UserProfile profile = getUserProfile(profileID);

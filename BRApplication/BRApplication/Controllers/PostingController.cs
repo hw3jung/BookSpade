@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BRApplication.Models;
-using BRApplication.Handlers; 
+using BRApplication.Handlers;
+using Microsoft.Web.WebPages.OAuth;
+using Facebook; 
 
 namespace BRApplication.Controllers
 {
@@ -28,14 +30,16 @@ namespace BRApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveBook(string isbn,
+        
+        public ActionResult SaveBook(string isbn, 
                                      string title,
                                      string author,
                                      string course,
                                      string bookImageURL,
                                      bool isBuy,
                                      int price,
-                                     string condition)
+                                     string condition,
+                                     string email)
         {
             int courseID = CourseInfoHandler.getCourseID(course);
             if (courseID == -1)
@@ -51,7 +55,7 @@ namespace BRApplication.Controllers
             if (success)
             {
                 // TODO: implement retrieval of user profile ID and include it as part of a new Post
-                return SavePost(0, newBook.CourseName, newBook.Title, isBuy, price, condition);
+                return SavePost(0, newBook.CourseName, newBook.Title, isBuy, price, condition, email);
             }
             else
             {
@@ -65,12 +69,29 @@ namespace BRApplication.Controllers
                                      string title, 
                                      bool isBuy, 
                                      int price, 
-                                     string condition)
+                                     string condition,
+                                     string email)
         {
             int textbookID = TextbookHandler.getTextbookID(course, title);
 
-            Post newPost = new Post(profileID, textbookID, isBuy, price, condition);
-            bool success = PostHandler.insert(newPost);
+            //Retrieve current user's facebook ID using the facebooktoken
+
+            string accesstoken = Convert.ToString(Session["facebooktoken"]); 
+
+            FacebookClient client = new FacebookClient(accesstoken); 
+
+            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
+            string FacebookID = Convert.ToString(user["id"]);  
+            
+            UserProfile profile =  AccountHandler.getUserProfile_Facebook(FacebookID);
+
+            bool success = false; 
+
+            if (email != "")
+                success = AccountHandler.updateUserProfile_Email(FacebookID, email);
+
+            Post newPost = new Post(profile.ProfileID, textbookID, isBuy, price, condition, email != "");
+            success = PostHandler.insert(newPost);
 
             if (success)
             {
