@@ -18,6 +18,9 @@ namespace BRApplication.Models
         public int Price { get; set; }
         public DateTime datePosted { get; set; }
         public IEnumerable<Bid> Bids { get; set; }
+        public string email { get; set; }
+        public int profileID { get; set; }
+        public int PostID { get; set; }
 
         public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, string bookImageURL, int price, IEnumerable<Bid> bids)
         {

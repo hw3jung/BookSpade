@@ -10,6 +10,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
+using Facebook;
 
 namespace BRApplication.Controllers
 {
@@ -46,5 +47,51 @@ namespace BRApplication.Controllers
 
             return PartialView("MarketPost_Partial", marketPostCollection);
         }
+
+        [HttpPost]
+        public ActionResult EmailSeller(string PostedBy, string textbook, int profileID, string RespondantEmail)
+        {
+            string accesstoken = Convert.ToString(Session["facebooktoken"]);
+            FacebookClient client = new FacebookClient(accesstoken);
+            
+            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
+            string Respondant = Convert.ToString(user["name"]);
+
+            string PosterEmail = AccountHandler.getUserProfile(profileID).Email;
+            bool success = MarketPostHandler.SendSellerMail(Respondant, PostedBy, textbook, RespondantEmail, PosterEmail);
+
+            return Json(success); 
+        }
+
+        [HttpPost]
+        public ActionResult EmailBuyer(string PostedBy, string textbook, int profileID, string RespondantEmail)
+        {
+            string accesstoken = Convert.ToString(Session["facebooktoken"]);
+            FacebookClient client = new FacebookClient(accesstoken);
+
+            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
+            string Respondant = Convert.ToString(user["name"]);
+
+            string PosterEmail = AccountHandler.getUserProfile(profileID).Email;
+            bool success = MarketPostHandler.SendBuyerMail(Respondant, PostedBy, textbook, RespondantEmail, PosterEmail);
+
+            return Json(success);
+        }
+
+        public ActionResult GetMarketPostsByisBuy(bool isBuy)
+        {
+            IEnumerable<MarketPost> sellPosts = MarketPostHandler.getMarketPostsByisBuy(isBuy); 
+            return View("Index", sellPosts); 
+        }
+
+
+        [HttpPost]
+        public JsonResult GetFacebookLink(int profileID)
+        {
+            string FBLink = AccountHandler.getUserProfile(profileID).FacebookProfileLink;
+            return Json(FBLink);
+        }
+
+
     }
 }

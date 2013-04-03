@@ -195,6 +195,7 @@
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\EmailUtil.cs" />
     <Compile Include="Utility\RegexUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -383,7 +384,6 @@
     <Content Include="Views\Demo\Index.cshtml" />
     <Content Include="Views\Demo\Partial Views\DemoPartial.cshtml" />
     <Content Include="Views\Shared\FacebookLoginPartial.cshtml" />
-    <Content Include="Views\Posting\Index.cshtml" />
     <Content Include="Views\Market\Index.cshtml" />
     <Content Include="Views\Posting\AddNew.cshtml" />
     <Content Include="Views\Market\Partial Views\BuyPost_Partial.cshtml" />
@@ -391,6 +391,7 @@
     <Content Include="Views\Posting\Partial Views\AddBook_Partial.cshtml" />
     <Content Include="Views\Posting\Partial Views\Bid_Partial.cshtml" />
     <Content Include="Views\Market\Partial Views\MarketPost_Partial.cshtml" />
+    <Content Include="Views\Posting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

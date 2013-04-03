@@ -18,6 +18,23 @@
     </script>
 }
 
+<div id="mdlEmail" title="Contact Email Address" class="none mdlEmail">
+    Please enter an email the owner of this book can contact you with. <br/><br/>
+     @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
+    <input id="btnSave" class="none btn-save" type="button" value="Submit" />
+</div>
+<div id="mdlFacebook" class="none">
+    Please contact @Model.PostedBy through their facebook profile: 
+    <div id="fblink">&nbsp;</div>
+</div>
+<div id="mdlSuccess" title="Success!"  class="none">
+    Success! The poster has been notified and will contact you soon.
+</div>
+<div id="mdlFailedToMail" title="Oops!" class="none">
+    The poster could not be contact with the given email address, please try again. 
+</div>
+
+
 <div class="PostContainer">
     <form method="get" action="/search" id="search">
       <input name="q" type="text" size="40" placeholder="Search..." />
@@ -100,8 +117,162 @@
             @Html.Partial("Bid_Partial", Model)
         </div>
         <div class="DvSubmit">
-             <input id="btnBuy" type="submit" value="Buy" />
+            @if (Model.IsBuy) {
+                <input id="btnSell" class="btn-save" type="submit" value="Buy" />
+            } else {
+                <input id="btnBuy" class="btn-sell-save" type="submit" value="Sell" />
+            }
         </div>
     </div>
 </div>
 
+@section script {
+    <script type="text/javascript">
+
+        $(function () {
+            $(document).on('click', '.btn-buy', function () {
+                var email = $("#email").text();
+                if (email) {
+                    EmailDialog();
+                } else {
+                    FacebookLink();
+                }
+            });
+
+
+            $(document).on('click', '.btn-sell', function () {
+                var email = $("#email").text();
+                if (email) {
+                    EmailDialog();
+                } else {
+                    FacebookLink();
+                }
+            });
+
+        });
+
+        function EmailDialog() {
+            $("#mdlEmail").dialog({
+                height: 350,
+                width: 500,
+                modal: true,
+                buttons: [{
+                    text: "Cancel",
+                    "class": 'EmailCancel',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+            });
+        }
+
+        $(document).on('click', '.btn-save', function () {
+            var postedby = $("#PostedBy").text();
+            var bookTitle = $("#bookTitle").text();
+            var profileID = $("#profileID").text();
+            var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+
+            $.ajax({
+                url: '@Url.Action("EmailSeller", "Market")',
+                data: {
+                    PostedBy: postedby,
+                    textbook: bookTitle,
+                    profileID: profileID,
+                    RespondantEmail: RespondantEmail
+                },
+                type: 'POST',
+                success: function (result) {
+                    if (result) {
+                        SuccessDialog(this);
+                    } else {
+                        FailedToMailDialog(this);
+                    }
+                }
+            });
+        });
+
+            $(document).on('click', '.btn-sell-save', function () {
+                var postedby = $("#PostedBy").text();
+                var bookTitle = $("#bookTitle").text();
+                var profileID = $("#profileID").text();
+                var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+
+                $.ajax({
+                    url: '@Url.Action("EmailBuyer", "Market")',
+                data: {
+                    PostedBy: postedby,
+                    textbook: bookTitle,
+                    profileID: profileID,
+                    RespondantEmail: RespondantEmail
+                },
+                type: 'POST',
+                success: function (result) {
+                    if (result) {
+                        SuccessDialog(this);
+                    } else {
+                        FailedToMailDialog(this);
+                    }
+                }
+            });
+        });
+
+
+        function FacebookLink() {
+            alert("fb link");
+            var profileID = $("#profileID").text();
+            alert(profileID);
+            $.ajax({
+                url: '@Url.Action("GetFacebookLink", "Market")',
+                data: {
+                    profileID: profileID
+                },
+                type: 'POST',
+                success: function (result) {
+                    $("#fblink").text(result);
+                    FacebookDialog();
+                }
+            });
+
+        }
+
+        function SuccessDialog(dialog) {
+            $("#mdlSuccess").dialog({
+                height: 300,
+                width: 200,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        $(".ui-dialog-content").dialog("close");
+                    }
+                }
+            });
+        }
+
+        function FailedToMailDialog() {
+            $("#mdlSuccess").dialog({
+                height: 200,
+                width: 200,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        $(".ui-dialog-content").dialog("close");
+                    }
+                }
+            });
+        }
+
+        function FacebookDialog() {
+            $("#mdlFacebook").dialog({
+                height: 300,
+                width: 500,
+                modal: true,
+                buttons: {
+                    "OK": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
+
+    </script>
+}

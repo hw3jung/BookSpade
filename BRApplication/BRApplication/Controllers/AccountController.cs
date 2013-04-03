@@ -224,9 +224,6 @@ namespace BRApplication.Controllers
 
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             bool facebookVerified;
-
-            Session["test"] = "lalala"; 
-            
             
             string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
 

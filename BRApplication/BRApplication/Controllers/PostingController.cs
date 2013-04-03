@@ -5,8 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using BRApplication.Models;
 using BRApplication.Handlers;
+using BRApplication.Utility; 
 using Microsoft.Web.WebPages.OAuth;
 using Facebook; 
+
 
 namespace BRApplication.Controllers
 {
@@ -28,6 +30,13 @@ namespace BRApplication.Controllers
             
             return View(textBookCollection);
         }
+
+        public ActionResult LoadDetailPost()
+        {
+            MarketPost marketPost = (MarketPost)TempData["marktPost"];
+            return View("Index", marketPost); 
+        }
+
 
         [HttpPost]
         
@@ -103,5 +112,8 @@ namespace BRApplication.Controllers
                 return Json("Failed to insert post for: " + title);
             }
         }
+
+        
+
     }
 }
