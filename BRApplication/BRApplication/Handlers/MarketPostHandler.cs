@@ -30,7 +30,9 @@ namespace BRApplication.Handlers
                         int price = Convert.ToInt32(row["Price"]);
                         int postID = Convert.ToInt32(row["PostID"]); 
 
-                        string postedBy = AccountHandler.getUserName(profileID);
+                        UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
+                        string postedBy = UserProfile.Name;
+                        string email = UserProfile.Email; 
 
                         Textbook textbook = TextbookHandler.getTextbook(textbookID);
                         string title = textbook.Title;
@@ -42,7 +44,8 @@ namespace BRApplication.Handlers
 
                         MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                         marketPost.profileID = profileID;
-                        marketPost.PostID = postID; 
+                        marketPost.PostID = postID;
+                        marketPost.email = email; 
                         marketPosts.Add(marketPost);
                     }
                 }
@@ -178,7 +181,9 @@ namespace BRApplication.Handlers
                     DataRow row = dt.Rows[0];
 
                     int profileID = Convert.ToInt32(row["ProfileID"]);
-                    string userName = AccountHandler.getUserName(profileID);
+                    UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
+                    string postedBy = UserProfile.Name;
+                    string email = UserProfile.Email; 
 
                     int textbookID = Convert.ToInt32(row["TextBookID"]);
          
@@ -195,7 +200,7 @@ namespace BRApplication.Handlers
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     IEnumerable<Bid> bids = BidHandler.getBids(postID);
 
-                    marketPost = new MarketPost(title, isBuy, course, condition, userName, datePosted, isbn, author, bookImageURL, price, bids);
+                    marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
                     marketPost.PostID = postID; 
                 }
@@ -286,7 +291,9 @@ namespace BRApplication.Handlers
                     int postID = Convert.ToInt32(row["PostID"]);
                     int textBookID = Convert.ToInt32(row["TextBookID"]);
 
-                    string postedBy = AccountHandler.getUserName(profileID);
+                    UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
+                    string postedBy = UserProfile.Name;
+                    string email = UserProfile.Email; 
 
                     Textbook textbook = TextbookHandler.getTextbook(textBookID);
                     string title = textbook.Title;
@@ -299,6 +306,7 @@ namespace BRApplication.Handlers
                     MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
                     marketPost.PostID = postID;
+                    marketPost.email = email; 
                     marketPosts.Add(marketPost);
                 }
                

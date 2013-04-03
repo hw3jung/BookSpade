@@ -1,5 +1,17 @@
 ﻿@model IEnumerable<BRApplication.Models.MarketPost> 
 
+<style type="text/css">
+    .fbLink a {
+        color: #0094ff;
+    }
+
+    .fbLink a:hover {
+        color: #808080;
+    }
+
+
+</style>
+
 <div class="PostContainer">
     <div style="width:90%; text-align:center;">
         <div>
@@ -149,7 +161,7 @@
             },
             type: 'POST',
             success: function (result) {
-                $("#fblink").text("<a href=\"result\">" + result + "</a>");
+                $("#fblink").html("<a href=\"" + result + "\">" + result + "</a>");
                 FacebookDialog();
             }
         });

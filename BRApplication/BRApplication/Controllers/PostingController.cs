@@ -31,9 +31,10 @@ namespace BRApplication.Controllers
             return View(textBookCollection);
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult LoadDetailPost()
         {
-            MarketPost marketPost = (MarketPost)TempData["marktPost"];
+            MarketPost marketPost = (MarketPost)TempData["marketPost"];
             return View("Index", marketPost); 
         }
 

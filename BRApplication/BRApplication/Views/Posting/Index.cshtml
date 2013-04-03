@@ -1,27 +1,28 @@
 ﻿@model BRApplication.Models.MarketPost
 
-@section Script {
-    <script type="text/ecmascript">
-        $(function () {
-            $('#cbNegotiationPrice').click(function () {
-                if ($(this).is(':checked')) {
-                    //$("#btnBid").show();
-                    $("#dvNegotiate").show();
-                    $("#bidBox").show();
-                } else {
-                    //$("#btnBid").hide();
-                    $("#dvNegotiate").hide();
-                    $("#bidBox").hide();
-                }
-            });
-        }); 
-    </script>
-}
+<style type="text/css">
+    .none {
+        display:none;
+    }
+    #btnSave {
+        height: 40px;
+        width: 110px;
+        text-align: center;
+    }
+    .EmailCancel {
+        width: 80px;
+        height: 40px;
+        text-align:center;
+        padding:5px;
+        padding-left: 10px;
+    }
+
+</style>
 
 <div id="mdlEmail" title="Contact Email Address" class="none mdlEmail">
     Please enter an email the owner of this book can contact you with. <br/><br/>
      @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
-    <input id="btnSave" class="none btn-save" type="button" value="Submit" />
+    <input id="btnSave" class="btn-save" type="button" value="Submit" />
 </div>
 <div id="mdlFacebook" class="none">
     Please contact @Model.PostedBy through their facebook profile: 
@@ -33,6 +34,11 @@
 <div id="mdlFailedToMail" title="Oops!" class="none">
     The poster could not be contact with the given email address, please try again. 
 </div>
+
+<div class="none" id="PostedBy">@Model.PostedBy</div>
+<div class="none" id="bookTitle">@Model.Title</div>
+<div class="none" id="profileID">@Model.profileID</div>
+<div class="none" id="email">@Model.email</div>
 
 
 <div class="PostContainer">
@@ -118,18 +124,29 @@
         </div>
         <div class="DvSubmit">
             @if (Model.IsBuy) {
-                <input id="btnSell" class="btn-save" type="submit" value="Buy" />
+                <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
             } else {
-                <input id="btnBuy" class="btn-sell-save" type="submit" value="Sell" />
+                <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />
             }
         </div>
     </div>
 </div>
 
-@section script {
-    <script type="text/javascript">
-
+@section Script {
+    <script type="text/ecmascript">
         $(function () {
+            $('#cbNegotiationPrice').click(function () {
+                if ($(this).is(':checked')) {
+                    //$("#btnBid").show();
+                    $("#dvNegotiate").show();
+                    $("#bidBox").show();
+                } else {
+                    //$("#btnBid").hide();
+                    $("#dvNegotiate").hide();
+                    $("#bidBox").hide();
+                }
+            });
+
             $(document).on('click', '.btn-buy', function () {
                 var email = $("#email").text();
                 if (email) {
@@ -199,30 +216,30 @@
 
                 $.ajax({
                     url: '@Url.Action("EmailBuyer", "Market")',
-                data: {
-                    PostedBy: postedby,
-                    textbook: bookTitle,
-                    profileID: profileID,
-                    RespondantEmail: RespondantEmail
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result) {
-                        SuccessDialog(this);
-                    } else {
-                        FailedToMailDialog(this);
+                    data: {
+                        PostedBy: postedby,
+                        textbook: bookTitle,
+                        profileID: profileID,
+                        RespondantEmail: RespondantEmail
+                    },
+                    type: 'POST',
+                    success: function (result) {
+                        if (result) {
+                            SuccessDialog(this);
+                        } else {
+                            FailedToMailDialog(this);
+                        }
                     }
-                }
+                });
             });
-        });
 
 
-        function FacebookLink() {
-            alert("fb link");
-            var profileID = $("#profileID").text();
-            alert(profileID);
-            $.ajax({
-                url: '@Url.Action("GetFacebookLink", "Market")',
+            function FacebookLink() {
+                alert("fb link");
+                var profileID = $("#profileID").text();
+                alert(profileID);
+                $.ajax({
+                    url: '@Url.Action("GetFacebookLink", "Market")',
                 data: {
                     profileID: profileID
                 },
@@ -273,6 +290,5 @@
                 }
             });
         }
-
     </script>
 }

@@ -1311,27 +1311,6 @@ tr.pager td {
 }
 
  /*------------------------------------------------------------------*/
- /* Market Post (individual) Buy Now/ Sell Now 
- --------------------------------------------------------------------*/
-
- .none {
-        display:none;
-    }
-    #btnSave {
-        height: 40px;
-        width: 110px;
-        text-align: center;
-    }
-    .EmailCancel {
-        width: 80px;
-        height: 40px;
-        text-align:center;
-        padding:5px;
-        padding-left: 10px;
-      
-    }
-
- /*------------------------------------------------------------------*/
  /* ToolTip 
  --------------------------------------------------------------------*/
 
@@ -1469,3 +1448,24 @@ tr.pager td {
         float: left;
     }
 
+/*----------------------------------------*/
+/* Buy now
+-------------------------------------*/
+
+  /* .none {
+        display:none;
+    }
+    #btnSave {
+        height: 40px;
+        width: 110px;
+        text-align: center;
+    }
+    .EmailCancel {
+        width: 80px;
+        height: 40px;
+        text-align:center;
+        padding:5px;
+        padding-left: 10px;
+      
+    }
+      */
