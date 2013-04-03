@@ -1,13 +1,15 @@
-﻿html {
-    background-color: #e2e2e2;
+﻿/*Website container*/
+html {
+    background-color: red;
     margin: 0;
     padding: 0;
     height: 100%;
     overflow-y: scroll;
 }
 
+/*Main container*/
 body {
-    background-color: #fff;
+    background-color: #000000 url("../Images/3-3D.png");
     color: #333;
     font-size: 1em;
     font-family: Calibri;
@@ -24,39 +26,39 @@ a {
     text-decoration: none;
 }
 
-    a.header {
-        padding: 8%;
-        margin-left: 3%;
-        margin-right: 3%;
-        font-weight: lighter;
-        font-size: 50pt;
-        border: 1px outset white;
-        position: relative;
-        top: -50%;
-    }
+a.header {
+    padding: 8%;
+    margin-left: 3%;
+    margin-right: 3%;
+    font-weight: lighter;
+    font-size: 50pt;
+    border: 1px outset white;
+    position: relative;
+    top: -50%;
+}
 
-        a.header[class] {
-            padding: 8%;
-            margin-left: 3%;
-            margin-right: 3%;
-            font-weight: lighter;
-            font-size: 50pt;
-            border: 1px outset white;
-            position: static;
-        }
+a.header[class] {
+    padding: 8%;
+    margin-left: 3%;
+    margin-right: 3%;
+    font-weight: lighter;
+    font-size: 50pt;
+    border: 1px outset white;
+    position: static;
+}
 
-    a.body {
-        font: 20pt;
-        padding: 1em;
-        margin: 1em;
-        border: 1px solid black;
-    }
+a.body {
+    font: 20pt;
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid black;
+}
 
-    a.link {
-        width: 30%;
-        font-size: 1.1em;
-        display: inline-block;
-    }
+a.link {
+    width: 30%;
+    font-size: 1.1em;
+    display: inline-block;
+}
 
 div {
 }

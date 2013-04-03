@@ -2,14 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - BookSpade</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
 
+        <!--Orangy Layout
         @Styles.Render("~/Content/themes/orangy/jquery-ui-1.10.1.custom.css")
+        -->
         @Styles.Render("~/Content/css")
+        <!--
         @Styles.Render("~/Content/effects/stroll/stroll.css")
-        
+        -->
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/Scripts/jquery-1.9.1.js")
         @Scripts.Render("~/Scripts/jquery-ui-1.10.1.custom.js")
@@ -122,7 +125,188 @@
 
 
     </head>
+
     <body>
+
+        <!-- NEW STUFF STARTS HERE -->
+        <style type="text/css">
+	.masterContainer{
+		width: 100%;
+		height: 100%;
+		background: #fff;
+        overflow: hidden;
+	}
+
+	.header{
+		width: 100%;
+		height: 40px;
+		background: #000;
+		position: absolute;
+		top: 0;
+		left:0;
+		overflow: hidden;
+		z-index: 2
+	}
+	
+	#logo{
+		padding: 5px 15px 5px 0px;
+		float: left;
+		margin-left: 2%;
+	}
+	
+	#login{
+		padding: 10px 0px 10px 15px;
+		float: right;
+		margin-right: 2%;
+	}
+	
+	#footer{
+		width: 100%;
+		height: 60px;
+		background: #000;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		overflow: hidden;
+		z-index: 2
+	}	
+	
+	.bottomNav{
+		padding: 5px 15px 5px 0px;
+		margin-left: 2%;
+	}
+	
+	#legal{
+		padding: 15px 15px 5px 0px;
+		margin-left: 2%;
+		font: 10px Arial;
+		color: #fff;
+		float: left;
+	}
+	
+	.contentContainer{
+		width: 100%;
+		background: #000;
+		position: absolute;
+		left: 0px;
+		top: 40px;
+		bottom: 60px;
+		overflow: hidden
+	}
+	
+	#homeNav{
+		width: 100%;
+		height: 100px;
+		display: block;
+		top: 40%;
+		position: absolute;
+
+		overflow: hidden;
+		z-index: 100;
+	}
+
+	.button{
+		height: 100%;
+		width: 200px;
+		color: #fff;
+		background-color: #000;
+		margin-left: 10px;
+		float: left;
+		font: 80px Arial;
+		text-align: center;
+		opacity: 0.7
+	}
+	
+	.button:hover { 
+		background-color: #000;
+		opacity: 1.0
+	}
+	
+	.bottomNav ul li{ 
+		list-style: none; 
+		float: left; 
+		display: block; 
+		padding: 0px 30px 0px 0px;
+		margin: -10px 40px 0px -40px;
+	}
+	
+	.bottomNav a:link, a:active, a:visited{
+		font: 12px Arial;
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	.button a, a:link, a:active, a:visited{
+		font: 80px Arial;
+		text-decoration: none;
+		color: #fff;
+	}
+	
+	img.fullscreen{
+		width: 100%;
+	}
+	
+	#bgOverlay{
+		width:100%;
+		height:100%;
+		position:fixed;
+		top:0px;
+		left:0px;
+		background:transparent url(../images/patternDot.png) repeat top left;
+		z-index: 1;
+	}
+</style>
+
+</head>
+
+<body>
+<!--Everything goes inside here-->
+<div class="masterContainer">
+
+	<!--Logo and login button goes here-->
+	<div class="header">
+		<div id="logo">
+			<img src="images/BS_logo.png" style="height: 30px">
+		</div>
+		
+		<div id="login">
+			<a href="#"><image src="images/fb_button-login.png"></a>
+		</div>
+	</div>
+	
+	<!--Background goes here-->
+	<div class="contentContainer">
+		<img class="fullscreen" src="images/bsBG.jpg">
+		
+		<div id="bgOverlay"></div>
+		
+		<div id="homeNav">
+			<div class="button"><a href="#">buy</a></div>
+			<div class="button"><a href="#">sell</a></div>
+		</div>
+	</div>
+		
+	<!--Links and legal disclaimer goes here-->
+	<div id="footer">
+		<div class="bottomNav">
+			<ul>
+				<li><a href="#">About</a></li>
+				
+				<li><a href="#">Contact</a></li>
+				
+				<li><a href="#">FAQs</a></li>
+			</ul>
+		</div>
+		
+		<div id="legal">
+			BookSpade &copy; 2013
+		</div>
+	</div>
+	
+</div>
+        <!-- NEW STUFF ENDS HERE -->
+
+        <!-- OLD STUFF
         <header class="generic-background">
             <div class="content-wrapper">
                 <div class="float-left">
@@ -143,6 +327,7 @@
             </div>
             @RenderSection("Script", required: false) 
         </header>
+
 @*        <div class="sidebar">
             <a class="body">Create Your Own Posting</a>
         </div>*@
@@ -155,6 +340,8 @@
             </span>
         </footer>
         @RenderSection("scripts", required: false)
+    -->
+
     </body>
     
 </html>
