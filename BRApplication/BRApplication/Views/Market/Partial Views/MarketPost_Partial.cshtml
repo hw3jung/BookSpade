@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<BRApplication.Models.MarketPost> 
 
 @{
-    foreach (var m in Model) {
+    var marketPostCollection = Model.OrderBy(marketPost => marketPost.Price).ThenBy(marketPost => marketPost.datePosted);
+    foreach (var m in marketPostCollection) {
             if (m.IsBuy) {
                 <li>
                         @Html.Partial("BuyPost_Partial", m) 
