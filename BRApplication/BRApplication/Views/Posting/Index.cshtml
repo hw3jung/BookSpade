@@ -124,9 +124,11 @@
         </div>
         <div class="DvSubmit">
             @if (Model.IsBuy) {
+                <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
+            }
+            else
+            {
                 <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
-            } else {
-                <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />
             }
         </div>
     </div>
