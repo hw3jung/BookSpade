@@ -21,10 +21,5 @@ namespace BRApplication.Models
         public bool IsDeleted { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
-
-        internal bool insert()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

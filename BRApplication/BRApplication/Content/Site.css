@@ -931,7 +931,7 @@ tr.pager td {
         font-style:italic; 
     }
 
-    .MarketPost > a {
+    .MarketPostDetail > a {
         font-weight:bold;
         font-family: Calibri;
         font-size: 15px;
@@ -1087,6 +1087,26 @@ tr.pager td {
     	background: #ffdd57 50% 50% repeat-x;
     }
 
+    .BookImage {
+        float:left;
+    }
+    .MarketPostDetail {
+        float:left;
+    }
+    .btnActionNow {
+        float:right;
+        margin-right: 50px;
+    }
+    #btnSellNow {
+        width: 100%;
+        padding:10px;
+    }
+
+    #btnBuyNow {
+        width: 100%;
+        padding:10px;
+    }
+
     .NewBook {
         width: 100%;
         height: 100%;
@@ -1137,6 +1157,26 @@ tr.pager td {
             margin-bottom: 2%;
         }
 
+    .PostType {
+        position: fixed;
+        height: 5%;
+        width: 18%;
+        bottom: 18%;
+        right: 2.5%;
+    }
+
+        .PostType select {
+            height: 100%;
+            width: 40%;
+        }
+
+        .PostType input {
+            text-align: center;
+            height: 90%;
+            width: 47%;
+            margin-left: 7%;
+        }
+
     .DetailLine {
         background-color: #FFEF91;
         border-bottom: 1px solid #E0D69D; 
@@ -1165,6 +1205,39 @@ tr.pager td {
         width:70%;
         float: left;
     }
+
+    .BidBox {
+        background-color: #FF9933;
+        padding:25px;
+        font-weight:bold;
+        font-family: Calibri;
+        font-size: 17px;
+        color: #402203;
+    }
+
+    .BidHeader table {
+        line-height: 2em;
+    }
+
+    .BidHeader table tr {
+        /*padding: 0 4px 0 4px;*/
+        text-align:left;
+    }
+
+
+    .BidLine table {
+        line-height: 2em;
+    }
+
+    .BidLine table tr {
+        /*padding: 0 4px 0 4px;*/
+        text-align:left;
+    }
+
+    .BidLine table tr:hover {
+        background-color: #FFCC00;
+    }
+
 
     /*-- DvSubmit is specific to the detail posting page submit area --*/
      .DvSubmit {
@@ -1230,7 +1303,7 @@ tr.pager td {
 /* Facebook 
 --------------------------------------------------------------------*/
 
-    #facebook-button {
+ #facebook-button {
     background: #ccc url('@Url.Content("~/Content/Images/login-with-facebook.png")') no-repeat top left;
     background-size:154px 29px;
     height: 29px;
@@ -1238,3 +1311,163 @@ tr.pager td {
     border:  none;
     cursor: pointer;
 }
+
+ /*------------------------------------------------------------------*/
+ /* ToolTip 
+ --------------------------------------------------------------------*/
+
+
+  /*Tooltip component by www.menucool.com */
+
+    /*For tooltip target element that has set class="tooltip" */
+    .tooltip {text-decoration: none; border-bottom:0px dotted #36c; outline: none; }
+
+    /*For tooltip box*/
+    div#mcTooltip 
+    {
+        line-height:16px;
+        border-width: 1px;   
+        color:#333; 
+        border-color:#BBBBBB;
+        padding:20px;
+        font-size: 12px;
+        font-family: Verdana, Arial;
+        border-radius:6px; /*Rounded corners. N/A for IE 8 and below.*/
+        box-shadow: 0 1px 4px #AAAAAA; /*Drop shadow. N/A for IE 8 and below.*/
+    }
+
+    div#mcTooltip, div.mcTooltipInner 
+    {
+        background-color:#FFFFFF;
+    }
+
+    /* For hyperlink within tooltip */
+    div#mcTooltip a { 
+        color:#36c; 
+    }
+
+    /*Close button. Only available when sticky or overlay has been set to true.*/
+    div#mcttCloseButton 
+    {
+        width:14px;
+        height:14px;
+        position:absolute;
+        background-image:url(closeBtn.gif);
+        cursor:pointer; 
+        overflow:hidden;
+        top:12px; 
+        right:12px; 
+        left:auto;
+    }            
+
+    /* Only applies when overlay has been set to true or 1.*/
+    div#mcOverlay 
+    {
+        background-color: white;
+        opacity:0.8; 
+        filter: alpha(opacity=80); 
+        display:none;
+        top:0;left:0;
+        width:100%;
+        height: 100%;
+        overflow:visible;
+        z-index:4; 
+    }
+
+    /*Only available when calling by tooltip.ajax(...). It will be a spinning image indicating a request is in progress.*/
+    div#tooltipAjaxSpin {
+        margin:20px 50px; 
+        background:transparent url(loading.gif) no-repeat center center; 
+        width:50px; 
+        height:30px; 
+        font-size:0;
+
+    }
+
+    /*The settings below should remain unchanged*/
+    div#mcTooltipWrapper {
+        position:absolute;
+        visibility:hidden;
+        overflow:visible;
+        z-index:9999999999;
+        top:-2000px;
+
+    }
+    div#mcTooltip {
+        float:left;
+        border-style:solid;
+        position:relative;
+        overflow:hidden;
+    }
+    div.mcTooltipInner {
+        float:left;
+        position:relative;
+        width:auto;
+        height:auto;
+    }
+    div#mcttCo {
+        position:absolute;
+        text-align:left;
+    }
+    div#mcttCo em, div#mcttCo b {
+        display:block;
+        width:0; 
+        height:0;
+        overflow:hidden;
+    }
+
+    #SubmitDialog {
+        display:none;
+    }
+    #ErrorDialog {
+        display:none;
+    }
+
+    .ContactPref {
+        width:100%;
+    }
+
+    .PrefDetail ul {
+        width:100%;
+        display:inline-block; 
+        padding:0px; 
+    }
+    .PrefDetail ul li {
+        display:inline-block;
+        list-style-type:none;
+        padding:0px; 
+    }
+
+    .lblContactRef {
+        width:20%;
+        padding:0px;
+        font-weight:bold;
+        float: left;
+    }
+    .valContactRef {
+        width:80%;
+        padding:0px;
+        float: left;
+    }
+
+/*----------------------------------------*/
+/* Buy now
+-------------------------------------*/
+
+  /* .none {
+        display:none;
+    }
+    #btnSave {
+        height: 40px;
+        width: 110px;
+        text-align: center;
+    }
+    .EmailCancel {
+        width: 80px;
+        height: 40px;
+        text-align:center;
+        padding:5px;
+        padding-left: 10px;
+      
+    }
+      */

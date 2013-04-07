@@ -1,13 +1,8 @@
-﻿
 
-
-
-<!-- OLD STUFF
 <div class="home">
-    <a class="header" href="" title="Buy Textbooks">Buy</a>
-    <a class="header" href="" title="Sell Textbooks">Sell</a>
+    <a class="header" href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks">Buy</a>
+    <a class="header" href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks">Sell</a>
 </div>
--->
 
 @*@{
     viewbag.title = "home page";

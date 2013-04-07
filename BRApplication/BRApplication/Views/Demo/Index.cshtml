@@ -6,7 +6,7 @@
 
 <a href="javascript:void" onclick="InsertStatus()"> INSERT </a>
 
-<div id="DemoPartial">
+<div id="Partial">
     @Html.Partial("DemoPartial", Model.StatusName)
 </div>
 
@@ -17,21 +17,23 @@
             data: {status: $("#txtStatusName").val()},
             type: 'POST',
             success: function (result) {
-               // alert(result);
+                alert(result);
                 UpdatePartial(result); 
             }
         });
     }
 
     function UpdatePartial(status) {
-        alert(status);
+        alert("Inside Update");
+
         $.ajax({
             url: '@Url.Action("UpdatePartial", "Demo")',
             data: { status: status },
             type: 'POST',
             success: function (result) {
-                $("#DemoPartial").replaceWith(result); 
+                alert(result);
+                $("#Partial").html(result);
             }
-        }); 
+        });
     }
 </script>

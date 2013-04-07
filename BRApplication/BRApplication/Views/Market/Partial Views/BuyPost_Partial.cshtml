@@ -1,28 +1,65 @@
-﻿@model BRApplication.Models.MarketPostModel
+﻿@model BRApplication.Models.MarketPost
 
-<div class="MarketPost">
+<style type="text/css">
+    .none {
+        display:none;
+    }
+    #btnSave {
+        height: 40px;
+        width: 110px;
+        text-align: center;
+    }
+    .EmailCancel {
+        width: 80px;
+        height: 40px;
+        text-align:center;
+        padding:5px;
+        padding-left: 10px;
+      
+    }
+
+</style>
+
+<div id="mdlEmail" title="Contact Email Address" class="none mdlEmail">
+    Please enter an email the buyer can contact you with to buy your textbook. <br/><br/>
+     @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
+    <input id="btnSellSave" class="btn-sell-save" type="button" value="Submit" />
+</div>
+<div id="mdlFacebook" class="none">
+    Please contact @Model.PostedBy through their facebook profile: <br /><br />
+    <div id="fblink" class="fbLink">&nbsp;</div>
+</div>
+<div id="mdlSuccess" title="Success!"  class="none">
+    Success! The poster has been notified and will contact you soon.
+</div>
+<div id="mdlFailedToMail" title="Oops!" class="none">
+    The poster could not be contact with the given email address, please try again. 
+</div>
+
+<div class="MarketPost" style="width:100%">
     <div class="MarketBuyPrice">
         $@Model.Price 
     </div>
     <div class="BookImage">
         <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
     </div>
-    <a href="http://www.facebook.com">@Model.Title</a>
     <div class="MarketPostDetail">
+         @using (Html.BeginForm("LoadDetailPost", "Post"))
+         { 
+            TempData["marketPost"] = Model;
+            @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting"))
+         }
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
-            <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+            @*<span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>*@
             <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
         </div>
         <div>
             <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
     </div>
-    
+    <div class="btnActionNow">
+        <input id="btnSellNow" type="button" class="btn-sell" value="SELL NOW" />
+    </div>
 </div>
-
-
-    
-
-@*background-image:url('@Url.Content("~/Content/Images/MarketBuy.png")')*@

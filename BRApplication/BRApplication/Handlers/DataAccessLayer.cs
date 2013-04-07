@@ -12,7 +12,7 @@ namespace BRApplication.Handlers
     public class DataAccessLayer
     {
         // White list of valid table names to prevent SQL injection
-        String[] WhiteListOfTableNames = new String[] { "Posts", "CourseInfo", "TextBooks", "Transactions", "TransactionStatus", "UserProfile" };
+        String[] WhiteListOfTableNames = new String[] { "Posts", "CourseInfo", "TextBooks", "Transactions", "TransactionStatus", "UserProfile", "Bids" };
 
         public bool insert(Dictionary<string, string> ColumnValuePairs, string TableName)
         {
@@ -77,15 +77,30 @@ namespace BRApplication.Handlers
         }
 
         // WhereClause is either "" or of the form "Col = value AND/OR Col2 = value2..."
-        public DataTable select(string WhereClause, string TableName)
+        public DataTable select(string WhereClause, string TableName, string[] ColumnNames = null)
         {
+            ColumnNames = ColumnNames ?? new string[] { "*" };
+            
             string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BookRack"].ToString();
             SqlConnection conn = new SqlConnection(connString);
             DataTable dt = new DataTable();
             SqlCommand cmd = conn.CreateCommand();
             try
             {
-                string selectCommand = "SELECT * FROM {0}" ;
+                string selectCommand = "SELECT ";
+
+                int i = 0;
+                int numColumns = ColumnNames.Count();
+                while (i < numColumns)
+                {
+                    selectCommand += ColumnNames[i];
+                    if ((i + 1) == numColumns) break;
+
+                    selectCommand += ", ";
+                    i++;
+                }
+
+                selectCommand += " FROM {0}";
                 
                 if (WhereClause != "")
                 {
@@ -98,40 +113,6 @@ namespace BRApplication.Handlers
                 }
                 string ct = String.Format(selectCommand, TableName);
                 cmd.CommandText = ct;
-                conn.Open();
-
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                da.Dispose();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return dt;
-        }
-
-        public DataTable getCourseNameWithTextBookID(int textBookID)
-        {
-            string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BookRack"].ToString();
-            SqlConnection conn = new SqlConnection(connString);
-            DataTable dt = new DataTable();
-            SqlCommand cmd = conn.CreateCommand();
-            try
-            {
-                string selectCommand = "SELECT CourseName " +
-                                       "  FROM Posts p, CourseInfo ci, TextBooks t " +
-                                       " WHERE p.textBookID = @tbID " +
-                                       "   AND p.textBookID = t.textBookID " +
-                                       "   AND t.courseID = ci.courseID ";
-                string ct = String.Format(selectCommand, textBookID);
-                cmd.CommandText = ct;
-                cmd.Parameters.Add(new SqlParameter("@tbID", textBookID));
                 conn.Open();
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);

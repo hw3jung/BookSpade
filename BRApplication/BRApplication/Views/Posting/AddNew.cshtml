@@ -1,4 +1,37 @@
-﻿@model List<BRApplication.Models.Textbook>
+﻿@model IEnumerable<BRApplication.Models.Textbook>
+
+
+<div id="SubmitDialog" title="Contact Preference">
+    <div id="ContactPref">
+        <div class="PrefDetail">
+            <ul>
+                <li class="lblContactRef">Email</li>
+                <li class="valContactRef">This will be kept private. BookSpade will send you an email with the contact of those interested.</li>
+            </ul>
+        </div>
+        <div class="PrefDetail">
+            <ul>
+                <li class="lblContactRef">Facebook</li>
+                <li class="valContactRef">A profile link will be displayed to everyone interested in responding to your post.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        @Html.RadioButton("Pref", false)Facebook
+        @Html.RadioButton("Pref", true)Email
+    </div>
+    <div id="divContactEmail" style="display:none;">
+        Please enter a valid email: 
+        @Html.TextBox("txtContactEmail")
+    </div>
+</div>
+
+<div>
+
+</div>
+<div id="ErrorDialog" title="Oops!"> Please select a book or add you own book</div>
+
 
 <div class="PostContainer">
     <div class="NewPost">
@@ -10,14 +43,18 @@
             @Html.TextBox("txtSearchBook")
             <input id="SearchButton" type="button" value="Search" />
         </div>
+        
         <div class="ChooseBook">
             <div id="BookListWrapper">
+                
                 <ul id="BookList" class="SearchResults wave">
-                    @for (int i=0; i < @Model.Count; i++) { 
-                        <li>
+                    
+                    @for (int i = 0; i < @Model.Count(); i++)
+                    { 
+                        <li class="tooltip" onmouseover="tooltip.pop(this, '<span style=\'color:black;\'><div style=\'float:left;\'><img src=\'@Model.ElementAt(i).BookImageURL\' width=\'100px\' /></div><div style=\'float:left;\'>ISBN: @Model.ElementAt(i).ISBN<br />Book Title: @Model.ElementAt(i).Title<br />Author(s): @Model.ElementAt(i).Author<br />Course: @Model.ElementAt(i).CourseName<br />Store Price: &#36;@Model.ElementAt(i).StorePrice</div></span>')">
                             <div class="item">
-                                <span class="Block">@Model[i].Author</span>
-                                <span class="Block Truncate One-line">@Model[i].Title</span>
+                                <span id="Course" class="Block">@Model.ElementAt(i).CourseName</span>
+                                <span id="Title" class="Block Truncate One-line">@Model.ElementAt(i).Title</span>
                             </div>
                         </li>
                     }
@@ -31,8 +68,15 @@
     </div>
 </div>
 <div class="AddPost">
-    <input id="Price" class="InputGradient Info" type="text" placeholder="Price" />
+    <input id="Price" class="InputGradient Info" type="text" placeholder="Price ($)" />
     <input id="SubmitButton" type="button" value="Add Post" />
+</div>
+<div class="PostType">
+    <select id="PostType">
+        <option value="Buy" selected>Buy</option>
+        <option value="Sell">Sell</option>
+    </select>
+    <input id="Condition" class="InputGradient Info" type="text" placeholder="Condition" />
 </div>
 
 @* Must come after definition of the 'ul' element that we are binding to*@
@@ -43,7 +87,7 @@
         $(this).siblings(".selected").removeClass("selected");
         $(this).addClass("selected");
     });
-    
+
     // get the width of the book list minus scrollbar
     var bookList = document.getElementById("BookList");
     var origWidth = bookList.offsetWidth;
@@ -68,5 +112,134 @@
             $(".NewPost").css("height", "92%");
         }
     });
+
 </script>
 
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/ToolTip.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(":radio[name=Pref]").change(function () {
+                if ($(this).val() == 'True') {
+                    $("#divContactEmail").show(); 
+                } else {
+                    $("#divContactEmail").val("");
+                    $("#divContactEmail").hide();
+                }
+            });
+
+            $("#SubmitButton").click(function () {
+                if (!$("li.selected").length && !addBook) {
+                    ErrorDialog();
+                } else {
+                    ContactPrefDialog();
+                }
+            });
+        });
+
+
+        function CommonFields() {
+
+            var isBuy = $("#PostType").val() == "Buy";
+            var price = $("#Price").val().trim();
+            var condition = $("#Condition").val().trim();
+            var email = $("#txtContactEmail").val();
+
+            var fields = {
+                "isBuy": isBuy,
+                "price": price,
+                "condition": condition,
+                "email": email
+            }
+            return fields;
+        }
+
+        function ErrorDialog() {
+            $("#ErrorDialog").dialog({
+                height: 200,
+                width: 500,
+                modal: true,
+                buttons: {
+                    "OK" : function () {
+                        $(this).dialog("close"); 
+                    }
+                }
+            }); 
+        }
+
+        function ContactPrefDialog() {
+            $("#SubmitDialog").dialog({
+                height: 500,
+                width: 500,
+                modal: true,
+                buttons: {
+                    "Post" : function () {
+                        if (addBook) {
+                            NewBook();
+                            $(this).dialog("close");
+                        } else {
+                            AddPost();
+                            $(this).dialog("close");
+                       }
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close"); 
+                    }
+                }
+            });
+        }
+
+        function AddPost() {
+            var course = $("li.selected #Course").text().trim();
+            var title = $("li.selected #Title").text().trim();
+            var common = CommonFields(); 
+
+            $.ajax({
+                url: '@Url.Action("SavePost", "Posting")',
+                    data: {
+                        profileID: 0,
+                        course : course,
+                        title : title,
+                        isBuy : common.isBuy,
+                        price : common.price,
+                        condition : common.condition,
+                        email : common.email
+                    },
+                    type: 'POST',
+                    success: function (result) {
+                        // TODO: do something with success
+                    }
+                });
+        }
+
+        function NewBook() {
+            var title = $(".NewBook #Title").val().trim();
+            var author = $(".NewBook #Author").val().trim();
+            var course = $(".NewBook #Course").val().trim();
+            var isbn = $(".NewBook #ISBN").val().trim();
+            var bookImageURL = $(".NewBook #BookImageURL").val().trim();
+            var common = CommonFields();
+
+            $.ajax({
+                url: '@Url.Action("SaveBook", "Posting")',
+                data: {
+                    isbn : isbn,
+                    title : title,
+                    author : author,
+                    course : course,
+                    bookImageURL : bookImageURL,
+                    isBuy : common.isBuy,
+                    price : common.price,
+                    condition : common.condition,
+                    email : common.email
+                },
+                type: 'POST',
+                success: function (result) {
+                    // TODO: do something with success
+                }
+            });
+        }
+    </script> 
+   
+}

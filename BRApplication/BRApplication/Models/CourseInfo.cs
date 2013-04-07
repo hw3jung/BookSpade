@@ -11,10 +11,10 @@ namespace BRApplication.Models
         public int CourseID { get; set; }
         public string CourseName { get; set; }
         public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
 
+        public CourseInfo(string courseName, string description) {
+            this.CourseName = courseName;
+            this.Description = description;
+        }
     }
 }
