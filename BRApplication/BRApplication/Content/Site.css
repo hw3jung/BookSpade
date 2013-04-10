@@ -1,23 +1,107 @@
-﻿/*Website container*/
+﻿/*Global container*/
 html {
-    background-color: red;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    border: 0px solid yellow;
+
 }
 
-/*Main container*/
+/*Body container*/
 body {
-    background-color: #000000 url("../Images/3-3D.png");
-    color: #333;
+    width: 100%;
+    height: 100%;
+    background-color: purple;
     font-size: 1em;
     font-family: Calibri;
     margin: 0;
     padding: 0;
+}
+
+/*DIVs*/
+div {
+}
+
+div.main {
+    width: 70%;
     height: 100%;
 }
 
+div.home {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: table-cell; 
+    vertical-align: middle;
+}
+
+div.home[class] {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: table-cell; 
+    vertical-align: middle;
+}
+
+div.body {
+    width: 100%;
+    height: 70%;
+    display: table;
+    position: static;
+    overflow-y: scroll;
+}
+
+div.body[class] {
+    width: 100%;
+    height: 70%;
+    display: table;
+    position: static;
+    overflow-y: scroll;
+}
+
+div.sidebar {
+    -webkit-background-clip: padding-box;
+    background-color: #f2f4f8;
+    border-left: 1px solid rgba(0, 0, 0, .4);
+    -webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9;
+    display: block;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 205px;
+    z-index: 300;
+}
+
+hgroup, nav, section {
+    display: block;
+}
+
+mark {
+    background-color: #a6dbed;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear-fix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/*Link styles*/
 a {
     font-family: Calibri;
     outline: none;
@@ -58,87 +142,6 @@ a.link {
     width: 30%;
     font-size: 1.1em;
     display: inline-block;
-}
-
-div {
-}
-
-    div.main {
-        width: 80%;
-        height: 100%;
-    }
-
-    div.home {
-        width: 100%;
-        text-align: center;
-        position: absolute; 
-        top: 50%;
-    }
-
-        div.home[class] {
-            width: 100%;
-            text-align: center;
-            display: table-cell; 
-            vertical-align: middle;
-            position: static;
-        }
-
-    div.body {
-        background: white;
-        clear: both;
-        width: 100%;
-        height: 80%;
-        overflow: hidden;
-        position: relative;
-    }
-
-        div.body[class] {
-            clear: both;
-            width: 100%;
-            height: 80%;
-            display: table;
-            position: static;
-        }
-
-    div.sidebar {
-        -webkit-background-clip: padding-box;
-        background-color: #f2f4f8;
-        border-left: 1px solid rgba(0, 0, 0, .4);
-        -webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9;
-        display: block;
-        height: 100%;
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 205px;
-        z-index: 300;
-    }
-
-header, footer, hgroup,
-nav, section {
-    display: block;
-}
-
-mark {
-    background-color: #a6dbed;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
-}
-
-.clear-fix:after {
-    content: ".";
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
 }
 
 h1, h2, h3,
@@ -197,13 +200,8 @@ h5, h6 {
 .featured + .main-content {
 }
 
-header {
-    margin: 0;
-    padding: 0;
-    height: 15%;
-}
 
-footer {
+/*footer {
     background-color: #e2e2e2;
     font-size: 1em;
     height: 5%;
@@ -213,7 +211,7 @@ footer {
     footer .copyright {
         position: relative;
         top: 25%;
-    }
+    }*/
 
 /* site title
 ----------------------------------------------------------*/
@@ -234,7 +232,7 @@ footer {
 
 
 /* login
-----------------------------------------------------------*/
+----------------------------------------------------------
 #login {
     display: block;
     font-size: .85em;
@@ -265,7 +263,7 @@ footer {
         display: inline;
         list-style: none;
     }
-
+*/
 
 /* menu
 ----------------------------------------------------------*/
@@ -491,7 +489,7 @@ aside {
     margin: 5px 0 0 10px;
 }
 
-/* forms */
+/* Forms */
 fieldset {
     border: none;
     margin: 0;
@@ -684,170 +682,12 @@ tr.pager td {
 /********************
 *   Mobile Styles   *
 ********************/
+
 @media only screen and (max-width: 850px) {
 
-    /* header
-    ----------------------------------------------------------*/
-    header .float-left,
-    header .float-right {
-        float: none;
-    }
-
-    /* logo */
-    header .site-title {
-        margin: 10px;
-        text-align: center;
-    }
-
-    /* login */
-    #login {
-        font-size: .85em;
-        margin: 0 0 12px;
-        text-align: center;
-    }
-
-        #login ul {
-            margin: 5px 0;
-            padding: 0;
-        }
-
-        #login li {
-            display: inline;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #login a {
-            background: none;
-            color: #999;
-            font-weight: 600;
-            margin: 2px;
-            padding: 0;
-        }
-
-        #login a:hover {
-            color: #333;
-        }
-
-    /* menu */
-    nav {
-        margin-bottom: 5px;
-    }
-
-    ul#menu {
-        margin-top: 10%;
-        padding: 0;
-        text-align: center;
-    }
-
-        ul#menu li {
-            margin: 0;
-            padding: 0;
-        }
-
-
-    /* main layout
-    ----------------------------------------------------------*/
-    .main-content,
-    .featured + .main-content {
-        background-position: 10px 0;
-    }
-
-    .content-wrapper {
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-
-    .featured .content-wrapper {
-        padding: 10px;
-    }
-
-    /* page content */
-     aside {
-        float: none;
-        width: 100%;
-    }
-
-    /* ordered list */
-    ol.round {
-        list-style-type: none;
-        padding-left: 0;
-    }
-
-        ol.round li {
-            padding-left: 10px;
-            margin: 25px 0;
-        }
-
-            ol.round li.zero,
-            ol.round li.one,
-            ol.round li.two,
-            ol.round li.three,
-            ol.round li.four,
-            ol.round li.five,
-            ol.round li.six,
-            ol.round li.seven,
-            ol.round li.eight,
-            ol.round li.nine {
-                background: none;
-            }
-
-     /* features */
-     section.feature {
-        float: none;
-        padding: 10px;
-        width: auto;
-     }
-
-        section.feature img {
-            color: #999;
-            content: attr(alt);
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-
-    /* forms */
-    input {
-        width: 90%;
-    }
-
-    /* login page */
-    #loginForm {
-        border-right: none;
-        float: none;
-        width: auto;
-    }
-
-        #loginForm .validation-error {
-            display: block;
-            margin-left: 15px;
-        }
-
-    #socialLoginForm {
-        margin-left: 0;
-        float: none;
-        width: auto;
-    }
-
-/*-------------------------------------------------------------*/
-/* footer
- -------------------------------------------------------------*/
-    footer .float-left,
-    footer .float-right {
-        float: none;
-    }
-
-    footer {
-        text-align: center;
-        height: auto;
-        padding: 10px 0;
-    }
-
-        footer p {
-            margin: 0;
-        }
 }
+
+
 
 /*-------------------------------------------------------------*/
 /* String-related
@@ -876,6 +716,7 @@ tr.pager td {
     text-align:center;
     width: 100%;
     height: 100%;
+    background-color: #e80c4d;
 }
 
     .PostContainer > .post {
@@ -1449,6 +1290,54 @@ tr.pager td {
         padding:0px;
         float: left;
     }
+
+/* NEW STUFF by Alan*/
+header {
+	width: 100%;
+	height: 10%;
+	background: #fff;
+	top: 0;
+	left:0;
+	overflow: hidden;
+	z-index: 1
+}
+
+	
+#logo{
+	padding: 5px 15px 5px 0px;
+	float: left;
+	margin-left: 2%;
+}
+	
+#login{
+	padding: 10px 0px 10px 15px;
+	float: right;
+	margin-right: 2%;
+}
+
+footer{
+	width: 100%;
+	height: 20%;
+	background: #fff;
+    border-top: 1px solid #d1d1d1;
+	overflow: hidden;
+	z-index: 2
+}	
+	
+.bottomNav{
+	padding: 5px 15px 5px 0px;
+	margin-left: 2%;
+}
+	
+#legal{
+	padding: 1%;
+	margin-top: 1%;
+	font: 0.7em Tahoma;
+	color: #000;
+	float: left;
+}
+
+/*NEW STUFF ENDS HERE*/
 
 /*----------------------------------------*/
 /* Buy now
