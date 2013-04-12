@@ -54,7 +54,7 @@
 	
 .buttonBuySell:hover { 
 	background-color: #009FE3;
-    color: #fff;
+    color: #000;
 }
 
 .buttonBuySell a, a:link, a:active, a:visited{
