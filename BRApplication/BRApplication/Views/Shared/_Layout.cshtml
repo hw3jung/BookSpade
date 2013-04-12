@@ -125,12 +125,12 @@
             <!--Logo and login button goes here-->
 
                 <div id="logo">
-    		    	<img src="images/BS_logo.png" style="height: 30px">
+    		    	<img src="images/BS_logo.png">
 	        	</div>
 		
-                <div id="login">
-                    <a href="#"><image src="images/fb_button-login.png"></a>
-	    	    </div>
+                    <section id="login">
+                        <div>@Html.Partial("_LoginPartial")</div>
+                    </section>
 
 
             @*REMOVE EVENTUALLY
@@ -171,23 +171,15 @@
         @*Footer appears on bottom of every page*@
         <footer>
             <!--Links and legal disclaimer goes here-->
+            <ul>
+                <li>BookSpade &copy; @DateTime.Now.Year</li>
+                
+                <li><a href="#">FAQs</a></li>
+                
+                <li><a href="#">Contact</a></li>
 
-		        <div class="bottomNav">
-			        <ul>
-				        <li><a href="#">About</a></li>
-				
-				        <li><a href="#">Contact</a></li>
-				
-				        <li><a href="#">FAQs</a></li>
-			        </ul>
-		        </div>
-		
-		        <div id="legal">
-                    <span class="copyright">
-                        BookSpade &copy; @DateTime.Now.Year
-                    </span>
-		        </div>
-
+                <li><a href="#">About</a></li>
+            </ul>
 
             @*REMOVE EVENTUALLY
             <span class="copyright">

@@ -7,16 +7,16 @@
 	<!--Background goes here-->
 	<div class="contentContainer">
 		<div id="leftDiv">
-            <div id="vertical-middle"><img src="Images/bsBG.jpg" style="width: 90%"/></div>
+            <div id="vertical-align-middle"><img src="Images/bsBG.jpg" style="width: 80%"/></div>
 		</div>
 
 		<div id="rightDiv">
-            <div id="vertical-middle">
-                <h1>I am looking to</h1>
+            <div id="vertical-align-middle">
+                <h1>I need to...</h1>
 
-			    <div class="button buttonBuy"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks">Buy</a></div>
+			    <div class="buttonBuySell"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks">Buy</a></div>
 			
-                <div class="button buttonSell"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks">Sell</a></div>
+                <div class="buttonBuySell"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks">Sell</a></div>
             </div>
 		</div>
 

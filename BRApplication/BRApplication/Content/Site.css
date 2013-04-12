@@ -5,17 +5,14 @@ html {
     margin: 0;
     padding: 0;
     overflow-y: auto;
-    border: 0px solid yellow;
-
 }
 
 /*Body container*/
 body {
     width: 100%;
     height: 100%;
-    background-color: purple;
-    font-size: 1em;
-    font-family: Calibri;
+    background-color: white;
+    font: 1em Calibri;
     margin: 0;
     padding: 0;
 }
@@ -25,7 +22,7 @@ div {
 }
 
 div.main {
-    width: 70%;
+    width: 100%;
     height: 100%;
 }
 
@@ -47,7 +44,7 @@ div.home[class] {
 
 div.body {
     width: 100%;
-    height: 70%;
+    height: 86%;
     display: table;
     position: static;
     overflow-y: scroll;
@@ -55,7 +52,7 @@ div.body {
 
 div.body[class] {
     width: 100%;
-    height: 70%;
+    height: 86%;
     display: table;
     position: static;
     overflow-y: scroll;
@@ -115,7 +112,6 @@ a.header {
     margin-left: 3%;
     margin-right: 3%;
     font-weight: lighter;
-    font-size: 50pt;
     border: 1px outset white;
     position: relative;
     top: -50%;
@@ -232,12 +228,14 @@ h5, h6 {
 
 
 /* login
-----------------------------------------------------------
+---------------------------------------------------------- */
 #login {
     display: block;
     font-size: .85em;
-    margin-top: 10%;
+    margin-top: 0%;
     text-align: right;
+    padding: 0.5% 10% 0.5% 10%;
+
 }
 
     #login a {
@@ -263,7 +261,11 @@ h5, h6 {
         display: inline;
         list-style: none;
     }
-*/
+
+    #login img {
+        height: 70%;
+    }
+
 
 /* menu
 ----------------------------------------------------------*/
@@ -716,7 +718,7 @@ tr.pager td {
     text-align:center;
     width: 100%;
     height: 100%;
-    background-color: #e80c4d;
+    background-color: #fff;
 }
 
     .PostContainer > .post {
@@ -1146,9 +1148,7 @@ tr.pager td {
 
  #facebook-button {
     background: #ccc url('@Url.Content("~/Content/Images/login-with-facebook.png")') no-repeat top left;
-    background-size:154px 29px;
-    height: 29px;
-    width: 154px;
+    height: 70%;
     border:  none;
     cursor: pointer;
 }
@@ -1294,48 +1294,51 @@ tr.pager td {
 /* NEW STUFF by Alan*/
 header {
 	width: 100%;
-	height: 10%;
-	background: #fff;
-	top: 0;
-	left:0;
+	height: 7%;
+	background: #E94E1B;
 	overflow: hidden;
-	z-index: 1
 }
-
 	
 #logo{
-	padding: 5px 15px 5px 0px;
+    padding: 0.5% 10% 0.5% 10%;
 	float: left;
-	margin-left: 2%;
 }
-	
-#login{
-	padding: 10px 0px 10px 15px;
-	float: right;
-	margin-right: 2%;
+
+
+#logo img{
+	height: 70%
 }
+
+/*#login{
+    padding: 0.5% 10% 0.5% 10%;
+    float: right;
+}
+
+#login img{
+	height: 70%
+}*/
 
 footer{
 	width: 100%;
-	height: 20%;
+	height: 7%;
 	background: #fff;
-    border-top: 1px solid #d1d1d1;
+    color: #878787;
 	overflow: hidden;
-	z-index: 2
+}
+
+footer ul li{ 
+	list-style: none; 
+	float: right; 
+	display: table; 
+	padding: 0% 2% 0% 2%;
+}
+
+footer a:link, footer a:active, footer a:visited{
+	font: 0.8em Arial;
+	color: #E94E1B;
+	text-decoration: none;
 }	
 	
-.bottomNav{
-	padding: 5px 15px 5px 0px;
-	margin-left: 2%;
-}
-	
-#legal{
-	padding: 1%;
-	margin-top: 1%;
-	font: 0.7em Tahoma;
-	color: #000;
-	float: left;
-}
 
 /*NEW STUFF ENDS HERE*/
 
