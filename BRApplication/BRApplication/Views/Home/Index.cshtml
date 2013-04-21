@@ -7,9 +7,16 @@
 <body>
 <!--Everything goes inside here-->
 	<!--Background goes here-->
+    <div id ="loginHome">
+        <section id="login">
+            <div>@Html.Partial("_LoginPartial")</div>
+        </section>
+    </div>
+
     <div id ="foregroundTable">
 	    <div id ="foregroundCell">
             <div id ="foregroundWrapper">
+
                 <div id="foreLeft">
 
                         <img src="@(Url.Content("~/Images/logo_bookspade_text.png"))" style="width: 15em"/>
@@ -28,12 +35,6 @@
                         </div>
  
 		        </div>
-
-                <div id ="loginHome">
-                     <section id="login">
-                        <div>@Html.Partial("_LoginPartial")</div>
-                    </section>
-                </div>
 
 		        <div id="foreRight">
                     <img src="@(Url.Content("~/Images/pic_Home.png"))" style="width: 100%"/>
