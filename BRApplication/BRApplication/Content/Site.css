@@ -10,9 +10,9 @@ html {
 /*Body container*/
 body {
     width: 100%;
-    height: 100%;
+    height: 95%;
     background-color: white;
-    font: 1em Calibri;
+    font: 1em arial;
     margin: 0;
     padding: 0;
 }
@@ -44,15 +44,16 @@ div.home[class] {
 
 div.body {
     width: 100%;
-    height: 86%;
+    height: 90%;
     display: table;
     position: static;
     overflow-y: scroll;
+
 }
 
 div.body[class] {
     width: 100%;
-    height: 86%;
+    height: 90%;
     display: table;
     position: static;
     overflow-y: scroll;
@@ -748,12 +749,11 @@ tr.pager td {
     }
     
     .ExistingPosts {
-        margin: 0px auto; 
-        width:100%;
+        margin: auto; 
+        width:90%;
         height: 80%;
         text-align:left;  
         padding: 0;
-        border: 1px solid red;
     }
 
     .ChoosePost {
@@ -808,13 +808,13 @@ tr.pager td {
     .ExistingPosts .SearchResults {
         position: relative;
         width: 100%;
-        height: 380px;
-	    margin-left: 0%;
+        height: 100%;
 	    padding: 0;
 	    overflow-y: scroll;
+	    overflow-x: hidden;
 	    list-style: none;
-        border-top: 2px solid #BA4B06;
-        border-bottom: 2px solid #BA4B06;
+        border-top: 0px solid #BA4B06;
+        border-bottom: 0px solid #BA4B06;
 
         -webkit-perspective: 400px;
 	       -moz-perspective: 400px;
@@ -828,7 +828,6 @@ tr.pager td {
             text-align:left;
             clear:none;
             width:100%;
-            position: relative;
             padding: 10px;
             background: #feeebd;
             color: #613301; 
@@ -1295,8 +1294,8 @@ tr.pager td {
 /* NEW STUFF by Alan*/
 header {
 	width: 100%;
-	height: 7%;
-	background: #E94E1B;
+	height: 40px;
+	background: #ECECEC;
 	overflow: hidden;
 }
 	
@@ -1307,7 +1306,7 @@ header {
 
 
 #logo img{
-	height: 70%
+	height: 25px
 }
 
 /*#login{
@@ -1321,9 +1320,8 @@ header {
 
 footer{
 	width: 100%;
-	height: 7%;
-	background: #fff;
-    color: #878787;
+	font: 0.8em Arial;
+    color: #666;
 	overflow: hidden;
 }
 
@@ -1335,8 +1333,8 @@ footer ul li{
 }
 
 footer a:link, footer a:active, footer a:visited{
-	font: 0.8em Arial;
-	color: #E94E1B;
+	font: 1em Arial;
+	color: #383838;
 	text-decoration: none;
 }	
 	
