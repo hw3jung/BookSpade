@@ -11,7 +11,7 @@ html {
 body {
     width: 100%;
     height: 95%;
-    background-color: white;
+
     font: 1em arial;
     margin: 0;
     padding: 0;
@@ -719,7 +719,9 @@ tr.pager td {
     text-align:center;
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background: url('../Images/bg_pattern.jpg') #000;
+
+    /*background-color: #fff;*/
 }
 
     .PostContainer > .post {
@@ -806,6 +808,7 @@ tr.pager td {
     }
 
     .ExistingPosts .SearchResults {
+        background-color: #fff;
         position: relative;
         width: 100%;
         height: 100%;
