@@ -1,4 +1,6 @@
 <!-- NEW STUFF STARTS HERE -->
+
+
 @Styles.Render("~/Content/Pages/Home.css")
 
 
@@ -7,16 +9,25 @@
 	<!--Background goes here-->
 	<div class="contentContainer">
 		<div id="leftDiv">
-            <div id="vertical-align-middle"><img src="Images/bsBG.jpg" style="width: 80%"/></div>
+            <div class="verticalAlign-middle">
+                <img src="Images/logo_bookspade_text.png" style="width: 15em"/>
+                
+                <br />
+                <div id="description" class="inset">
+                    Buy and sell books <br />at reasonable prices.
+                </div>
+                
+                <br />
+                
+                <div id="needToBuySell">
+                    I need to <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks"><div class="buttonBuySell">Buy</div></a> / <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks"><div class="buttonBuySell">Sell</div></a>
+                </div>
+            </div>
+
 		</div>
 
 		<div id="rightDiv">
-            <div id="vertical-align-middle">
-                <h1>I need to...</h1>
-
-			    <div class="buttonBuySell"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks">Buy</a></div>
-			
-                <div class="buttonBuySell"><a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks">Sell</a></div>
+            <div class="verticalAlign-middle">
             </div>
 		</div>
 

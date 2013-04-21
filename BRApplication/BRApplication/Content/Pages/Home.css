@@ -1,32 +1,41 @@
-﻿.contentContainer{
+﻿header {
+    display: none;
+}
+    
+footer {
+    display: none;
+}
+body {
+    width: 100%;
+    height: 100%;
+    background: url('../Images/bg_pattern.jpg') #000;
+}
+
+.contentContainer{
 	width: 100%;
     height: 100%;
-	background: #fff;
     display: table-cell;
     vertical-align: middle;
 	overflow: hidden;
 }
 	
 #leftDiv{
-	width: 60%;
 	height: 100%;
-    text-align: right;
     float: left;
-    background-color: white;
 	display: table;
 	overflow: hidden;
+    margin-left: 10%;
 }
 
-#vertical-align-middle {
+.verticalAlign-middle {
     display: table-cell;
     vertical-align: middle;
+    border: 0px solid red;
 }
 
 #rightDiv{
-    width: 40%;
     height: 100%;
     float: right;
-    background-color: white;
     text-align: left;
     display: table;
     overflow-y: auto;
@@ -44,12 +53,15 @@
 .buttonBuySell{
 	width: 30%;
 	background-color: #878787;
-    padding: 3% 7% 3% 7%;
-	margin: 2%;
-	float: left;
+    padding: 1% 0.8% 1% 0.8%;
+    display: inline-block;
+	margin-left: 2%;
 	text-align: center;
-	opacity: 0.7;
     cursor: pointer;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	border-radius: 8px;
 }
 	
 .buttonBuySell:hover { 
@@ -58,16 +70,39 @@
 }
 
 .buttonBuySell a, a:link, a:active, a:visited{
-	font: 1.5em Arial;
+	font: 1em Arial;
     color: #fff;
 	text-decoration: none;
 }
 
-.buttonBuySell a:hover{
+.buttonBuySell a:hover {
 	font: 1.5em Arial;
-    color: #fff;
+    color: #000;
 	text-decoration: none;
 }
+
+#needToBuySell {
+    font: 1em Arial bold;
+    color: #000;
+	background-color: #fff;
+    opacity: 0.7;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	-khtml-border-radius: 16px;
+	border-radius: 16px;
+	line-height: 70px;
+    text-align: center;
+	padding: 0 1em 0 1em;
+	width: 20em;
+}
+.inset { text-shadow:#fff 0px 1px 0, #000 0 -1px 0;}
+
+#description {
+    font: 1.5em arial bold;
+    color: #2E2E2E;
+    margin-bottom: 2em;
+}
+
 	
 
 	

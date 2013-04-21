@@ -125,7 +125,7 @@
             <!--Logo and login button goes here-->
 
                 <div id="logo">
-    		    	<img src="images/BS_logo.png">
+@*    		    	<a href="bookspade.com"><img src="@Url.content("~/Content/Images/bs_logo.png")" /></a>*@
 	        	</div>
 		
                     <section id="login">
@@ -174,11 +174,17 @@
             <ul>
                 <li>BookSpade &copy; @DateTime.Now.Year</li>
                 
-                <li><a href="#">FAQs</a></li>
+@*                <li><a href="#">FAQs</a></li>
                 
                 <li><a href="#">Contact</a></li>
 
-                <li><a href="#">About</a></li>
+                <li><a href="#">About</a></li>*@
+
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
 
             @*REMOVE EVENTUALLY
