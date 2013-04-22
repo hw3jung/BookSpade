@@ -34,7 +34,7 @@ namespace BRApplication.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult LoadDetailPost()
         {
-            MarketPost marketPost = (MarketPost)TempData["marketPost"];
+            MarketPost marketPost = (MarketPost)Session["marketPost"];
             return View("Index", marketPost); 
         }
 

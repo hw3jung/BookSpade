@@ -4,14 +4,17 @@
     .fbLink a {
         color: #0094ff;
     }
-
     .fbLink a:hover {
         color: #808080;
     }
-
-
 </style>
 
+<div id="mdlLoginRequest" title="Login Request" class="none">
+    You must login to proceed! <br /><br />
+    <div class="fbLink">
+        @Html.ActionLink("Login with Facebook", "Facebook", "Account") 
+    </div>
+</div>
 <div class="PostContainer">
     <div style="width:90%; text-align:center;">
         <div>
@@ -26,6 +29,7 @@
         </div>
      </div>
 </div>
+<div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
 <script type="text/javascript">
 
@@ -62,100 +66,136 @@
 @section script {
     <script type="text/javascript">
 
-        $(function () {
-            $(document).on('click', '.btn-buy', function () {
-                var email = $("#email").text();
+    var postID = 0;
+
+    $(function () {
+        $(document).on('click', '.btn-buy', function () {
+
+            postID = $(this).attr('postID');
+            var email = $("#email" + postID).text();
+            var LoginStatus = $("#LoginStatus").text();
+          
+            if (LoginStatus == "True") {
                 if (email) {
                     EmailDialog();
                 } else {
                     FacebookLink();
                 }
-            });
-
-
-            $(document).on('click', '.btn-sell', function () {
-                var email = $("#email").text();
-                if (email) {
-                    EmailDialog();
-                } else {
-                    FacebookLink();
-                }
-            });
-
+            } else {
+                LoginRequestDialog();
+            }
+            
         });
 
-        function EmailDialog() {
-            $("#mdlEmail").dialog({
-                height: 350,
-                width: 500,
-                modal: true,
-                buttons: [{
-                             text: "Cancel",
-                             "class": 'EmailCancel',
-                             click: function() { 
-                                $(this).dialog("close"); 
-                            }
-                          }]
-                });
+
+        $(document).on('click', '.btn-sell', function () {
+
+            postID = $(this).attr('postID');
+            var email = $("#email" + postID).text();
+            var LoginStatus = $("#LoginStatus").text();
+           
+            if (LoginStatus == "True") {
+                if (email) {
+                    EmailDialog();
+                } else {
+                    FacebookLink();
+                }
+            } else {
+                LoginRequestDialog(); 
+            }
+        });
+
+    });
+
+    function LoginRequestDialog() {
+        $("#mdlLoginRequest").dialog({
+            height: 200,
+            width: 500,
+            modal: true
+        });
+    }
+
+    function EmailDialog() {
+        $("#mdlEmail" + postID).dialog({
+            height: 350,
+            width: 500,
+            modal: true,
+            buttons: [{
+                        text: "Cancel",
+                        "class": 'EmailCancel',
+                        click: function() { 
+                            $(this).dialog("close"); 
+                        }
+                  }]
+            });
+    }
+
+    function PostInfo() {
+        var post = {
+            postedBy: $("#PostedBy" + postID).text(),
+            bookTitle: $("#bookTitle" + postID).text(),
+            profileID: $("#profileID" + postID).text()
         }
+        return post;
+    }
 
-        $(document).on('click', '.btn-save', function () {
-            var postedby = $("#PostedBy").text();
-            var bookTitle = $("#bookTitle").text();
-            var profileID = $("#profileID").text();
-            var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+    $(document).on('click', '.btn-save', function () {
 
-            $.ajax({
-                url: '@Url.Action("EmailSeller", "Market")',
-                data: {
-                    PostedBy: postedby,
-                    textbook: bookTitle,
-                    profileID: profileID,
-                    RespondantEmail: RespondantEmail
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result) {
-                        SuccessDialog(this);
-                    } else {
-                        FailedToMailDialog(this);
-                    }
+        var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        var post = PostInfo();
+           
+        $.ajax({
+            url: '@Url.Action("EmailSeller", "Market")',
+            data: {
+                PostedBy: post.postedBy,
+                textbook: post.bookTitle,
+                profileID: post.profileID,
+                RespondantEmail: post.RespondantEmail
+            },
+            type: 'POST',
+            success: function (result) {
+                if (result) {
+                    SuccessDialog(this);
+                } else {
+                    FailedToMailDialog(this);
                 }
-            });
-        }); 
+            }
+        });
+    }); 
 
-        $(document).on('click', '.btn-sell-save', function () {
-            var postedby = $("#PostedBy").text();
-            var bookTitle = $("#bookTitle").text();
-            var profileID = $("#profileID").text();
-            var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        
 
-            $.ajax({
-                url: '@Url.Action("EmailBuyer", "Market")',
-                data: {
-                    PostedBy: postedby,
-                    textbook: bookTitle,
-                    profileID: profileID,
-                    RespondantEmail: RespondantEmail
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result) {
-                        SuccessDialog(this);
-                    } else {
-                        FailedToMailDialog(this);
-                    }
+    $(document).on('click', '.btn-sell-save', function () {
+
+        var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        var post = PostInfo(); 
+
+        $.ajax({
+            url: '@Url.Action("EmailBuyer", "Market")',
+            data: {
+                PostedBy: post.postedBy,
+                textbook: post.bookTitle,
+                profileID: post.profileID,
+                RespondantEmail: RespondantEmail
+            },
+            type: 'POST',
+            success: function (result) {
+                if (result) {
+                    SuccessDialog(this);
+                } else {
+                    FailedToMailDialog(this);
                 }
-            });
-         });
+            }
+        });
+    });
 
 
-        function FacebookLink() {
-            alert("fb link");
-            var profileID = $("#profileID").text();
-            alert(profileID);
-            $.ajax({
-                url: '@Url.Action("GetFacebookLink", "Market")',
+  function FacebookLink() {
+
+      var profileID = $("#profileID" + postID).text();
+
+        $.ajax({
+            url: '@Url.Action("GetFacebookLink", "Market")',
             data: {
                 profileID: profileID
             },
@@ -165,13 +205,12 @@
                 FacebookDialog();
             }
         });
-
     }
 
     function SuccessDialog(dialog) {
-        $("#mdlSuccess").dialog({
+        $("#mdlSuccess" + postID).dialog({
             height: 300,
-            width: 200,
+            width: 350,
             modal: true,
             buttons: {
                 "OK": function () {
@@ -182,7 +221,7 @@
     }
 
     function FailedToMailDialog() {
-        $("#mdlSuccess").dialog({
+        $("#mdlFailedToMail" + postID).dialog({
             height: 200,
             width: 200,
             modal: true,
@@ -195,7 +234,7 @@
     }
 
     function FacebookDialog() {
-        $("#mdlFacebook").dialog({
+        $("#mdlFacebook" + postID).dialog({
             height: 300,
             width: 500,
             modal: true,

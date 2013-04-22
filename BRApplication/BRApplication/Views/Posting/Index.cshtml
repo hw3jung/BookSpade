@@ -18,7 +18,12 @@
     }
 
 </style>
-
+<div id="mdlLoginRequest" title="Login Request" class="none">
+    You must login to proceed! <br /><br />
+    <div class="fbLink">
+        @Html.ActionLink("Login with Facebook", "Facebook", "Account") 
+    </div>
+</div>
 <div id="mdlEmail" title="Contact Email Address" class="none mdlEmail">
     Please enter an email the owner of this book can contact you with. <br/><br/>
      @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
@@ -39,6 +44,7 @@
 <div class="none" id="bookTitle">@Model.Title</div>
 <div class="none" id="profileID">@Model.profileID</div>
 <div class="none" id="email">@Model.email</div>
+<div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
 
 <div class="PostContainer">
@@ -151,20 +157,32 @@
 
             $(document).on('click', '.btn-buy', function () {
                 var email = $("#email").text();
-                if (email) {
-                    EmailDialog();
+                var LoginStatus = $("#LoginStatus").text();
+
+                if (LoginStatus == "True") {
+                    if (email) {
+                        EmailDialog();
+                    } else {
+                        FacebookLink();
+                    }
                 } else {
-                    FacebookLink();
+                    LoginRequestDialog();
                 }
             });
 
 
             $(document).on('click', '.btn-sell', function () {
                 var email = $("#email").text();
-                if (email) {
-                    EmailDialog();
+                var LoginStatus = $("#LoginStatus").text();
+
+                if (LoginStatus == "True") {
+                    if (email) {
+                        EmailDialog();
+                    } else {
+                        FacebookLink();
+                    }
                 } else {
-                    FacebookLink();
+                    LoginRequestDialog();
                 }
             });
 
@@ -236,12 +254,12 @@
             });
 
 
-            function FacebookLink() {
-                alert("fb link");
-                var profileID = $("#profileID").text();
-                alert(profileID);
-                $.ajax({
-                    url: '@Url.Action("GetFacebookLink", "Market")',
+        function FacebookLink() {
+
+            var profileID = $("#profileID").text();
+
+            $.ajax({
+                url: '@Url.Action("GetFacebookLink", "Market")',
                 data: {
                     profileID: profileID
                 },
@@ -290,6 +308,14 @@
                         $(this).dialog("close");
                     }
                 }
+            });
+        }
+
+        function LoginRequestDialog() {
+            $("#mdlLoginRequest").dialog({
+                height: 200,
+                width: 500,
+                modal: true
             });
         }
     </script>

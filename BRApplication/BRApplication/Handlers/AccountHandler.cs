@@ -10,7 +10,7 @@ namespace BRApplication.Handlers
 {
     public class AccountHandler
     {
-        public bool AddUser(UserProfile elm)
+        public static bool AddUser(UserProfile elm)
         {
             bool success = false;
 

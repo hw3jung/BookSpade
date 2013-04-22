@@ -51,7 +51,7 @@ namespace BRApplication.Controllers
         [HttpPost]
         public ActionResult EmailSeller(string PostedBy, string textbook, int profileID, string RespondantEmail)
         {
-            string accesstoken = Convert.ToString(Session["facebooktoken"]);
+            string accesstoken = Convert.ToString(Session["AccessToken"]);
             FacebookClient client = new FacebookClient(accesstoken);
             
             IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
@@ -66,7 +66,7 @@ namespace BRApplication.Controllers
         [HttpPost]
         public ActionResult EmailBuyer(string PostedBy, string textbook, int profileID, string RespondantEmail)
         {
-            string accesstoken = Convert.ToString(Session["facebooktoken"]);
+            string accesstoken = Convert.ToString(Session["AccessToken"]);
             FacebookClient client = new FacebookClient(accesstoken);
 
             IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user

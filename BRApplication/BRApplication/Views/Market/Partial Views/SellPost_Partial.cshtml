@@ -20,19 +20,19 @@
 
 </style>
 
-<div id="mdlEmail" title="Contact Email Address" class="none mdlEmail">
+<div id="mdlEmail@(Model.PostID)" title="Contact Email Address" class="none mdlEmail">
     Please enter an email the owner of this book can contact you with. <br/><br/>
      @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
     <input id="btnSave" class="btn-save" type="button" value="Submit" />
 </div>
-<div id="mdlFacebook" class="none">
+<div id="mdlFacebook@(Model.PostID)" class="none">
     Please contact @Model.PostedBy through their facebook profile: <br />
     <div id="fblink" class="fbLink">&nbsp;</div>
 </div>
-<div id="mdlSuccess" title="Success!"  class="none">
+<div id="mdlSuccess@(Model.PostID)" title="Success!"  class="none">
     Success! The poster has been notified and will contact you soon.
 </div>
-<div id="mdlFailedToMail" title="Oops!" class="none">
+<div id="mdlFailedToMail@(Model.PostID)" title="Oops!" class="none">
     The poster could not be contact with the given email address, please try again. 
 </div>
 
@@ -46,7 +46,7 @@
     <div class="MarketPostDetail">
         @using (Html.BeginForm("LoadDetailPost", "Post"))
          { 
-            TempData["marketPost"] = Model;
+            Session["marketPost"] = Model;
             @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting")) 
          }
         <div>
@@ -60,11 +60,12 @@
         </div>
     </div>
     <div  class="btnActionNow">
-        <input id="btnBuyNow" type="button" class="btn-buy" value="BUY NOW" />
+        <input id="btnBuyNow" type="button" postID="@(Model.PostID)" class="btn-buy" value="BUY NOW" />
     </div>
 </div>
 
-<div class="none" id="PostedBy">@Model.PostedBy</div>
-<div class="none" id="bookTitle">@Model.Title</div>
-<div class="none" id="profileID">@Model.profileID</div>
-<div class="none" id="email">@Model.email</div>
+<div class="none" id="PostedBy@(Model.PostID)">@Model.PostedBy</div>
+<div class="none" id="bookTitle@(Model.PostID)">@Model.Title</div>
+<div class="none" id="profileID@(Model.PostID)">@Model.profileID</div>
+<div class="none" id="email@(Model.PostID)">@Model.email</div>
+
