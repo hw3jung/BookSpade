@@ -15,7 +15,7 @@ using Facebook;
 
 namespace BRApplication.Controllers
 {
-    [Authorize]
+
     public class AccountController : Controller
     {
 
@@ -49,7 +49,6 @@ namespace BRApplication.Controllers
                 scope = "email" // Add other permissions as needed
             });
 
-            Session["host"] = loginUrl.Host; 
             return Redirect(loginUrl.AbsoluteUri);
         }
 
@@ -57,8 +56,9 @@ namespace BRApplication.Controllers
 
         #region FacebookCallBack
 
-        public ActionResult FacebookCallback(string code)
+        public ActionResult FacebookCallback(string code, string returnUrl)
         {
+          
             var fb = new FacebookClient();
             dynamic result = fb.Post("oauth/access_token", new
             {
@@ -80,22 +80,15 @@ namespace BRApplication.Controllers
             // Get the user's information
             IDictionary<string, object> user = (IDictionary<string, object>)fb.Get("me"); //get the current user
 
-            if (Session["host"] != null)
-            {
-                string host = Convert.ToString(Session["host"]);
-            
-                if (host.Equals("www.facebook.com"))
-                {
-                    UserProfile userProfile = new UserProfile(
-                        Convert.ToString(user["name"]),
-                        Convert.ToString(user["link"]),
-                        Convert.ToString(user["id"]),
-                        Convert.ToString(user["gender"]),
-                        Convert.ToString(user["email"]), String.Empty);
+            UserProfile userProfile = new UserProfile(
+                Convert.ToString(user["name"]),
+                Convert.ToString(user["link"]),
+                Convert.ToString(user["id"]),
+                Convert.ToString(user["gender"]),
+                Convert.ToString(user["email"]), String.Empty);
 
-                    AccountHandler.AddUser(userProfile);
-                }
-            }
+            AccountHandler.AddUser(userProfile);
+
             // Set the auth cookie
             FormsAuthentication.SetAuthCookie(Convert.ToString(user["name"]), false);
             
@@ -106,10 +99,9 @@ namespace BRApplication.Controllers
 
         #region Login
 
-        [AllowAnonymous]
         public ActionResult Login() //string returnUrl
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion
