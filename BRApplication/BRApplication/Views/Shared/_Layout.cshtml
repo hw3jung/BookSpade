@@ -121,40 +121,42 @@
     </head>
 
 
-            <header>
-            <!--Logo and login button goes here-->
-
-                <div id="logo">
-@*    		    	<a href="bookspade.com"><img src="@Url.content("~/Content/Images/bs_logo.png")" /></a>*@
-                    <a href="bookspade.com"><img src="@(Url.Content("~/Images/logo_bookspade_text.png"))" /></a>
-	        	</div>
+        <header>
+            <div id="headerCell">
+                <div id="headerWrapper">
+                    <div id="headLeft">
+                        <a href="@Url.Action("Index", "Home")"><img src="@(Url.Content("~/Images/logo_bookspade_text.png"))" /></a>
+	                </div>
 		
                     <section id="login">
                         <div>@Html.Partial("_LoginPartial")</div>
                     </section>
-
-
-            @*REMOVE EVENTUALLY
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
                 </div>
-                <div class="float-right">
-                    <section id="login">
-                        <div>@Html.Partial("_LoginPartial")</div>
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>*@
+            </div>
 
-            @RenderSection("Script", required: false) 
-        </header>
+        @*REMOVE EVENTUALLY
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+            </div>
+            <div class="float-right">
+                <section id="login">
+                    <div>@Html.Partial("_LoginPartial")</div>
+                </section>
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>*@
+
+        @RenderSection("Script", required: false) 
+    </header>
+
+
     <body>
         @*Header appears at the top of every page*@
 

@@ -16,24 +16,21 @@
     <div id ="foregroundTable">
 	    <div id ="foregroundCell">
             <div id ="foregroundWrapper">
-
                 <div id="foreLeft">
-
-                        <img src="@(Url.Content("~/Images/logo_bookspade_text.png"))" style="width: 15em"/>
+                    <img src="@(Url.Content("~/Images/logo_bookspade_text.png"))" style="width: 15em"/>
       
-                        <br />
-                        <div id="description" class="inset">
-                            Buy and sell books <br />at reasonable prices.
-                        </div>
+                    <br />
+                    <div id="description" class="inset">
+                        Buy and sell your books <br />at the price they should be.
+                    </div>
                 
-                        <br />
+                    <br />
                 
-                        <div id="needToBuySell">
-                            <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks"><div class="buttonBuySell inset">Buy</div></a>
+                    <div id="needToBuySell">
+                        <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = false }))" title="Buy Textbooks"><div class="buttonBuySell inset">Buy</div></a>
                             
-                            <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks"><div class="buttonBuySell inset">Sell</div></a>
-                        </div>
- 
+                        <a href="@(Url.Action("GetMarketPostsByisBuy", "Market", new { isBuy = true }))" title="Sell Textbooks"><div class="buttonBuySell inset">Sell</div></a>
+                    </div>
 		        </div>
 
 		        <div id="foreRight">
