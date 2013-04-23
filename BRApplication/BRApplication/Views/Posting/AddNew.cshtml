@@ -40,24 +40,12 @@
             Add Your Posting
         </div>
         <div class="SearchBook">
-            @Html.TextBox("txtSearchBook")
-            <input id="SearchButton" type="button" value="Search" />
+            <input id="BookSearch" type="text" placeholder="Search by Title, Course, or ISBN"/>
         </div>
-        
         <div class="ChooseBook">
             <div id="BookListWrapper">
-                
                 <ul id="BookList" class="SearchResults wave">
-                    
-                    @for (int i = 0; i < @Model.Count(); i++)
-                    { 
-                        <li class="tooltip" onmouseover="tooltip.pop(this, '<span style=\'color:black;\'><div style=\'float:left;\'><img src=\'@Model.ElementAt(i).BookImageURL\' width=\'100px\' /></div><div style=\'float:left;\'>ISBN: @Model.ElementAt(i).ISBN<br />Book Title: @Model.ElementAt(i).Title<br />Author(s): @Model.ElementAt(i).Author<br />Course: @Model.ElementAt(i).CourseName<br />Store Price: &#36;@Model.ElementAt(i).StorePrice</div></span>')">
-                            <div class="item">
-                                <span id="Course" class="Block">@Model.ElementAt(i).CourseName</span>
-                                <span id="Title" class="Block Truncate One-line">@Model.ElementAt(i).Title</span>
-                            </div>
-                        </li>
-                    }
+                    @Html.Partial("BookList_Partial", Model)
                 </ul>
             </div>
             <a class="link">Cannot find your book? Click Here</a>
@@ -79,8 +67,8 @@
     <input id="Condition" class="InputGradient Info" type="text" placeholder="Condition" />
 </div>
 
-@* Must come after definition of the 'ul' element that we are binding to*@
 <script type="text/javascript">
+    //Must come after definition of the 'ul' element that we are binding to
     stroll.bind('.NewPost ul');
     
     $("li").click(function () {
@@ -112,7 +100,24 @@
             $(".NewPost").css("height", "92%");
         }
     });
+    
+    var xhr = null;
+    $("#BookSearch").keyup(function () {
+        var searchVal = $("#BookSearch").val().trim();
 
+        if (xhr && xhr.readyState != 4) {
+            xhr.abort();
+        }
+
+        xhr = $.ajax({
+            url: '@Url.Action("GetTextbooks", "Posting")',
+            data: { searchString: searchVal },
+            type: 'POST',
+            success: function (result) {
+                $("#BookList").html(result);
+            }
+        });
+    });
 </script>
 
 

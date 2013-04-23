@@ -235,6 +235,7 @@
     <Content Include="Images\load.gif" />
     <Content Include="Images\logo_bookspade_text.png" />
     <Content Include="Images\pic_Home.png" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.1.custom.js" />
     <Content Include="Scripts\jquery-ui-1.10.1.custom.min.js" />
@@ -303,6 +304,7 @@
     <Content Include="Views\Posting\Partial Views\Bid_Partial.cshtml" />
     <Content Include="Views\Market\Partial Views\MarketPost_Partial.cshtml" />
     <Content Include="Views\Posting\Index.cshtml" />
+    <Content Include="Views\Posting\Partial Views\BookList_Partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

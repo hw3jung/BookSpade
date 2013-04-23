@@ -9,7 +9,6 @@ using BRApplication.Utility;
 using Microsoft.Web.WebPages.OAuth;
 using Facebook; 
 
-
 namespace BRApplication.Controllers
 {
     public class PostingController : Controller
@@ -31,6 +30,36 @@ namespace BRApplication.Controllers
             return View(textBookCollection);
         }
 
+        [HttpPost]
+        public ActionResult GetTextbooks(string searchString = "")
+        {
+            IEnumerable<Textbook> bookCollection = null;
+
+            if (RegexUtil.isISBN(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByISBN(searchString);
+            }
+            else if (RegexUtil.isCourse(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByCourse(searchString);
+            }
+            else if (RegexUtil.isTitle(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByTitle(searchString);
+            }
+            else if (searchString == String.Empty)
+            {
+                bookCollection = TextbookHandler.getAllTextbooks();
+            }
+
+            if (bookCollection == null)
+            {
+                bookCollection = new List<Textbook>();
+            }
+
+            return PartialView("BookList_Partial", bookCollection);
+        }
+
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult LoadDetailPost()
         {
@@ -38,9 +67,7 @@ namespace BRApplication.Controllers
             return View("Index", marketPost); 
         }
 
-
         [HttpPost]
-        
         public ActionResult SaveBook(string isbn, 
                                      string title,
                                      string author,
@@ -95,10 +122,12 @@ namespace BRApplication.Controllers
             
             UserProfile profile =  AccountHandler.getUserProfile_Facebook(FacebookID);
 
-            bool success = false; 
+            bool success = false;
 
-            if (email != "")
+            if (email != String.Empty)
+            {
                 success = AccountHandler.updateUserProfile_Email(FacebookID, email);
+            }
 
             Post newPost = new Post(profile.ProfileID, textbookID, isBuy, price, condition, email != "");
             success = PostHandler.insert(newPost);
@@ -113,8 +142,5 @@ namespace BRApplication.Controllers
                 return Json("Failed to insert post for: " + title);
             }
         }
-
-        
-
     }
 }

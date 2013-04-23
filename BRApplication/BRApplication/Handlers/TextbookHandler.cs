@@ -133,15 +133,121 @@ namespace BRApplication.Handlers
             return allTextbooks;
         }
 
+        public static IEnumerable<Textbook> getTextbooksByISBN(string isbn)
+        {
+            List<Textbook> textbooks = new List<Textbook>();
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("ISBN LIKE '%{0}%'", isbn), "TextBooks");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string full_isbn = Convert.ToString(row["ISBN"]);
+                    string title = Convert.ToString(row["BookTitle"]);
+                    string author = Convert.ToString(row["Author"]);
+                    string bookImageURL = Convert.ToString(row["BookImageURL"]);
+
+                    int courseID = Convert.ToInt32(row["CourseID"]);
+                    string courseName = CourseInfoHandler.getCourseName(courseID);
+
+                    int storePrice = Convert.ToInt32(row["StorePrice"]);
+
+                    Textbook textbook = new Textbook(full_isbn, title, author, courseName, bookImageURL, storePrice);
+                    textbooks.Add(textbook);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbooks by ISBN --- " + ex.Message);
+            }
+
+            return textbooks;
+        }
+
+        public static IEnumerable<Textbook> getTextbooksByCourse(string courseName)
+        {
+            List<Textbook> textbooks = new List<Textbook>();
+
+            try
+            {
+                int[] courseIDs = CourseInfoHandler.getCourseIDs(courseName);
+
+                foreach (int courseID in courseIDs)
+                {
+                    DataAccessLayer DAL = new DataAccessLayer();
+                    DataTable dt = DAL.select(String.Format("CourseID = '{0}'", courseID), "TextBooks");
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        string isbn = Convert.ToString(row["ISBN"]);
+                        string title = Convert.ToString(row["BookTitle"]);
+                        string author = Convert.ToString(row["Author"]);
+                        string bookImageURL = Convert.ToString(row["BookImageURL"]);
+
+                        string full_courseName = CourseInfoHandler.getCourseName(courseID);
+
+                        int storePrice = Convert.ToInt32(row["StorePrice"]);
+
+                        Textbook textbook = new Textbook(isbn, title, author, full_courseName, bookImageURL, storePrice);
+                        textbooks.Add(textbook);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbooks by course name --- " + ex.Message);
+            }
+
+            return textbooks;
+        }
+
+        public static IEnumerable<Textbook> getTextbooksByTitle(string title)
+        {
+            List<Textbook> textbooks = new List<Textbook>();
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("BookTitle LIKE '%{0}%'", title), "TextBooks");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    string isbn = Convert.ToString(row["ISBN"]);
+                    string full_title = Convert.ToString(row["BookTitle"]);
+                    string author = Convert.ToString(row["Author"]);
+                    string bookImageURL = Convert.ToString(row["BookImageURL"]);
+
+                    int courseID = Convert.ToInt32(row["CourseID"]);
+                    string courseName = CourseInfoHandler.getCourseName(courseID);
+
+                    int storePrice = Convert.ToInt32(row["StorePrice"]);
+
+                    Textbook textbook = new Textbook(isbn, full_title, author, courseName, bookImageURL, storePrice);
+                    textbooks.Add(textbook);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving textbooks by book title --- " + ex.Message);
+            }
+
+            return textbooks;
+        }
+
         public static int[] getTextbookIDsByISBN(string isbn)
         {
             List<int> textbookIDs = new List<int>();
             
             try
             {
+                // ISBN parsing (may or may not contain hyphens)
+                isbn = isbn.Replace("-", String.Empty);
+                
                 DataAccessLayer DAL = new DataAccessLayer();
                 DataTable dt = DAL.select(String.Format("ISBN LIKE '%{0}%'", isbn), "TextBooks", new string[] { "TextBookID" });
-
+                
                 foreach (DataRow row in dt.Rows)
                 {
                     int textbookID = Convert.ToInt32(row["TextBookID"]);

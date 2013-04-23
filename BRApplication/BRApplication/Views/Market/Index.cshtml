@@ -18,7 +18,7 @@
 <div class="PostContainer">
     <div style="width:90%; text-align:center;">
         <div>
-            <input id="MarketSearch" type="text" size="40" placeholder=" Search Buy Posts/Sell Posts" />
+            <input id="MarketSearch" type="text" size="40" placeholder="Search by Title, Course, or ISBN" />
         </div>
     </div>
     <div class="ExistingPosts">
@@ -32,33 +32,35 @@
 <div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
 <script type="text/javascript">
-
-
+    //Must come after definition of the 'ul' element that we are binding to
     stroll.bind('.ExistingPosts ul');
 
-    var delay = (function () {
-        var timer = 0;
-        return function (callback, ms) {
-            clearTimeout(timer);
-            timer = setTimeout(callback, ms);
-        };
-    })();
-
+    var xhr = null;
     $("#MarketSearch").keyup(function () {
-        var userInputDelay = 200;
+        var searchVal = $("#MarketSearch").val().trim();
+        var isBuySection = '@(Model.ElementAt(0).IsBuy)';
 
-        delay(function () {
-            var searchVal = $("#MarketSearch").val().trim();
+        if (isBuySection == "True") {
+            isBuySection = true;
+        } else {
+            isBuySection = false;
+        }
+       
+        if (xhr && xhr.readyState != 4) {
+            xhr.abort();
+        }
 
-            $.ajax({
-                url: '@Url.Action("GetMarketPosts", "Market")',
-                data: { searchString: searchVal },
-                type: 'POST',
-                success: function (result) {
-                    $("#SearchResults").html(result);
-                }
-            });
-        }, userInputDelay);
+        xhr = $.ajax({
+            url: '@Url.Action("GetMarketPosts", "Market")',
+            data: {
+                isBuy: isBuySection,
+                searchString: searchVal
+            },
+            type: 'POST',
+            success: function (result) {
+                $("#SearchResults").html(result);
+            }
+        });
     });
 </script>
 
@@ -104,7 +106,6 @@
                 LoginRequestDialog(); 
             }
         });
-
     });
 
     function LoginRequestDialog() {
@@ -189,8 +190,7 @@
         });
     });
 
-
-  function FacebookLink() {
+    function FacebookLink() {
 
       var profileID = $("#profileID" + postID).text();
 
@@ -245,6 +245,5 @@
             }
         });
     }
-
     </script>
 }

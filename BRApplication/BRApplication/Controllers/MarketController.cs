@@ -19,29 +19,50 @@ namespace BRApplication.Controllers
         //
         // GET: /Market/
 
-        public ActionResult Index()
+        public ActionResult Index(bool isBuy)
         {
-            IEnumerable<MarketPost> marketPostCollection = MarketPostHandler.getAllMarketPosts();
+            IEnumerable<MarketPost> marketPostCollection = MarketPostHandler.getAllMarketPosts(isBuy);
 
             return View(marketPostCollection);
         }
 
         [HttpPost]
-        public ActionResult GetMarketPosts(string searchString)
+        public ActionResult GetMarketPosts(bool isBuy, string searchString = "")
         {
             IEnumerable<MarketPost> marketPostCollection = null;
 
-            if (RegexUtil.isISBN(searchString)) {
-                marketPostCollection = MarketPostHandler.getMarketPostsByISBN(searchString);
-            } else if (RegexUtil.isCourse(searchString)) {
-                marketPostCollection = MarketPostHandler.getMarketPostsByCourse(searchString);
-            } else if (RegexUtil.isTitle(searchString)) {
-                marketPostCollection = MarketPostHandler.getMarketPostsByTitle(searchString);
-            } else if (searchString == String.Empty) {
-                marketPostCollection = MarketPostHandler.getAllMarketPosts();
+            if (RegexUtil.isISBN(searchString)) 
+            {
+                marketPostCollection = MarketPostHandler.getMarketPostsByISBN(isBuy, searchString);
+            } 
+            else if (RegexUtil.isCourse(searchString)) 
+            {
+                marketPostCollection = MarketPostHandler.getMarketPostsByCourse(isBuy, searchString);
+
+                // In case the search string is a substring of a title even though it matches the regex for courses
+                if (marketPostCollection.Count() == 0)
+                {
+                    marketPostCollection = MarketPostHandler.getMarketPostsByTitle(isBuy, searchString);
+                }
+            }
+            else if (RegexUtil.isTitle(searchString)) 
+            {
+                marketPostCollection = MarketPostHandler.getMarketPostsByTitle(isBuy, searchString);
+
+                // In case the search string is a substring of a course even though it does not match the regex 
+                // (the regex for courses only catches strings of alphabets followed by numbers, eg. "AFM 101" and not "AFM")
+                if (marketPostCollection.Count() == 0)
+                {
+                    marketPostCollection = MarketPostHandler.getMarketPostsByCourse(isBuy, searchString);
+                }
+            }
+            else if (searchString == String.Empty) 
+            {
+                marketPostCollection = MarketPostHandler.getAllMarketPosts(isBuy);
             }
 
-            if (marketPostCollection == null) {
+            if (marketPostCollection == null) 
+            {
                 marketPostCollection = new List<MarketPost>();
             }
 
@@ -77,13 +98,6 @@ namespace BRApplication.Controllers
 
             return Json(success);
         }
-
-        public ActionResult GetMarketPostsByisBuy(bool isBuy)
-        {
-            IEnumerable<MarketPost> sellPosts = MarketPostHandler.getMarketPostsByisBuy(isBuy); 
-            return View("Index", sellPosts); 
-        }
-
 
         [HttpPost]
         public JsonResult GetFacebookLink(int profileID)
