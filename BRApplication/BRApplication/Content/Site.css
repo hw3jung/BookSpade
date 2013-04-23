@@ -770,7 +770,6 @@ tr.pager td {
     }
 
     .ExistingPosts .SearchResults {
-        background-color: #fff;
         position: relative;
         width: 100%;
         height: 100%;
@@ -794,8 +793,6 @@ tr.pager td {
             clear:none;
             width:100%;
             padding: 10px;
-            background: #feeebd;
-            color: #613301; 
             font-size: 16px;
             z-index: 2;
 
@@ -808,33 +805,36 @@ tr.pager td {
 	
         .ExistingPosts .SearchResults li > .MarketPost > .MarketBuyPrice {
                 background-repeat:no-repeat; 
-                width: 68px;
-                height: 68px; 
+                height: 100px;
+                width: 100px;
                 text-align: center; 
                 margin-top: auto;
-                line-height: 68px; 
+                margin-right: 10px;
+                line-height: 100px; 
                 font-weight: bold;
                 font-family: Calibri; 
                 float:left;
-                background:#FFF;
-                color:#000;
-                border:2px solid #333; 
+                background:#666;
+                color:#ccc;
+                border:0px solid #333; 
          }
+
+        
 
          .ExistingPosts .SearchResults li > .MarketPost > .BookImage {
                 background-repeat:no-repeat; 
-                width: 68px;
-                height: 68px; 
-                text-align: center; 
+                width: 100px;
+                height: 100px; 
+                text-align: left; 
                 margin-top: auto;
-                line-height: 68px; 
+                line-height: 100px; 
                 font-weight: bold;
                 font-family: Calibri; 
                 float:left;
-                margin-right:15px;
-                background:#DB5400;
+                margin-right:0px;
+                background:#666;
                 color:#000;
-                border:2px solid #333;
+                overflow: hidden;
         }
 
         .ExistingPosts .SearchResults li:hover a {
@@ -888,19 +888,38 @@ tr.pager td {
         }
 
     .SearchResults li:nth-child(even) {
-    	background: #fff;
     }
 
     .SearchResults li:hover {
-    	background: #ffdd57 50% 50% repeat-x;
+    	background: #fff 50% 50% repeat-x;
     }
 
     .BookImage {
         float:left;
-    }h
-    .MarketPostDetail {
-        float:left;
     }
+    .MarketPostDetail {
+        display: block;
+        float: left;
+        background: #666;
+        height: 100px;
+        width: 50%;
+    }
+    .MarketPostTitle {
+        float: left;
+        display: inline-block;
+        height: 100px;
+        width: 100px;
+        background: #cc3300;
+    }
+    .MarketPostMoreDetail {
+        color: #ccc;
+        display: inline-block;
+        height: 100px;
+        width: 200px;
+        background: #666;
+        margin: 0;
+    }
+
     .btnActionNow {
         float:right;
         margin-right: 50px;

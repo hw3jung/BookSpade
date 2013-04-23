@@ -39,17 +39,21 @@ div {
     border: 0px solid red;
 }
 	
-#foreLeft{
+#foreLeft {
     display: inline-block;
     width: 40%;
     min-width: 20em;
     text-align: left;
 }
 
-#foreRight{
+#foreRight {
     display: inline-block;
     width: 45%;
-    text-align: center;
+    text-align: right;
+}
+
+#foreRight img {
+    width: 80%;
 }
 
 #rightDiv h1{
@@ -66,7 +70,7 @@ div {
 	/*background-color: #878787;*/
     padding: 1% 0.8% 1% 0.8%;
     display: inline-block;
-	margin-left: 2%;
+	margin-right: 2%;
 	text-align: center;
     cursor: pointer;
 	-moz-border-radius: 8px;
@@ -115,7 +119,7 @@ div {
 
 #loginHome {
     text-align: right;
-    padding: 0.5% 5% 0 0
+    padding: 0.5% 8% 0 0
 }
 
 

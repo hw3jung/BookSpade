@@ -37,11 +37,11 @@
 </div>
 
 <div class="MarketPost" style="width:100%">
+    <div class="BookImage">
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="100%" />
+    </div>
     <div class="MarketBuyPrice">
         $@Model.Price 
-    </div>
-    <div class="BookImage">
-        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
     </div>
     <div class="MarketPostDetail">
          @using (Html.BeginForm("LoadDetailPost", "Post"))
