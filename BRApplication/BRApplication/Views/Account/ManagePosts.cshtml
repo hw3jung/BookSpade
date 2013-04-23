@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BRApplication.Models.MarketPost>
+
+
+<div id="lblGreetings">
+    You've made the following posts:
+</div>
+
+@{
+    foreach (var marketPost in Model) {
+        @Html.Partial("_ManagePostsPartial", marketPost)  
+    } 
+}
+

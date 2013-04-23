@@ -1,0 +1,28 @@
+﻿@model BRApplication.Models.MarketPost
+
+<div class="MarketPost" style="width:100%">
+    <div class="MarketBuyPrice">
+        $@Model.Price 
+    </div>
+    <div class="BookImage">
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
+    </div>
+    <div class="MarketPostDetail">
+         @using (Html.BeginForm("LoadDetailPost", "Post"))
+         {
+             Session["marketPost"] = Model;
+            @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting"))
+         }
+        <div>
+            <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+            <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+            <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
+        </div>
+        <div>
+            <span class="marketValue datePosted">@Model.datePosted</span>
+        </div>
+    </div>
+    <div class="btnDelete@(Model.PostID)">
+        <input id="btnDelete" type="button" postID="@(Model.PostID)" value="DELETE" />
+    </div>
+</div>

@@ -119,5 +119,15 @@ namespace BRApplication.Controllers
 
         #endregion
 
+        #region Manage
+
+        public ActionResult ManagePosts(int profileID)
+        {
+            
+            return View(); 
+        }
+
+        #endregion
+
     }
 }
