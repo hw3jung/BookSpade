@@ -276,10 +276,6 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -305,6 +301,8 @@
     <Content Include="Views\Market\Partial Views\MarketPost_Partial.cshtml" />
     <Content Include="Views\Posting\Index.cshtml" />
     <Content Include="Views\Posting\Partial Views\BookList_Partial.cshtml" />
+    <Content Include="Views\Account\Partial Views\_ManagePostsPartial.cshtml" />
+    <Content Include="Views\Account\ManagePosts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
