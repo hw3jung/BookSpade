@@ -1,14 +1,5 @@
 ﻿@model IEnumerable<BRApplication.Models.MarketPost> 
 
-<style type="text/css">
-    .fbLink a {
-        color: #0094ff;
-    }
-    .fbLink a:hover {
-        color: #808080;
-    }
-</style>
-
 <div id="mdlLoginRequest" title="Login Request" class="none">
     You must login to proceed! <br /><br />
     <div class="fbLink">
@@ -85,6 +76,7 @@
                 }
             } else {
                 LoginRequestDialog();
+                $(".ui-dialog-content").dialog("close");
             }
             
         });
@@ -103,7 +95,8 @@
                     FacebookLink();
                 }
             } else {
-                LoginRequestDialog(); 
+                LoginRequestDialog();
+                $(".ui-dialog-content").dialog("close");
             }
         });
     });
@@ -203,6 +196,7 @@
             success: function (result) {
                 $("#fblink").html("<a href=\"" + result + "\">" + result + "</a>");
                 FacebookDialog();
+                
             }
         });
     }

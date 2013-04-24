@@ -1,0 +1,38 @@
+﻿   
+/*-- Universal --- --------------------------*/
+
+.none {
+    display:none;
+}
+
+/*------------------------------------------*/   
+/*-- Facebook profile link ---------------- */
+
+.fbLink a {
+    color: #0094ff;
+}
+.fbLink a:hover {
+    color: #808080;
+}
+    
+/* ----------------------------------------- */
+
+/*-- Buy/Sell Post Partial (Modal Dialog)--- */
+/*-- Detail Post ----------------------------*/
+
+#btnSave {
+    height: 40px;
+    width: 110px;
+    text-align: center;
+}
+
+.EmailCancel {
+    width: 80px;
+    height: 40px;
+    text-align:center;
+    padding:5px;
+    padding-left: 10px;
+      
+}
+
+/*------------------------------------------ */

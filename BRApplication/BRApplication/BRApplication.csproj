@@ -209,6 +209,7 @@
     <Content Include="Content\Images\MarketSell.png" />
     <Content Include="Content\Images\StaticImage.jpg" />
     <Content Include="Content\Pages\Home.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\orangy\images\animated-overlay.gif" />
     <Content Include="Content\themes\orangy\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
     <Content Include="Content\themes\orangy\images\ui-bg_flat_100_feeebd_40x100.png" />
