@@ -19,12 +19,18 @@ namespace BRApplication.Controllers
         //
         // GET: /Market/
 
+        #region Index
+
         public ActionResult Index(bool isBuy)
         {
             IEnumerable<MarketPost> marketPostCollection = MarketPostHandler.getAllMarketPosts(isBuy);
 
             return View(marketPostCollection);
         }
+
+        #endregion
+
+        #region GetMarketPosts
 
         [HttpPost]
         public ActionResult GetMarketPosts(bool isBuy, string searchString = "")
@@ -69,6 +75,10 @@ namespace BRApplication.Controllers
             return PartialView("MarketPost_Partial", marketPostCollection);
         }
 
+        #endregion
+
+        #region EmailSeller
+
         [HttpPost]
         public ActionResult EmailSeller(string PostedBy, string textbook, int profileID, string RespondantEmail)
         {
@@ -83,6 +93,10 @@ namespace BRApplication.Controllers
 
             return Json(success); 
         }
+
+        #endregion
+
+        #region EmailBuyer
 
         [HttpPost]
         public ActionResult EmailBuyer(string PostedBy, string textbook, int profileID, string RespondantEmail)
@@ -99,6 +113,10 @@ namespace BRApplication.Controllers
             return Json(success);
         }
 
+        #endregion
+
+        #region GetFacebookLink
+
         [HttpPost]
         public JsonResult GetFacebookLink(int profileID)
         {
@@ -106,6 +124,6 @@ namespace BRApplication.Controllers
             return Json(FBLink);
         }
 
-
+        #endregion
     }
 }

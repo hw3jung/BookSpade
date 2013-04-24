@@ -42,8 +42,12 @@ namespace BRApplication.Controllers
             var fb = new FacebookClient();
             var loginUrl = fb.GetLoginUrl(new
             {
-                client_id = "410278782401754",
-                client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+               // Production : 
+               // client_id = "410278782401754",
+               // client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+               // Development : 
+                client_id = "424967934259582",
+                client_secret = "7d491f9e46f04614240c0043094fd2d5",
                 redirect_uri = RedirectUri.AbsoluteUri,
                 response_type = "code",
                 scope = "email" // Add other permissions as needed
@@ -62,8 +66,12 @@ namespace BRApplication.Controllers
             var fb = new FacebookClient();
             dynamic result = fb.Post("oauth/access_token", new
             {
-                client_id = "410278782401754",
-                client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+                // Production : 
+                // client_id = "410278782401754",
+                // client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+                // Development : 
+                client_id = "424967934259582",
+                client_secret = "7d491f9e46f04614240c0043094fd2d5",
                 redirect_uri = RedirectUri.AbsoluteUri,
                 code = code
             });
@@ -119,12 +127,29 @@ namespace BRApplication.Controllers
 
         #endregion
 
-        #region Manage
+        #region ManagePosts
 
-        public ActionResult ManagePosts(int profileID)
+        public ActionResult ManagePosts()
         {
+            string AccessToken = Convert.ToString(Session["AccessToken"]);
+            FacebookClient fb = new FacebookClient(AccessToken);
+            IDictionary<string, object> user = (IDictionary<string, object>)fb.Get("me"); //get the current user
             
-            return View(); 
+            UserProfile profile = AccountHandler.getUserProfile_Facebook(Convert.ToString(user["id"]));
+
+            IEnumerable<MarketPost> marketPosts = MarketPostHandler.getMarketPostsByProfile(profile.ProfileID); 
+
+            return View(marketPosts); 
+        }
+
+        #endregion
+
+        #region DeletePost
+
+        public JsonResult DeletePost(int postID)
+        {
+            bool success = MarketPostHandler.deletePost(postID); 
+            return Json(success); 
         }
 
         #endregion

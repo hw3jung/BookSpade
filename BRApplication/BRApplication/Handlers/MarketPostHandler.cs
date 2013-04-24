@@ -116,6 +116,57 @@ namespace BRApplication.Handlers
         }
         #endregion
 
+        #region Market Posts by Profile
+
+        public static IEnumerable<MarketPost> getMarketPostsByProfile(int ProfileID)
+        {
+            DataAccessLayer DAL = new DataAccessLayer();
+            List<MarketPost> marketPosts = new List<MarketPost>(); 
+
+            try
+            {
+                DataTable dt = DAL.select(String.Format("ProfileID = '{0}'", ProfileID), "Posts");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int textBookID = Convert.ToInt32(row["TextBookID"]);
+                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                    string condition = Convert.ToString(row["BookCondition"]);
+                    int profileID = Convert.ToInt32(row["ProfileID"]);
+                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                    int price = Convert.ToInt32(row["Price"]);
+                    int postID = Convert.ToInt32(row["PostID"]);
+
+                    UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
+                    string postedBy = UserProfile.Name;
+                    string email = UserProfile.Email;
+
+                    Textbook textbook = TextbookHandler.getTextbook(textBookID);
+                    string title = textbook.Title;
+                    string course = textbook.CourseName;
+                    string isbn = textbook.ISBN;
+                    string author = textbook.Author;
+                    string bookImageURL = textbook.BookImageURL;
+                    List<Bid> bids = new List<Bid>();
+
+                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
+                    marketPost.profileID = profileID;
+                    marketPost.email = email;
+                    marketPost.PostID = postID;
+
+                    marketPosts.Add(marketPost);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving market posts by profile --- " + ex.Message);
+            }
+
+            return marketPosts; 
+        }
+
+        #endregion
+
         #region All Market Posts
         public static IEnumerable<MarketPost> getAllMarketPosts(bool isBuyPost)
         {
@@ -268,6 +319,26 @@ namespace BRApplication.Handlers
             return success;
 
         }
+        #endregion
+
+        #region DeletePost
+
+        public static bool deletePost(int postID)
+        {
+            bool success = false;
+
+            DataAccessLayer DAL = new DataAccessLayer();
+            try
+            {
+                DAL.delete(String.Format("postID = '{0}'", postID), "Posts");
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: could not delete post ---- " + ex.Message);
+            }
+            return success; 
+        }
+
         #endregion
     }
 }

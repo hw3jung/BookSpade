@@ -1,13 +1,15 @@
 ﻿@model BRApplication.Models.MarketPost
 
-<div class="MarketPost" style="width:100%">
-    <div class="MarketBuyPrice">
-        $@Model.Price 
+<div id="mdlConfirmation@(Model.PostID)" class="none">Delete this post? <br /> WARNING: This action is permanent</div>
+
+<div id="MarketPost@(Model.PostID)" class="DeleteMarketPost" style="width:100%">
+    <div class="DeleteMarketPostPrice">
+        @Model.Price 
     </div>
-    <div class="BookImage">
+    <div class="DeleteBookImage">
         <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
     </div>
-    <div class="MarketPostDetail">
+    <div class="DeleteMarketPostDetail">
          @using (Html.BeginForm("LoadDetailPost", "Post"))
          {
              Session["marketPost"] = Model;
@@ -22,7 +24,7 @@
             <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
     </div>
-    <div class="btnDelete@(Model.PostID)">
-        <input id="btnDelete" type="button" postID="@(Model.PostID)" value="DELETE" />
+    <div class="dvBtnDelete">
+        <input id="btnDelete" class="btn-delete" type="button" postID="@(Model.PostID)" profileID="@(Model.profileID)" value="X" />
     </div>
 </div>
