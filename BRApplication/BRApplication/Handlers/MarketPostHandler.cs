@@ -120,7 +120,7 @@ namespace BRApplication.Handlers
 
         #region Market Posts by Profile
 
-        public static IEnumerable<MarketPost> getMarketPostsByProfile(int ProfileID)
+        public static IList<MarketPost> getMarketPostsByProfile(int ProfileID)
         {
             DataAccessLayer DAL = new DataAccessLayer();
             List<MarketPost> marketPosts = new List<MarketPost>(); 

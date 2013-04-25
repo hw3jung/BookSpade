@@ -137,7 +137,7 @@ namespace BRApplication.Controllers
             
             UserProfile profile = AccountHandler.getUserProfile_Facebook(Convert.ToString(user["id"]));
 
-            IEnumerable<MarketPost> marketPosts = MarketPostHandler.getMarketPostsByProfile(profile.ProfileID); 
+            IList<MarketPost> marketPosts = MarketPostHandler.getMarketPostsByProfile(profile.ProfileID); 
 
             return View(marketPosts); 
         }
