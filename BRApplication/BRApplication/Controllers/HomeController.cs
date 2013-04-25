@@ -13,12 +13,23 @@ namespace BRApplication.Controllers
 {
     public class HomeController : Controller
     {
+        #region Index
+
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application. This is Kevin.";
-            
+
+            if (Request.Url.Host.ToLower().Equals("www.bookspade.com"))
+            {
+                return Redirect("http://bookspade.com"); 
+            }
+
             return View();
         }
+
+        #endregion
+
+        #region InsertIt [TEST FUNCTION --> NEEDS TO BE DELETED]
 
         public JsonResult InsertIt(int x)
         {
@@ -37,6 +48,10 @@ namespace BRApplication.Controllers
             return Json(string.Format("Successfully Inserted:{0}", x));
         }
 
+        #endregion
+
+        #region About
+
         public ActionResult About()
         {
             ViewBag.Message = "ASMA";
@@ -44,11 +59,18 @@ namespace BRApplication.Controllers
             return View();
         }
 
+        #endregion
+
+        #region Contact
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page. This is Johnny";
 
             return View();
         }
+
+        #endregion
+
     }
 }

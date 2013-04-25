@@ -16,12 +16,11 @@ namespace BRApplication.Handlers
 
         #region insert 
 
-        public bool insert(Dictionary<string, string> ColumnValuePairs, string TableName)
+        public int insert(Dictionary<string, string> ColumnValuePairs, string TableName)
         {
             string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BookRack"].ToString();
             SqlConnection conn = new SqlConnection(connString);
-            bool succ = true;
-
+            int newId = -1; 
             using (SqlCommand command = conn.CreateCommand())
             {
                 try
@@ -57,25 +56,24 @@ namespace BRApplication.Handlers
 	                }
                     insertCommand += " )";
                    
-                    command.CommandText = String.Format(insertCommand);
+                    command.CommandText = insertCommand + " SELECT SCOPE_IDENTITY()";
                     foreach (var pair in ColumnValuePairs)
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
                     }
                     conn.Open();
-                    command.ExecuteNonQuery();
+                    newId = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.StackTrace);
-                    succ = false;
                 }
                 finally
                 {
                     conn.Close();
                 }
             }
-            return succ;
+            return newId;
         }
 
         #endregion

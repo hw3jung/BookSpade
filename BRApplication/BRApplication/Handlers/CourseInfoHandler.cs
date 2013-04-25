@@ -10,9 +10,9 @@ namespace BRApplication.Handlers
 {
     public class CourseInfoHandler
     {
-        public static bool insert(CourseInfo newCourseInfo)
+        public static int insert(CourseInfo newCourseInfo)
         {
-            bool success = false;
+            int id = -1;
 
             try
             {
@@ -28,7 +28,7 @@ namespace BRApplication.Handlers
                     courseInfo.Add("IsDeleted", "0");
                     courseInfo.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     courseInfo.Add("ModifiedDate", Convert.ToString(DateTime.Now));
-                    success = DAL.insert(courseInfo, "CourseInfo");
+                    id = DAL.insert(courseInfo, "CourseInfo");
                 }
             }
             catch (Exception ex)
@@ -36,7 +36,7 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new course --- " + ex.Message);
             }
 
-            return success; 
+            return id; 
         }
 
         public static CourseInfo getCourseInfo(int courseID)

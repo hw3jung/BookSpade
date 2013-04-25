@@ -28,7 +28,8 @@ namespace BRApplication.Handlers
                         int profileID = Convert.ToInt32(row["ProfileID"]);
                         DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                         int price = Convert.ToInt32(row["Price"]);
-                        int postID = Convert.ToInt32(row["PostID"]); 
+                        int postID = Convert.ToInt32(row["PostID"]);
+                        bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                         UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                         string postedBy = UserProfile.Name;
@@ -45,7 +46,8 @@ namespace BRApplication.Handlers
                         MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                         marketPost.profileID = profileID;
                         marketPost.PostID = postID;
-                        marketPost.email = email; 
+                        marketPost.email = email;
+                        marketPost.viaEmail = viaEmail; 
                         marketPosts.Add(marketPost);
                     }
                 }
@@ -136,6 +138,7 @@ namespace BRApplication.Handlers
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     int price = Convert.ToInt32(row["Price"]);
                     int postID = Convert.ToInt32(row["PostID"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                     string postedBy = UserProfile.Name;
@@ -153,6 +156,7 @@ namespace BRApplication.Handlers
                     marketPost.profileID = profileID;
                     marketPost.email = email;
                     marketPost.PostID = postID;
+                    marketPost.viaEmail = viaEmail; 
 
                     marketPosts.Add(marketPost);
                 }
@@ -185,7 +189,8 @@ namespace BRApplication.Handlers
                     int profileID = Convert.ToInt32(row["ProfileID"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     int price = Convert.ToInt32(row["Price"]);
-                    int postID = Convert.ToInt32(row["PostID"]); 
+                    int postID = Convert.ToInt32(row["PostID"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                     string postedBy = UserProfile.Name;
@@ -202,7 +207,8 @@ namespace BRApplication.Handlers
                     MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
                     marketPost.email = email;
-                    marketPost.PostID = postID; 
+                    marketPost.PostID = postID;
+                    marketPost.viaEmail = viaEmail;
 
                     allMarketPosts.Add(marketPost);
                 }
@@ -250,10 +256,13 @@ namespace BRApplication.Handlers
                     int price = Convert.ToInt32(row["Price"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     IEnumerable<Bid> bids = BidHandler.getBids(postID);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
-                    marketPost.PostID = postID; 
+                    marketPost.PostID = postID;
+                    marketPost.email = email;
+                    marketPost.viaEmail = viaEmail; 
                 }
             }
             catch (Exception ex)

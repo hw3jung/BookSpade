@@ -213,7 +213,8 @@
                     },
                     type: 'POST',
                     success: function (result) {
-                        // TODO: do something with success
+                        var link = "@(Url.Action("Index", "Posting", new {postID = 1}))"
+                        document.location.href = link.replace(1, result);
                     }
                 });
         }
@@ -241,7 +242,8 @@
                 },
                 type: 'POST',
                 success: function (result) {
-                    // TODO: do something with success
+                    var link = "@(Url.Action("Index", "", new {postID = 1}))"
+                    document.location.href = link.replace(1, result); 
                 }
             });
         }

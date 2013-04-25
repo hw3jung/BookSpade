@@ -9,9 +9,9 @@ namespace BRApplication.Handlers
 {
     public class TextbookHandler
     {
-        public static bool insert(Textbook newBook)
+        public static int insert(Textbook newBook)
         {
-            bool success = false;
+            int id = -1; 
 
             try
             {
@@ -27,11 +27,13 @@ namespace BRApplication.Handlers
                     textbook.Add("BookTitle", newBook.Title);
                     textbook.Add("Author", newBook.Author);
                     textbook.Add("CourseID", courseID.ToString());
+                    textbook.Add("BookImageURL", newBook.BookImageURL);
+                    textbook.Add("StorePrice", Convert.ToString(newBook.StorePrice));
                     textbook.Add("IsActive", "1");
                     textbook.Add("IsDeleted", "0");
                     textbook.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     textbook.Add("ModifiedDate", Convert.ToString(DateTime.Now));
-                    success = DAL.insert(textbook, "TextBooks");
+                    id = DAL.insert(textbook, "TextBooks");
                 }
             }
             catch (Exception ex)
@@ -39,7 +41,7 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new textbook --- " + ex.Message);
             }
 
-            return success; 
+            return id; 
         }
 
         public static int getTextbookID(string course, string title)

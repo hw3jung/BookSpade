@@ -13,15 +13,16 @@ namespace BRApplication.Handlers
 
         #region Add User 
 
-        public static bool AddUser(UserProfile elm)
+        public static int AddUser(UserProfile elm)
         {
-            bool success = false;
+            int id = -1;
 
             try
             {
                 DataAccessLayer DAL = new DataAccessLayer();
                 DataTable dt = DAL.select(String.Format("FacebookID = '{0}'", elm.FacebookID), "UserProfile");
                 
+
                 if (dt == null ||dt.Rows.Count == 0)
                 {
                     Dictionary<string, string> Profile = new Dictionary<string, string>();
@@ -34,7 +35,7 @@ namespace BRApplication.Handlers
                     Profile.Add("IsDeleted", "0");
                     Profile.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     Profile.Add("ModifiedDate", Convert.ToString(DateTime.Now));
-                    success = DAL.insert(Profile, "UserProfile");
+                    id = DAL.insert(Profile, "UserProfile");
                 }
             }
             catch (Exception ex)
@@ -42,7 +43,7 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new user --- " + ex.Message); 
             }
 
-            return success; 
+            return id; 
         }
 
     #endregion

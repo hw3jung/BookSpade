@@ -10,6 +10,7 @@
     <div style="width:90%; text-align:center;">
         <div>
             <input id="MarketSearch" type="text" size="40" placeholder="Search by Title, Course, or ISBN" />
+            <input id="btnAddNew" type="button" value="Create A Post" />
         </div>
     </div>
     <div class="ExistingPosts">
@@ -62,6 +63,16 @@
     var postID = 0;
 
     $(function () {
+
+        $("#btnAddNew").click(function () {
+            var LoginStatus = $("#LoginStatus").text();
+            if (LoginStatus == "True") {
+                AddNew();
+            } else {
+                LoginRequestDialog(); 
+            }
+        }); 
+
         $(document).on('click', '.btn-buy', function () {
 
             postID = $(this).attr('postID');
@@ -69,7 +80,7 @@
             var LoginStatus = $("#LoginStatus").text();
           
             if (LoginStatus == "True") {
-                if (email) {
+                if (email == "True") {
                     EmailDialog();
                 } else {
                     FacebookLink();
@@ -88,7 +99,7 @@
             var LoginStatus = $("#LoginStatus").text();
            
             if (LoginStatus == "True") {
-                if (email) {
+                if (email == "True") {
                     EmailDialog();
                 } else {
                     FacebookLink();
@@ -98,6 +109,10 @@
             }
         });
     });
+
+    function AddNew() {
+        document.location = '@Url.Action("AddNew","Posting")';
+    }
 
     function LoginRequestDialog() {
         $("#mdlLoginRequest").dialog({
