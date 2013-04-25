@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BRApplication.Models.MarketPost>
+
+
+<div class="UserPosts">
+    <div class="lblDelete">
+        You've made the following posts:
+    </div>
+    @{
+        foreach (var marketPost in Model) {
+            <div class="UserPost">
+                @Html.Partial("_ManagePostsPartial", marketPost)
+            </div>  
+        }
+    } 
+
+</div>
+
+
+@section Script {
+    <script type="text/javascript">
+
+        $(function () {
+            $(document).on('click', '.btn-delete', function () {
+                var postID = $(this).attr('postID');
+                ConfirmationDialog(postID); 
+            }); 
+        }); 
+
+        function ConfirmationDialog(postID) {
+            $("#mdlConfirmation" + postID).dialog({
+                height: 350,
+                width: 500,
+                modal: true,
+                buttons: {
+                    "Delete": function () {
+                        deletePost(postID); 
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close"); 
+                    }
+                }
+            });
+        }
+
+        function deletePost(postID) {
+            $.ajax({
+                    url: '@Url.Action("DeletePost", "Account")',
+                type: 'POST',
+                data: { postID : postID }, 
+                success: function (result) {
+                    $("#mdlConfirmation" + postID).dialog("close");
+                    $("#MarketPost" + postID).remove(); 
+                }
+            });
+        }
+
+    </script>
+}

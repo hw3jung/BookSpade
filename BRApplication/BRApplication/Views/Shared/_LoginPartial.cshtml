@@ -1,3 +1,4 @@
+
 ﻿<style type="text/css">
   /*------------------------------------------------------------------*/
 /* Facebook 
@@ -24,10 +25,12 @@
 
 </style>
 
-@if (Request.IsAuthenticated) {
+﻿
+@if (Request.IsAuthenticated && Session["AccessToken"] != null)
+{
     <text>
-        <div id="facebook-logoff">
-            Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
+        <div id="facebook-logoff" class="fbContainer">
+            Hello, @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account")!
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) 
             {
                 @Html.AntiForgeryToken()
@@ -36,15 +39,12 @@
         </div>
     </text>
 } else {
-    
     <ul>
         <li> 
-            
-            @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
-            {
-                @Html.AntiForgeryToken()
-                <button id="facebook-button" type="submit" name="provider" value="facebook" title="Log in using your account"></button>
-            }
+           
+             <div id="facebook-login" class="fbContainer">
+                 @Html.ActionLink("Login with Facebook", "Facebook", "Account") 
+             </div>
         </li>
     </ul>
 }

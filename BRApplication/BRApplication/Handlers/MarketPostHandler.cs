@@ -11,7 +11,7 @@ namespace BRApplication.Handlers
     public class MarketPostHandler
     {
         #region Market Posts by Textbook ID
-        private static IEnumerable<MarketPost> getMarketPostsByTextbookIDs(int[] textbookIDs)
+        private static IEnumerable<MarketPost> getMarketPostsByTextbookIDs(bool isBuyPost, int[] textbookIDs)
         {
             List<MarketPost> marketPosts = new List<MarketPost>();
             try
@@ -19,7 +19,7 @@ namespace BRApplication.Handlers
                 DataAccessLayer DAL = new DataAccessLayer();
                 foreach (int textbookID in textbookIDs)
                 {
-                    DataTable dt = DAL.select(String.Format("TextBookID = '{0}'", textbookID), "Posts");
+                    DataTable dt = DAL.select(String.Format("IsBuy = '{0}' AND TextBookID = '{1}'", isBuyPost, textbookID), "Posts");
 
                     foreach (DataRow row in dt.Rows)
                     {
@@ -28,7 +28,8 @@ namespace BRApplication.Handlers
                         int profileID = Convert.ToInt32(row["ProfileID"]);
                         DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                         int price = Convert.ToInt32(row["Price"]);
-                        int postID = Convert.ToInt32(row["PostID"]); 
+                        int postID = Convert.ToInt32(row["PostID"]);
+                        bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                         UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                         string postedBy = UserProfile.Name;
@@ -45,14 +46,15 @@ namespace BRApplication.Handlers
                         MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                         marketPost.profileID = profileID;
                         marketPost.PostID = postID;
-                        marketPost.email = email; 
+                        marketPost.email = email;
+                        marketPost.viaEmail = viaEmail; 
                         marketPosts.Add(marketPost);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.Write("ERROR: An error occured in retrieving market posts --- " + ex.Message);
+                Console.Write("ERROR: An error occured in retrieving market posts by textbook IDs--- " + ex.Message);
             }
 
             return marketPosts;
@@ -60,14 +62,14 @@ namespace BRApplication.Handlers
         #endregion
 
         #region Market Posts by ISBN
-        public static IEnumerable<MarketPost> getMarketPostsByISBN(string isbn)
+        public static IEnumerable<MarketPost> getMarketPostsByISBN(bool isBuy, string isbn)
         {
             IEnumerable<MarketPost> marketPosts = null;
 
             try
             {
                 int[] textbookIDs = TextbookHandler.getTextbookIDsByISBN(isbn);
-                marketPosts = getMarketPostsByTextbookIDs(textbookIDs);
+                marketPosts = getMarketPostsByTextbookIDs(isBuy, textbookIDs);
             }
             catch (Exception ex)
             {
@@ -79,14 +81,14 @@ namespace BRApplication.Handlers
         #endregion
 
         #region Market Posts by Course
-        public static IEnumerable<MarketPost> getMarketPostsByCourse(string courseName)
+        public static IEnumerable<MarketPost> getMarketPostsByCourse(bool isBuy, string courseName)
         {
             IEnumerable<MarketPost> marketPosts = null;
 
             try
             {
                 int[] textbookIDs = TextbookHandler.getTextbookIDsByCourse(courseName);
-                marketPosts = getMarketPostsByTextbookIDs(textbookIDs);
+                marketPosts = getMarketPostsByTextbookIDs(isBuy, textbookIDs);
             }
             catch (Exception ex)
             {
@@ -98,14 +100,14 @@ namespace BRApplication.Handlers
         #endregion
 
         #region Market Posts by Title
-        public static IEnumerable<MarketPost> getMarketPostsByTitle(string title)
+        public static IEnumerable<MarketPost> getMarketPostsByTitle(bool isBuy, string title)
         {
             IEnumerable<MarketPost> marketPosts = null;
 
             try
             {
                 int[] textbookIDs = TextbookHandler.getTextbookIDsByTitle(title);
-                marketPosts = getMarketPostsByTextbookIDs(textbookIDs);
+                marketPosts = getMarketPostsByTextbookIDs(isBuy, textbookIDs);
             }
             catch (Exception ex)
             {
@@ -116,15 +118,16 @@ namespace BRApplication.Handlers
         }
         #endregion
 
-        #region All Market Posts
-        public static IEnumerable<MarketPost> getAllMarketPosts()
+        #region Market Posts by Profile
+
+        public static IEnumerable<MarketPost> getMarketPostsByProfile(int ProfileID)
         {
-            List<MarketPost> allMarketPosts = new List<MarketPost>();
+            DataAccessLayer DAL = new DataAccessLayer();
+            List<MarketPost> marketPosts = new List<MarketPost>(); 
 
             try
             {
-                DataAccessLayer DAL = new DataAccessLayer();
-                DataTable dt = DAL.select("", "Posts");
+                DataTable dt = DAL.select(String.Format("ProfileID = '{0}'", ProfileID), "Posts");
 
                 foreach (DataRow row in dt.Rows)
                 {
@@ -134,7 +137,60 @@ namespace BRApplication.Handlers
                     int profileID = Convert.ToInt32(row["ProfileID"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     int price = Convert.ToInt32(row["Price"]);
-                    int postID = Convert.ToInt32(row["PostID"]); 
+                    int postID = Convert.ToInt32(row["PostID"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
+
+                    UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
+                    string postedBy = UserProfile.Name;
+                    string email = UserProfile.Email;
+
+                    Textbook textbook = TextbookHandler.getTextbook(textBookID);
+                    string title = textbook.Title;
+                    string course = textbook.CourseName;
+                    string isbn = textbook.ISBN;
+                    string author = textbook.Author;
+                    string bookImageURL = textbook.BookImageURL;
+                    List<Bid> bids = new List<Bid>();
+
+                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
+                    marketPost.profileID = profileID;
+                    marketPost.email = email;
+                    marketPost.PostID = postID;
+                    marketPost.viaEmail = viaEmail; 
+
+                    marketPosts.Add(marketPost);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving market posts by profile --- " + ex.Message);
+            }
+
+            return marketPosts; 
+        }
+
+        #endregion
+
+        #region All Market Posts
+        public static IEnumerable<MarketPost> getAllMarketPosts(bool isBuyPost)
+        {
+            List<MarketPost> allMarketPosts = new List<MarketPost>();
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("IsBuy = '{0}'", isBuyPost), "Posts");
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int textBookID = Convert.ToInt32(row["TextBookID"]);
+                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                    string condition = Convert.ToString(row["BookCondition"]);
+                    int profileID = Convert.ToInt32(row["ProfileID"]);
+                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                    int price = Convert.ToInt32(row["Price"]);
+                    int postID = Convert.ToInt32(row["PostID"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                     string postedBy = UserProfile.Name;
@@ -151,7 +207,8 @@ namespace BRApplication.Handlers
                     MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
                     marketPost.email = email;
-                    marketPost.PostID = postID; 
+                    marketPost.PostID = postID;
+                    marketPost.viaEmail = viaEmail;
 
                     allMarketPosts.Add(marketPost);
                 }
@@ -199,10 +256,13 @@ namespace BRApplication.Handlers
                     int price = Convert.ToInt32(row["Price"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     IEnumerable<Bid> bids = BidHandler.getBids(postID);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
                     marketPost.profileID = profileID;
-                    marketPost.PostID = postID; 
+                    marketPost.PostID = postID;
+                    marketPost.email = email;
+                    marketPost.viaEmail = viaEmail; 
                 }
             }
             catch (Exception ex)
@@ -270,56 +330,24 @@ namespace BRApplication.Handlers
         }
         #endregion
 
-        #region Market Posts by IsBuy
+        #region DeletePost
 
-        public static IEnumerable<MarketPost> getMarketPostsByisBuy(bool isBuy)
+        public static bool deletePost(int postID)
         {
-            List<MarketPost> marketPosts = new List<MarketPost>();
-            DataAccessLayer DAL = new DataAccessLayer(); 
+            bool success = false;
 
+            DataAccessLayer DAL = new DataAccessLayer();
             try
             {
-                DataTable dt = DAL.select(String.Format("IsBuy = '{0}'", isBuy), "Posts");
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    bool IsBuy = Convert.ToBoolean(row["IsBuy"]);
-                    string condition = Convert.ToString(row["BookCondition"]);
-                    int profileID = Convert.ToInt32(row["ProfileID"]);
-                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
-                    int price = Convert.ToInt32(row["Price"]);
-                    int postID = Convert.ToInt32(row["PostID"]);
-                    int textBookID = Convert.ToInt32(row["TextBookID"]);
-
-                    UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
-                    string postedBy = UserProfile.Name;
-                    string email = UserProfile.Email; 
-
-                    Textbook textbook = TextbookHandler.getTextbook(textBookID);
-                    string title = textbook.Title;
-                    string course = textbook.CourseName;
-                    string isbn = textbook.ISBN;
-                    string author = textbook.Author;
-                    string bookImageURL = textbook.BookImageURL;
-                    List<Bid> bids = new List<Bid>();
-
-                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
-                    marketPost.profileID = profileID;
-                    marketPost.PostID = postID;
-                    marketPost.email = email; 
-                    marketPosts.Add(marketPost);
-                }
-               
+                DAL.delete(String.Format("postID = '{0}'", postID), "Posts");
             }
             catch (Exception ex)
             {
-                Console.Write("ERROR: An error occured in retrieving market posts --- " + ex.Message);
+                Console.Write("ERROR: could not delete post ---- " + ex.Message);
             }
-
-            return marketPosts;
+            return success; 
         }
 
         #endregion
-
     }
 }

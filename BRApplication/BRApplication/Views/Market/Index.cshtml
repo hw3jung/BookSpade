@@ -1,21 +1,16 @@
 ﻿@model IEnumerable<BRApplication.Models.MarketPost> 
 
-<style type="text/css">
-    .fbLink a {
-        color: #0094ff;
-    }
-
-    .fbLink a:hover {
-        color: #808080;
-    }
-
-
-</style>
-
+<div id="mdlLoginRequest" title="Login Request" class="none">
+    You must login to proceed! <br /><br />
+    <div class="fbLink">
+        @Html.ActionLink("Login with Facebook", "Facebook", "Account") 
+    </div>
+</div>
 <div class="PostContainer">
    <div style="width:100%; text-align:center;">
         <div>
-            <input id="MarketSearch" type="text" size="40" placeholder=" Search Buy Posts/Sell Posts" />
+            <input id="MarketSearch" type="text" size="40" placeholder="Search by Title, Course, or ISBN" />
+            <input id="btnAddNew" type="button" value="Create A Post" />
         </div>
     </div>
     <div class="ExistingPosts">
@@ -26,35 +21,38 @@
         </div>
      </div>
 </div>
+<div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
 <script type="text/javascript">
-
-
+    //Must come after definition of the 'ul' element that we are binding to
     stroll.bind('.ExistingPosts ul');
 
-    var delay = (function () {
-        var timer = 0;
-        return function (callback, ms) {
-            clearTimeout(timer);
-            timer = setTimeout(callback, ms);
-        };
-    })();
-
+    var xhr = null;
     $("#MarketSearch").keyup(function () {
-        var userInputDelay = 200;
+        var searchVal = $("#MarketSearch").val().trim();
+        var isBuySection = '@(Model.ElementAt(0).IsBuy)';
 
-        delay(function () {
-            var searchVal = $("#MarketSearch").val().trim();
+        if (isBuySection == "True") {
+            isBuySection = true;
+        } else {
+            isBuySection = false;
+        }
+       
+        if (xhr && xhr.readyState != 4) {
+            xhr.abort();
+        }
 
-            $.ajax({
-                url: '@Url.Action("GetMarketPosts", "Market")',
-                data: { searchString: searchVal },
-                type: 'POST',
-                success: function (result) {
-                    $("#SearchResults").html(result);
-                }
-            });
-        }, userInputDelay);
+        xhr = $.ajax({
+            url: '@Url.Action("GetMarketPosts", "Market")',
+            data: {
+                isBuy: isBuySection,
+                searchString: searchVal
+            },
+            type: 'POST',
+            success: function (result) {
+                $("#SearchResults").html(result);
+            }
+        });
     });
 </script>
 
@@ -62,100 +60,148 @@
 @section script {
     <script type="text/javascript">
 
-        $(function () {
-            $(document).on('click', '.btn-buy', function () {
-                var email = $("#email").text();
-                if (email) {
-                    EmailDialog();
-                } else {
-                    FacebookLink();
-                }
-            });
+    var postID = 0;
 
+    $(function () {
 
-            $(document).on('click', '.btn-sell', function () {
-                var email = $("#email").text();
-                if (email) {
-                    EmailDialog();
-                } else {
-                    FacebookLink();
-                }
-            });
-
-        });
-
-        function EmailDialog() {
-            $("#mdlEmail").dialog({
-                height: 350,
-                width: 500,
-                modal: true,
-                buttons: [{
-                             text: "Cancel",
-                             "class": 'EmailCancel',
-                             click: function() { 
-                                $(this).dialog("close"); 
-                            }
-                          }]
-                });
-        }
-
-        $(document).on('click', '.btn-save', function () {
-            var postedby = $("#PostedBy").text();
-            var bookTitle = $("#bookTitle").text();
-            var profileID = $("#profileID").text();
-            var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
-
-            $.ajax({
-                url: '@Url.Action("EmailSeller", "Market")',
-                data: {
-                    PostedBy: postedby,
-                    textbook: bookTitle,
-                    profileID: profileID,
-                    RespondantEmail: RespondantEmail
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result) {
-                        SuccessDialog(this);
-                    } else {
-                        FailedToMailDialog(this);
-                    }
-                }
-            });
+        $("#btnAddNew").click(function () {
+            var LoginStatus = $("#LoginStatus").text();
+            if (LoginStatus == "True") {
+                AddNew();
+            } else {
+                LoginRequestDialog(); 
+            }
         }); 
 
-        $(document).on('click', '.btn-sell-save', function () {
-            var postedby = $("#PostedBy").text();
-            var bookTitle = $("#bookTitle").text();
-            var profileID = $("#profileID").text();
-            var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        $(document).on('click', '.btn-buy', function () {
 
-            $.ajax({
-                url: '@Url.Action("EmailBuyer", "Market")',
-                data: {
-                    PostedBy: postedby,
-                    textbook: bookTitle,
-                    profileID: profileID,
-                    RespondantEmail: RespondantEmail
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result) {
-                        SuccessDialog(this);
-                    } else {
-                        FailedToMailDialog(this);
-                    }
+            postID = $(this).attr('postID');
+            var email = $("#email" + postID).text();
+            var LoginStatus = $("#LoginStatus").text();
+          
+            if (LoginStatus == "True") {
+                if (email == "True") {
+                    EmailDialog();
+                } else {
+                    FacebookLink();
                 }
+            } else {
+                LoginRequestDialog();
+            }
+            
+        });
+
+
+        $(document).on('click', '.btn-sell', function () {
+
+            postID = $(this).attr('postID');
+            var email = $("#email" + postID).text();
+            var LoginStatus = $("#LoginStatus").text();
+           
+            if (LoginStatus == "True") {
+                if (email == "True") {
+                    EmailDialog();
+                } else {
+                    FacebookLink();
+                }
+            } else {
+                LoginRequestDialog();
+            }
+        });
+    });
+
+    function AddNew() {
+        document.location = '@Url.Action("AddNew","Posting")';
+    }
+
+    function LoginRequestDialog() {
+        $("#mdlLoginRequest").dialog({
+            height: 200,
+            width: 500,
+            modal: true
+        });
+    }
+
+    function EmailDialog() {
+        $("#mdlEmail" + postID).dialog({
+            height: 350,
+            width: 500,
+            modal: true,
+            buttons: [{
+                        text: "Cancel",
+                        "class": 'EmailCancel',
+                        click: function() { 
+                            $(this).dialog("close"); 
+                        }
+                  }]
             });
-         });
+    }
 
+    function PostInfo() {
+        var post = {
+            postedBy: $("#PostedBy" + postID).text(),
+            bookTitle: $("#bookTitle" + postID).text(),
+            profileID: $("#profileID" + postID).text()
+        }
+        return post;
+    }
 
-        function FacebookLink() {
-            alert("fb link");
-            var profileID = $("#profileID").text();
-            alert(profileID);
-            $.ajax({
-                url: '@Url.Action("GetFacebookLink", "Market")',
+    $(document).on('click', '.btn-save', function () {
+
+        var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        var post = PostInfo();
+           
+        $.ajax({
+            url: '@Url.Action("EmailSeller", "Market")',
+            data: {
+                PostedBy: post.postedBy,
+                textbook: post.bookTitle,
+                profileID: post.profileID,
+                RespondantEmail: post.RespondantEmail
+            },
+            type: 'POST',
+            success: function (result) {
+                if (result) {
+                    SuccessDialog(this);
+                } else {
+                    FailedToMailDialog(this);
+                }
+            }
+        });
+    }); 
+
+        
+
+    $(document).on('click', '.btn-sell-save', function () {
+
+        var RespondantEmail = $(this).siblings('.txtRespondantEmail').val();
+        var post = PostInfo(); 
+
+        $.ajax({
+            url: '@Url.Action("EmailBuyer", "Market")',
+            data: {
+                PostedBy: post.postedBy,
+                textbook: post.bookTitle,
+                profileID: post.profileID,
+                RespondantEmail: RespondantEmail
+            },
+            type: 'POST',
+            success: function (result) {
+                if (result) {
+                    SuccessDialog(this);
+                } else {
+                    FailedToMailDialog(this);
+                }
+            }
+        });
+    });
+
+    function FacebookLink() {
+
+      var profileID = $("#profileID" + postID).text();
+
+        $.ajax({
+            url: '@Url.Action("GetFacebookLink", "Market")',
             data: {
                 profileID: profileID
             },
@@ -163,15 +209,15 @@
             success: function (result) {
                 $("#fblink").html("<a href=\"" + result + "\">" + result + "</a>");
                 FacebookDialog();
+                
             }
         });
-
     }
 
     function SuccessDialog(dialog) {
-        $("#mdlSuccess").dialog({
+        $("#mdlSuccess" + postID).dialog({
             height: 300,
-            width: 200,
+            width: 350,
             modal: true,
             buttons: {
                 "OK": function () {
@@ -182,7 +228,7 @@
     }
 
     function FailedToMailDialog() {
-        $("#mdlSuccess").dialog({
+        $("#mdlFailedToMail" + postID).dialog({
             height: 200,
             width: 200,
             modal: true,
@@ -195,7 +241,7 @@
     }
 
     function FacebookDialog() {
-        $("#mdlFacebook").dialog({
+        $("#mdlFacebook" + postID).dialog({
             height: 300,
             width: 500,
             modal: true,
@@ -206,6 +252,5 @@
             }
         });
     }
-
     </script>
 }

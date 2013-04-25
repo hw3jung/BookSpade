@@ -14,12 +14,13 @@ namespace BRApplication.Handlers
         // White list of valid table names to prevent SQL injection
         String[] WhiteListOfTableNames = new String[] { "Posts", "CourseInfo", "TextBooks", "Transactions", "TransactionStatus", "UserProfile", "Bids" };
 
-        public bool insert(Dictionary<string, string> ColumnValuePairs, string TableName)
+        #region insert 
+
+        public int insert(Dictionary<string, string> ColumnValuePairs, string TableName)
         {
             string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["BookRack"].ToString();
             SqlConnection conn = new SqlConnection(connString);
-            bool succ = true;
-
+            int newId = -1; 
             using (SqlCommand command = conn.CreateCommand())
             {
                 try
@@ -55,28 +56,32 @@ namespace BRApplication.Handlers
 	                }
                     insertCommand += " )";
                    
-                    command.CommandText = String.Format(insertCommand);
+                    command.CommandText = insertCommand + " SELECT SCOPE_IDENTITY()";
                     foreach (var pair in ColumnValuePairs)
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
                     }
                     conn.Open();
-                    command.ExecuteNonQuery();
+                    newId = Convert.ToInt32(command.ExecuteScalar());
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.StackTrace);
-                    succ = false;
                 }
                 finally
                 {
                     conn.Close();
                 }
             }
-            return succ;
+            return newId;
         }
 
+        #endregion
+
+        #region Select
+
         // WhereClause is either "" or of the form "Col = value AND/OR Col2 = value2..."
+
         public DataTable select(string WhereClause, string TableName, string[] ColumnNames = null)
         {
             ColumnNames = ColumnNames ?? new string[] { "*" };
@@ -131,6 +136,9 @@ namespace BRApplication.Handlers
             return dt;
         }
 
+        #endregion
+
+        #region delete
         // WhereClause is either empty or of the form column=value etc
         public void delete(string WhereClause, string TableName)
         {
@@ -164,6 +172,9 @@ namespace BRApplication.Handlers
             }
         }
 
+        #endregion
+
+        #region update
         // WhereClause is either empty or of the form column=value etc
         public void update(string TableName, string WhereClause, Dictionary<string, string> newColumnValues)
         {
@@ -213,5 +224,8 @@ namespace BRApplication.Handlers
                 conn.Close();
             }
         }
+
+        #endregion
+
     }
 }

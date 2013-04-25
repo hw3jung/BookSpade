@@ -9,13 +9,14 @@ using BRApplication.Utility;
 using Microsoft.Web.WebPages.OAuth;
 using Facebook; 
 
-
 namespace BRApplication.Controllers
 {
     public class PostingController : Controller
     {
         //
         // GET: /Posting/
+
+        #region Index
 
         public ActionResult Index(int postID)
         {
@@ -24,6 +25,10 @@ namespace BRApplication.Controllers
             return View(marketPost);
         }
 
+        #endregion
+
+        #region AddNew
+
         public ActionResult AddNew()
         {
             IEnumerable<Textbook> textBookCollection = TextbookHandler.getAllTextbooks();
@@ -31,16 +36,51 @@ namespace BRApplication.Controllers
             return View(textBookCollection);
         }
 
+        #endregion
+
+        #region GetTextbooks
+        [HttpPost]
+        public ActionResult GetTextbooks(string searchString = "")
+        {
+            IEnumerable<Textbook> bookCollection = null;
+
+            if (RegexUtil.isISBN(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByISBN(searchString);
+            }
+            else if (RegexUtil.isCourse(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByCourse(searchString);
+            }
+            else if (RegexUtil.isTitle(searchString))
+            {
+                bookCollection = TextbookHandler.getTextbooksByTitle(searchString);
+            }
+            else if (searchString == String.Empty)
+            {
+                bookCollection = TextbookHandler.getAllTextbooks();
+            }
+
+            if (bookCollection == null)
+            {
+                bookCollection = new List<Textbook>();
+            }
+
+            return PartialView("BookList_Partial", bookCollection);
+        }
+
+        #endregion
+
+        #region LoadDetailPost
+
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult LoadDetailPost()
         {
-            MarketPost marketPost = (MarketPost)TempData["marketPost"];
+            MarketPost marketPost = (MarketPost)Session["marketPost"];
             return View("Index", marketPost); 
         }
 
-
         [HttpPost]
-        
         public ActionResult SaveBook(string isbn, 
                                      string title,
                                      string author,
@@ -60,18 +100,31 @@ namespace BRApplication.Controllers
             }
 
             Textbook newBook = new Textbook(isbn, title, author, course, bookImageURL, price);
-            bool success = TextbookHandler.insert(newBook);
+            int bookId = TextbookHandler.insert(newBook);
 
-            if (success)
+            string accesstoken = Convert.ToString(Session["AccessToken"]);
+
+            FacebookClient client = new FacebookClient(accesstoken);
+
+            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
+            string FacebookID = Convert.ToString(user["id"]);
+
+            UserProfile profile = AccountHandler.getUserProfile_Facebook(FacebookID);
+
+
+            if (bookId >= 0)
             {
-                // TODO: implement retrieval of user profile ID and include it as part of a new Post
-                return SavePost(0, newBook.CourseName, newBook.Title, isBuy, price, condition, email);
+                return SavePost(profile.ProfileID, newBook.CourseName, newBook.Title, isBuy, price, condition, email);
             }
             else
             {
                 return Json("Failed to insert textbook: " + newBook.Title);
             }
         }
+
+        #endregion
+
+        #region SavePost
 
         [HttpPost]
         public ActionResult SavePost(int profileID, 
@@ -86,7 +139,7 @@ namespace BRApplication.Controllers
 
             //Retrieve current user's facebook ID using the facebooktoken
 
-            string accesstoken = Convert.ToString(Session["facebooktoken"]); 
+            string accesstoken = Convert.ToString(Session["AccessToken"]); 
 
             FacebookClient client = new FacebookClient(accesstoken); 
 
@@ -95,26 +148,24 @@ namespace BRApplication.Controllers
             
             UserProfile profile =  AccountHandler.getUserProfile_Facebook(FacebookID);
 
-            bool success = false; 
+            bool success = false;
 
-            if (email != "")
+            if (email != String.Empty)
+            {
                 success = AccountHandler.updateUserProfile_Email(FacebookID, email);
+            }
 
             Post newPost = new Post(profile.ProfileID, textbookID, isBuy, price, condition, email != "");
-            success = PostHandler.insert(newPost);
+            int postID = PostHandler.insert(newPost);
 
-            if (success)
-            {
-                int postID = PostHandler.getPostID(newPost);
-                return Index(postID);
-            }
-            else
-            {
-                return Json("Failed to insert post for: " + title);
-            }
+           
+            PostHandler.getPostID(newPost);              
+          
+            return Json(postID);
+
         }
 
-        
+        #endregion
 
     }
 }

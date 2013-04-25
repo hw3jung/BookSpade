@@ -19,6 +19,7 @@ namespace BRApplication.Models
         public DateTime datePosted { get; set; }
         public IEnumerable<Bid> Bids { get; set; }
         public string email { get; set; }
+        public bool viaEmail {get; set;}
         public int profileID { get; set; }
         public int PostID { get; set; }
 

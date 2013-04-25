@@ -10,15 +10,19 @@ namespace BRApplication.Handlers
 {
     public class AccountHandler
     {
-        public bool AddUser(UserProfile elm)
+
+        #region Add User 
+
+        public static int AddUser(UserProfile elm)
         {
-            bool success = false;
+            int id = -1;
 
             try
             {
                 DataAccessLayer DAL = new DataAccessLayer();
                 DataTable dt = DAL.select(String.Format("FacebookID = '{0}'", elm.FacebookID), "UserProfile");
                 
+
                 if (dt == null ||dt.Rows.Count == 0)
                 {
                     Dictionary<string, string> Profile = new Dictionary<string, string>();
@@ -26,11 +30,12 @@ namespace BRApplication.Handlers
                     Profile.Add("Name", elm.Name);
                     Profile.Add("Email", elm.Email);
                     Profile.Add("FacebookProfileLink", elm.FacebookProfileLink);
+                    Profile.Add("Gender", elm.Gender);
                     Profile.Add("IsActive", "1");
                     Profile.Add("IsDeleted", "0");
                     Profile.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     Profile.Add("ModifiedDate", Convert.ToString(DateTime.Now));
-                    success = DAL.insert(Profile, "UserProfile");
+                    id = DAL.insert(Profile, "UserProfile");
                 }
             }
             catch (Exception ex)
@@ -38,8 +43,12 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new user --- " + ex.Message); 
             }
 
-            return success; 
+            return id; 
         }
+
+    #endregion
+
+        #region getUserProfile
 
         public static UserProfile getUserProfile(int profileID)
         {
@@ -71,6 +80,10 @@ namespace BRApplication.Handlers
             return profile;
         }
 
+        #endregion
+
+        #region getUserByFacebook
+
         public static UserProfile getUserProfile_Facebook(string facebookID)
         {
             UserProfile profile = null;
@@ -89,9 +102,10 @@ namespace BRApplication.Handlers
                     string email = Convert.ToString(row["Email"]);
                     string facebookProfileLink = Convert.ToString(row["FacebookProfileLink"]);
                     string gender = Convert.ToString(row["Gender"]);
-                    string profileID = Convert.ToString(row["ProfileID"]); 
+                    int profileID = Convert.ToInt32(row["ProfileID"]); 
 
                     profile = new UserProfile(name, facebookProfileLink, FacebookID, gender, email, String.Empty);
+                    profile.ProfileID = profileID; 
                 }
             }
             catch (Exception ex)
@@ -102,6 +116,9 @@ namespace BRApplication.Handlers
             return profile;
         }
 
+        #endregion
+
+        #region updateUserProfile_Email
 
         public static bool updateUserProfile_Email(string facebookID, string Email)
         {
@@ -124,12 +141,17 @@ namespace BRApplication.Handlers
             return success;
         }
 
+        #endregion
 
+        #region getUserName
+        
         public static string getUserName(int profileID)
         {
             UserProfile profile = getUserProfile(profileID);
 
             return profile.Name;
         }
+
+        #endregion
     }
 }

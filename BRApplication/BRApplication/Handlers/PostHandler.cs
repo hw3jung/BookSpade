@@ -9,9 +9,9 @@ namespace BRApplication.Handlers
 {
     public class PostHandler
     {
-        public static bool insert(Post newPost)
+        public static int insert(Post newPost)
         {
-            bool success = false;
+            int id = -1;
 
             try
             {
@@ -33,7 +33,7 @@ namespace BRApplication.Handlers
                     post.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     post.Add("ModifiedDate", Convert.ToString(DateTime.Now));
         
-                    success = DAL.insert(post, "Posts");
+                    id = DAL.insert(post, "Posts");
                 }
             }
             catch (Exception ex)
@@ -41,7 +41,7 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new post --- " + ex.Message);
             }
 
-            return success;
+            return id;
         }
 
         public static int getPostID(Post newPost)

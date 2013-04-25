@@ -4,14 +4,15 @@ using System.Linq;
 using System.Web;
 using BRApplication.Models;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace BRApplication.Handlers
 {
     public class CourseInfoHandler
     {
-        public static bool insert(CourseInfo newCourseInfo)
+        public static int insert(CourseInfo newCourseInfo)
         {
-            bool success = false;
+            int id = -1;
 
             try
             {
@@ -27,7 +28,7 @@ namespace BRApplication.Handlers
                     courseInfo.Add("IsDeleted", "0");
                     courseInfo.Add("CreatedDate", Convert.ToString(DateTime.Now));
                     courseInfo.Add("ModifiedDate", Convert.ToString(DateTime.Now));
-                    success = DAL.insert(courseInfo, "CourseInfo");
+                    id = DAL.insert(courseInfo, "CourseInfo");
                 }
             }
             catch (Exception ex)
@@ -35,7 +36,7 @@ namespace BRApplication.Handlers
                 Console.Write("ERROR: An error occured in adding a new course --- " + ex.Message);
             }
 
-            return success; 
+            return id; 
         }
 
         public static CourseInfo getCourseInfo(int courseID)
@@ -93,8 +94,29 @@ namespace BRApplication.Handlers
 
             try
             {
+                courseName = courseName.Replace(" ", String.Empty);
+                string pattern = @"([A-Za-z]+)";
+                string[] result = Regex.Split(courseName, pattern);
+
+                string coursePrefix = result[1];
+                string courseNumber = String.Empty;
+                for (int i = 2; i < result.Length; i++)
+                {
+                    courseNumber += result[i];
+                }
+
+                String whereClause;
+                if (courseNumber == String.Empty)
+                {
+                    whereClause = String.Format("CourseName LIKE '%{0}%'", coursePrefix);
+                }
+                else
+                {
+                    whereClause = String.Format("CourseName LIKE '%{0}%{1}%'", coursePrefix, courseNumber);
+                }
+
                 DataAccessLayer DAL = new DataAccessLayer();
-                DataTable dt = DAL.select(String.Format("CourseName LIKE '%{0}%'", courseName), "CourseInfo", new string[] { "CourseID" });
+                DataTable dt = DAL.select(whereClause, "CourseInfo", new string[] { "CourseID" });
 
                 foreach (DataRow row in dt.Rows)
                 {
