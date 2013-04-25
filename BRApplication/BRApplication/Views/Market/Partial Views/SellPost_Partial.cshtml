@@ -45,11 +45,13 @@
     </div>
 
     <div class="MarketPostDetail">
-            @using (Html.BeginForm("LoadDetailPost", "Post"))
-            { 
-            TempData["marketPost"] = Model;
+
+        @using (Html.BeginForm("LoadDetailPost", "Post"))
+        { 
+            Session["marketPost"] = Model;
             @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting")) 
-            }
+        }
+
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
