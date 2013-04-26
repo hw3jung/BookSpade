@@ -1,43 +1,16 @@
-
-﻿<style type="text/css">
-  /*------------------------------------------------------------------*/
-/* Facebook 
---------------------------------------------------------------------*/
-
-    #facebook-button {
-        background: #ccc url('@Url.Content("~/Content/Images/login-with-facebook.png")') no-repeat top left;
-        /*padding-left: 16px;*/
-        background-size:154px 29px;
-        height: 29px;
-        width: 154px;
-        border:  none;
-        cursor: pointer;
-    }
-    
-    #facebook-logoff {
-        height: 29px;
-    }
-
-    .fbContainer {
-        right: 10%;
-        position: relative;
-    }
-
-</style>
-
 ﻿
 @if (Request.IsAuthenticated && Session["AccessToken"] != null)
 {
-    <text>
-        <div id="facebook-logoff" class="fbContainer">
-            Hello, @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account")!
-            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) 
-            {
-                @Html.AntiForgeryToken()
-                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-            }
-        </div>
-    </text>
+
+    <div id="facebook-logoff" class="fbContainer">
+        Hello, @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account")!
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) 
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </div>
+ 
 } else {
     <ul>
         <li> 
