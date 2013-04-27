@@ -1,78 +1,227 @@
-﻿/*Global container*/
-html {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
-    background: url('../Images/bg_pattern.jpg') #FFF;
+﻿/* global */
+	html {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow-y: auto;
+		background: url('../Images/bg_pattern.jpg') #FFF;
 
+	}
+
+	body {
+		width: 100%;
+		height: 95%;
+		font: 1em calibri;
+		margin: 0;
+		padding: 0;
+	}
+
+	div {
+	}
+
+	div.main {
+		width: 100%;
+		height: 100%;
+	}
+
+	div.home {
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		display: table-cell; 
+		vertical-align: middle;
+	}
+
+	div.home[class] {
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		display: table-cell; 
+		vertical-align: middle;
+	}
+
+	div.body {
+		width: 100%;
+		height: 90%;
+		display: table;
+		position: static;
+		overflow-y: scroll;
+
+	}
+
+	div.body[class] {
+		width: 100%;
+		height: 90%;
+		display: table;
+		position: static;
+		overflow-y: scroll;
+	}
+
+	div.sidebar {
+		-webkit-background-clip: padding-box;
+		background-color: #f2f4f8;
+		border-left: 1px solid rgba(0, 0, 0, .4);
+		-webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9;
+		display: block;
+		height: 100%;
+		position: fixed;
+		right: 0;
+		top: 0;
+		width: 205px;
+		z-index: 300;
+	}
+
+	header {
+		display: table;
+		height: 2.5em;
+		width: 100%;
+		text-align: center;
+		background: #666;
+		overflow: hidden;
+	}
+
+	#headerCell {
+		display: table-cell;
+		width: 100%;
+		height: 100%;
+		vertical-align: bottom;
+		padding: 0% 5% 0% 5%;
+	}
+
+	#headerWrapper {
+		display: inline-block;
+		width: 100%;
+		line-height: 100%;
+	}
+		
+	#headLeft{
+		display: inline-block;
+		width: 50%;
+		text-align: left;
+		float: left;
+	}
+
+	#headLeft img{
+		height: 2em;
+		border: 0;
+	}
+	
+	footer{
+		width: 100%;
+		font: 0.8em Arial;
+		padding-bottom: 1em;
+		color: #666;
+		overflow: hidden;
+	}
+
+	footer ul li{ 
+		list-style: none; 
+		float: right; 
+		display: table; 
+		padding: 0% 2% 0% 2%;
+	}
+
+	footer a:link, footer a:active, footer a:visited{
+		font: 1em arial;
+		color: #383838;
+		text-decoration: none;
+	}	
+
+	/* search bar */
+	#subheader {
+		width: 100%;
+		border-bottom: 5px solid #666;
+		text-align: right;
+		background: #666;
+	}
+	
+	#subheaderWrapper {
+		margin-right: 5%
+	}
+	
+	#btnAddNew {
+	width: 7em;
+	font: 1em calibri;
+	font-weight: bold;
+	background: #666;
+	color: #fff;
+	border: 0;
+	cursor: pointer;
+	text-align: right;
+	margin: 0;
+	padding: 0;
 }
+	
+	input {
+		border: 1px solid #e2e2e2;
+		background: #fff;
+		color: #333;
+		font-size: 1em;
+		margin: 0;
+	}
+	input[type="text"] {
+		width: 30%;
+	}
 
-/*Body container*/
-body {
-    width: 100%;
-    height: 95%;
-    font: 1em arial;
-    margin: 0;
-    padding: 0;
-}
+	input.button {
+		background: #66;
+	}
 
-/*DIVs*/
-div {
-}
+	input:focus, textarea:focus {
+	}
 
-div.main {
-    width: 100%;
-    height: 100%;
-}
+	input[type="checkbox"] {
+		background: transparent;
+		border: inherit;
+		width: auto;
+	}
 
-div.home {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    display: table-cell; 
-    vertical-align: middle;
-}
+	input[type="button"] {
+		width: 20%;
+		height: 90%;
+	}
 
-div.home[class] {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    display: table-cell; 
-    vertical-align: middle;
-}
+	#login {
+		display: inline-block;
+		text-align: right;
+		width: 50%;
+		font-size: 1em;
+		padding: 0;
 
-div.body {
-    width: 100%;
-    height: 90%;
-    display: table;
-    position: static;
-    overflow-y: scroll;
+	}
 
-}
+	#login a {
+		color: #fff;
+		margin-left: 0;
+		margin-right: 0;
+		padding: 0;
+		text-decoration: none;
+	}
 
-div.body[class] {
-    width: 100%;
-    height: 90%;
-    display: table;
-    position: static;
-    overflow-y: scroll;
-}
+	#login a.username {
+		background: none;
+		margin: 0;
+		padding: 0;
+		text-decoration: underline;
+	}
 
-div.sidebar {
-    -webkit-background-clip: padding-box;
-    background-color: #f2f4f8;
-    border-left: 1px solid rgba(0, 0, 0, .4);
-    -webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9;
-    display: block;
-    height: 100%;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 205px;
-    z-index: 300;
-}
+	#login ul {
+		margin: 0;
+	}
+
+	#login li {
+		display: inline;
+		list-style: none;
+	}
+
+	#login img {
+		height: 70%;
+	}
+
+
+
+
 
 hgroup, nav, section {
     display: block;
@@ -198,18 +347,6 @@ h5, h6 {
 .featured + .main-content {
 }
 
-
-/*footer {
-    background-color: #e2e2e2;
-    font-size: 1em;
-    height: 5%;
-    text-align: center;
-}
-
-    footer .copyright {
-        position: relative;
-        top: 25%;
-    }*/
 
 /* site title
 ----------------------------------------------------------*/
@@ -499,34 +636,7 @@ textarea {
     width: 500px;
 }
 
-/*market search bar*/
 
-input {
-    border: 1px solid #e2e2e2;
-    background: #fff;
-    color: #333;
-    font-size: 1em;
-    margin: 0;
-
-}
-
-    input:focus, textarea:focus {
-    }
-
-    input[type="checkbox"] {
-        background: transparent;
-        border: inherit;
-        width: auto;
-    }
-
-    input[type="button"] {
-        width: 20%;
-        height: 90%;
-    }
-
-    input[type="text"] {
-        width: 100%;
-    }
 
 /* info and errors */
 .message-info {
@@ -693,6 +803,7 @@ tr.pager td {
         text-align:left;  
         border: 0px solid #7ac0da; 
         padding:0px; 
+		overflow: hidden;
     }
 
     .PostHeader {
@@ -716,7 +827,7 @@ tr.pager td {
     .ExistingPosts {
         margin: auto; 
         width:90%;
-        height: 80%;
+        height: 100%;
         text-align:left;  
         padding: 0;
     }
@@ -744,7 +855,8 @@ tr.pager td {
         font-weight:bold;
         font-family: Calibri;
         font-size: 15px;
-        color: #402203;
+        color: #000;
+        text-decoration: underline;
     }
 
     .marketLabel {
@@ -771,15 +883,12 @@ tr.pager td {
     }
 
     .ExistingPosts .SearchResults {
-        position: relative;
         width: 100%;
         height: 100%;
 	    padding: 0;
 	    overflow-y: auto;
 	    overflow-x: hidden;
 	    list-style: none;
-        border-top: 0px solid #BA4B06;
-        border-bottom: 0px solid #BA4B06;
 
         -webkit-perspective: 400px;
 	       -moz-perspective: 400px;
@@ -790,10 +899,11 @@ tr.pager td {
     
     	.ExistingPosts .SearchResults li {
             float:left;
+			margin-bottom: 1em;
             text-align:left;
             clear:none;
             width:100%;
-            padding: 10px;
+            padding: 0;
             font-size: 16px;
             z-index: 2;
 
@@ -813,15 +923,9 @@ tr.pager td {
                 margin-right: 10px;
                 line-height: 100px; 
                 font-weight: bold;
-                font-family: Calibri; 
+                font-family: Calibri;
+                color: #000; 
                 float:left;
-<<<<<<< Updated upstream
-                background:#666;
-                color:#ccc;
-=======
-                color:#666;
->>>>>>> Stashed changes
-                border:0px solid #333; 
          }
 
         
@@ -843,7 +947,7 @@ tr.pager td {
         }
 
         .ExistingPosts .SearchResults li:hover a {
-            color: #6B3700;
+            color: #000;
         }
     
     #BookListWrapper {
@@ -895,19 +999,14 @@ tr.pager td {
     .SearchResults li:nth-child(even) {
     }
 
-    .SearchResults li:hover {
-    	background: #fff 50% 50% repeat-x;
-    }
-
     .BookImage {
         float:left;
     }
     .MarketPostDetail {
         display: block;
         float: left;
-        background: #666;
         height: 100px;
-        width: 50%;
+        width: 70%;
     }
     .MarketPostTitle {
         float: left;
@@ -926,18 +1025,53 @@ tr.pager td {
     }
 
     .btnActionNow {
-        float:right;
-        margin-right: 50px;
+        float:right;        
     }
     #btnSellNow {
         width: 100%;
-        padding:10px;
-    }
+		background: #9d9d9c;
+        color: #fff;
+		padding: 1% 0.8% 1% 0.8%;
+		display: inline-block;
+		margin-right: 2%;
+		text-align: center;
+		cursor: pointer;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 8px;
+		-khtml-border-radius: 8px;
+		border-radius: 8px;
+		border: 0;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		background: -webkit-gradient(linear, left top, left bottom, from(#9d9d9c), to(#575756));
+		background: -moz-linear-gradient(top,  #9d9d9c,  #575756);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d9d9c', endColorstr='#575756');
+		}
+	
+	
 
     #btnBuyNow {
-        width: 100%;
-        padding:10px;
-    }
+        width: 7em;
+		background: #9d9d9c;
+        color: #fff;
+		padding: 1% 0.8% 1% 0.8%;
+		display: inline-block;
+		margin-right: 2%;
+		text-align: center;
+		cursor: pointer;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 8px;
+		-khtml-border-radius: 8px;
+		border-radius: 8px;
+		border: 0;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		background: -webkit-gradient(linear, left top, left bottom, from(#9d9d9c), to(#575756));
+		background: -moz-linear-gradient(top,  #9d9d9c,  #575756);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d9d9c', endColorstr='#575756');
+		}
 
     .NewBook {
         width: 100%;
@@ -1072,6 +1206,30 @@ tr.pager td {
         width:100%; 
         text-align:right; 
     }
+	
+	.btn-buy {
+	    width: 7em;
+		background: #9d9d9c;
+		font: 1.2em calibri;
+        color: #fff;
+		padding: 1% 0.8% 1% 0.8%;
+		display: inline-block;
+		margin-right: 2%;
+		text-align: center;
+		cursor: pointer;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 8px;
+		-khtml-border-radius: 8px;
+		border-radius: 8px;
+		border: 0;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		background: -webkit-gradient(linear, left top, left bottom, from(#9d9d9c), to(#575756));
+		background: -moz-linear-gradient(top,  #9d9d9c,  #575756);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#9d9d9c', endColorstr='#575756');
+		}
+	
   
 
 /*-------------------------------------------------------------*/
@@ -1275,39 +1433,7 @@ tr.pager td {
         float: left;
     }
 
-/* NEW STUFF by Alan*/
-header {
-    display: table;
-	width: 100%;
-    text-align: center;
-	background: #666;
-	overflow: hidden;
-}
 
-#headerCell {
-    display: table-cell;
-    width: 100%;
-    height: 100%;
-    vertical-align: middle;
-    padding: 0% 5% 0% 5%;
-}
-
-#headerWrapper {
-    display: inline-block;
-    width: 100%;
-    line-height: 100%;
-}
-	
-#headLeft{
-    display: inline-block;
-    width: 50%;
-    text-align: left;
-    float: left;
-}
-
-#headLeft img{
-	height: 30px;
-}
 
 /* login
 ---------------------------------------------------------- */
@@ -1315,13 +1441,12 @@ header {
     display: inline-block;
     text-align: right;
     width: 50%;
-    font-size: .85em;
-    text-align: right;
     padding: 0;
 
 }
 
 #login a {
+    font: 1em;
     color: #fff;
     margin-left: 0;
     margin-right: 0;
@@ -1347,36 +1472,145 @@ header {
 
 #login img {
     height: 70%;
+	border: 0;
 }
 
-/*#login{
-    padding: 0.5% 10% 0.5% 10%;
-    float: right;
+
+
+
+/* migrated from style.css */
+   
+/*-- Universal --- --------------------------*/
+
+.none {
+    display:none;
 }
 
-#login img{
-	height: 70%
-}*/
+/*------------------------------------------*/   
+/*-- Facebook profile link ---------------- */
 
-footer{
-	width: 100%;
-	font: 0.8em Arial;
-    color: #666;
-	overflow: hidden;
+.fbLink a {
+    color: #0094ff;
+}
+.fbLink a:hover {
+    color: #808080;
+}
+    
+/* ----------------------------------------- */
+
+/*-- Buy/Sell Post Partial (Modal Dialog)--- */
+/*-- Detail Post ----------------------------*/
+
+#btnSave {
+    height: 40px;
+    width: 110px;
+    text-align: center;
 }
 
-footer ul li{ 
-	list-style: none; 
-	float: right; 
-	display: table; 
-	padding: 0% 2% 0% 2%;
+.EmailCancel {
+    width: 80px;
+    height: 40px;
+    text-align:center;
+    padding:5px;
+    padding-left: 10px;
+      
 }
 
-footer a:link, footer a:active, footer a:visited{
-	font: 1em Arial;
-	color: #383838;
-	text-decoration: none;
-}	
+/*------------------------------------------ */
+
+/*------------------------------------------------------------------*/
+/* Facebook 
+--------------------------------------------------------------------*/
+
+    #facebook-button {
+        background: #ccc url('@Url.Content("~/Content/Images/login-with-facebook.png")') no-repeat top left;
+        /*padding-left: 16px;*/
+        background-size:154px 29px;
+        height: 29px;
+        width: 154px;
+        border:  none;
+        cursor: pointer;
+    }
+    
+    #facebook-logoff {
+        height: 29px;
+    }
+
+    .fbContainer {
+		width: 100%;
+		height: 100%
+    }
+
+/*------------------------------------------ */
+
+/*-- Manage Posts Partial --------------------*/
+
+.lblDelete {
+    font-weight: bold;
+    color: #130e55;
+    font-size: 15px;
+    margin-left: 5%;
+    padding: 20px;
+}
+.UserPosts {
+    width:100%;
+    text-align:left;
+    display:block;
+}
+
+.UserPost {
+    background-color: #F2F2F2;
+    width: 90%;
+    margin: 0 auto;
+    display:table;
+    padding-left: 20px;
+    border-bottom:1px solid #ccc;
+}
+
+    .UserPost:hover {
+        background-color: #f7fea5;
+    }
+
+.DeleteMarketPost {
+    float:left;
+}
+
+.DeleteMarketPostPrice {
+    display:inline-block;
+    vertical-align:middle;
+    text-align:center;
+    width:5%;
+    height:5%;
+}
+
+.DeleteBookImage {
+    display:inline-block;
+    vertical-align:middle;
+    text-align:center;
+    width:5%;
+    height:5%;
+}
+
+.DeleteMarketPostDetail {
+    display:inline-block;
+    padding-left:5px;
+    vertical-align: middle;
+}
+
+.dvBtnDelete {
+    display:inline-block;
+    vertical-align:middle;
+    float:right;
+
+}
+
+.btn-delete {
+    width:100%;
+    text-align:center;
+}
+
+/*--------------------------------------------*/
+
 	
 
 /*NEW STUFF ENDS HERE*/

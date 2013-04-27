@@ -17,27 +17,27 @@
     The poster could not be contact with the given email address, please try again. 
 </div>
 
-<div class="MarketPost" style="width:100%">
+<div class="MarketPost">
     <div class="BookImage">
-        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="100%" />
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image"  />
     </div>
     <div class="MarketBuyPrice">
         $@Model.Price 
     </div>
+
     <div class="MarketPostDetail">
-         <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
+        <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
+        
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
-            @*<span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>*@
+            <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
             <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
-        </div>
-        <div>
             <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
     </div>
     <div class="btnActionNow">
-        <input id="btnSellNow" type="button" class="btn-sell" postID="@(Model.PostID)" value="SELL NOW" />
+        <input id="btnSellNow" type="button" class="btn-sell" postID="@(Model.PostID)" value="Sell Now" />
     </div>
 </div>
 

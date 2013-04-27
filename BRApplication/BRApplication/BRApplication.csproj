@@ -211,25 +211,6 @@
     <Content Include="Content\Images\StaticImage.jpg" />
     <Content Include="Content\Pages\Home.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Content\themes\orangy\images\animated-overlay.gif" />
-    <Content Include="Content\themes\orangy\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_flat_100_feeebd_40x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_flat_30_cccccc_40x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_flat_50_b4b1b1_40x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_gloss-wave_60_fece2f_500x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_gloss-wave_70_ffdd57_500x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_gloss-wave_90_e9d79b_500x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_highlight-soft_30_df7207_1x100.png" />
-    <Content Include="Content\themes\orangy\images\ui-bg_spotlight_45_d2954b_16x16.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_3d3d3d_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_bd7b00_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_d19405_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_ed9f26_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_fadc7a_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_ffe180_256x240.png" />
-    <Content Include="Content\themes\orangy\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\themes\orangy\jquery-ui-1.10.1.custom.css" />
-    <Content Include="Content\themes\orangy\jquery-ui-1.10.1.custom.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -310,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

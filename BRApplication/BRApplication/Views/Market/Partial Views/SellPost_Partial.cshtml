@@ -18,14 +18,15 @@
 
 <div class="MarketPost">
     <div class="BookImage">
-        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="100%" />
+        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image"  />
     </div>
     <div class="MarketBuyPrice">
         $@Model.Price 
     </div>
 
     <div class="MarketPostDetail">
-          <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
+        <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
+        
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
@@ -33,10 +34,9 @@
             <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
             <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
-
     </div>
     <div  class="btnActionNow">
-        <input id="btnBuyNow" type="button" postID="@(Model.PostID)" class="btn-buy" value="BUY NOW" />
+        <input id="btnBuyNow" type="button" postID="@(Model.PostID)" class="btn-buy" value="Buy Now" />
     </div>
 </div>
 
