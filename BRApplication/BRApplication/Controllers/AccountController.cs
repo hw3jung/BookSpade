@@ -44,8 +44,8 @@ namespace BRApplication.Controllers
             var loginUrl = fb.GetLoginUrl(new
             {
                // Production : 
-               // client_id = "410278782401754",
-               // client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+                //client_id = "410278782401754",
+                //client_secret = "4d0fd841a025dd908191f50b86ec90f7",
                // Development : 
                 client_id = "424967934259582",
                 client_secret = "7d491f9e46f04614240c0043094fd2d5",
@@ -68,8 +68,8 @@ namespace BRApplication.Controllers
             dynamic result = fb.Post("oauth/access_token", new
             {
                 // Production : 
-               // client_id = "410278782401754",
-               // client_secret = "4d0fd841a025dd908191f50b86ec90f7",
+                //client_id = "410278782401754",
+                //client_secret = "4d0fd841a025dd908191f50b86ec90f7",
                 // Development : 
                 client_id = "424967934259582",
                 client_secret = "7d491f9e46f04614240c0043094fd2d5",

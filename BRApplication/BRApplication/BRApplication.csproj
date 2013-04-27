@@ -210,13 +210,13 @@
     <Content Include="Content\Images\MarketSell.png" />
     <Content Include="Content\Images\StaticImage.jpg" />
     <Content Include="Content\Pages\Home.css" />
-    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Images\bg_pattern.jpg" />
     <Content Include="Images\load.gif" />
     <Content Include="Images\logo_bookspade_text.png" />
+    <Content Include="Images\logo_bookspade_white.png" />
     <Content Include="Images\pic_Home.png" />
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
