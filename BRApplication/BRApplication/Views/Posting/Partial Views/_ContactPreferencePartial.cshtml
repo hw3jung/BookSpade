@@ -1,0 +1,27 @@
+﻿@model BRApplication.Models.MarketPost
+
+<div id="SubmitDialog" title="Contact Preference">
+    <div id="ContactPref">
+        <div class="PrefDetail">
+            <ul>
+                <li class="lblContactRef">Email</li>
+                <li class="valContactRef">This will be kept private. BookSpade will send you an email with the poster's email address if your bid has been selected.</li>
+            </ul>
+        </div>
+        <div class="PrefDetail">
+            <ul>
+                <li class="lblContactRef">Facebook</li>
+                <li class="valContactRef">The poster will be provided with a link to your facebook profile, he/she will utlize this to contact you (through facebook message).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        @Html.RadioButton("Pref", false)Facebook
+        @Html.RadioButton("Pref", true)Email
+    </div>
+    <div id="divContactEmail" class="none">
+        Please enter a valid email: 
+        @Html.TextBox("txtContactEmail")
+    </div>
+</div>

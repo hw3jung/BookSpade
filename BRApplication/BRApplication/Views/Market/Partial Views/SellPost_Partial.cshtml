@@ -7,7 +7,7 @@
 </div>
 <div id="mdlFacebook@(Model.PostID)" class="none">
     Please contact @Model.PostedBy through their facebook profile: <br />
-    <div id="fblink" class="fbLink">&nbsp;</div>
+    <div id="fblink@(Model.PostID)" class="fbLink">&nbsp;</div>
 </div>
 <div id="mdlSuccess@(Model.PostID)" title="Success!"  class="none">
     Success! The poster has been notified and will contact you soon.
@@ -25,13 +25,7 @@
     </div>
 
     <div class="MarketPostDetail">
-
-        @using (Html.BeginForm("LoadDetailPost", "Post"))
-        { 
-            Session["marketPost"] = Model;
-            @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting")) 
-        }
-
+          <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>

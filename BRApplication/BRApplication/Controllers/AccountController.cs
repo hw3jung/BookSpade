@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using BRApplication.Filters;
 using BRApplication.Models;
 using BRApplication.Handlers;
+using BRApplication.Utility; 
 using Facebook;
 
 namespace BRApplication.Controllers
@@ -150,6 +151,23 @@ namespace BRApplication.Controllers
         {
             bool success = MarketPostHandler.deletePost(postID); 
             return Json(success); 
+        }
+
+        #endregion
+
+        #region GetCurrentUserID
+
+        public JsonResult GetCurrentUserID()
+        {
+            if (Session["AccessToken"] != null)
+            {
+                string accesstoken = Convert.ToString(Session["AccessToken"]);
+                return Json(UserProfileUtil.getProfileID(accesstoken)); 
+            }
+            else
+            {
+                return Json(-1); 
+            }
         }
 
         #endregion

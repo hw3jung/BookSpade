@@ -23,7 +23,23 @@ namespace BRApplication.Models
         public int profileID { get; set; }
         public int PostID { get; set; }
 
-        public MarketPost(string title, bool isBuy, string course, string condition, string postedby, DateTime dateposted, string isbn, string author, string bookImageURL, int price, IEnumerable<Bid> bids)
+        public MarketPost(
+            string title, 
+            bool isBuy, 
+            string course,
+            string condition,
+            string postedby, 
+            DateTime dateposted,
+            string isbn, 
+            string author, 
+            string bookImageURL, 
+            int price, 
+            IEnumerable<Bid> bids,
+            string Email,
+            bool viaEmail,
+            int profileID,
+            int postID
+            )
         {
             this.Title = title; 
             this.IsBuy = isBuy;
@@ -36,6 +52,10 @@ namespace BRApplication.Models
             this.BookImageURL = bookImageURL;
             this.Price = price;
             this.Bids = bids;
+            this.email = Email;
+            this.viaEmail = viaEmail;
+            this.profileID = profileID;
+            this.PostID = postID;
         }
     }
 }

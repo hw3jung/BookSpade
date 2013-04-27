@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using BRApplication.Models;
 using System.Data;
+using BRApplication.Utility; 
 
 namespace BRApplication.Handlers
 {
     public class BidHandler
     {
-        public static IEnumerable<Bid> getBids(int postID)
+        #region getBids
+
+        public static List<Bid> getBids(int postID)
         {
             List<Bid> bids = new List<Bid>();
 
@@ -20,20 +23,16 @@ namespace BRApplication.Handlers
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    int buyerID = Convert.ToInt32(row["BuyerID"]);
-                    int sellerID = Convert.ToInt32(row["SellerID"]);
+                    int bidderID = Convert.ToInt32(row["BidderID"]);
 
-                    DataTable buyerDt = DAL.select(String.Format("profileID = '{0}'", buyerID), "UserProfile");
+                    DataTable buyerDt = DAL.select(String.Format("profileID = '{0}'", bidderID), "UserProfile");
                     DataRow buyerRow = buyerDt.Rows[0];
-                    string buyer = Convert.ToString(buyerRow["Name"]);
-
-                    DataTable sellerDt = DAL.select(String.Format("profileID = '{0}'", sellerID), "UserProfile");
-                    DataRow sellerRow = sellerDt.Rows[0];
-                    string seller = Convert.ToString(sellerRow["Name"]);
-
+                    
+                    string bidder = Convert.ToString(buyerRow["Name"]);
                     decimal bidPrice = Convert.ToDecimal(row["BidPrice"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
-                    Bid bid = new Bid(postID, buyerID, sellerID, buyer, seller, bidPrice);
+                    Bid bid = new Bid(postID, bidderID, bidder, bidPrice, viaEmail);
                     bids.Add(bid);
                 }
             }
@@ -44,5 +43,32 @@ namespace BRApplication.Handlers
 
             return bids;
         }
+
+        #endregion
+
+        #region createBid
+
+        public static int createBid(Bid bid) 
+        {
+            int bidID = -1;
+            DataAccessLayer DAL = new DataAccessLayer();
+            Dictionary<string, string> Bid = new Dictionary<string, string>();
+
+            Bid.Add("BidPrice", Convert.ToString(bid.BidPrice));
+            Bid.Add("PostID", Convert.ToString(bid.PostID));
+            Bid.Add("BidderID", Convert.ToString(bid.BidderID));
+            Bid.Add("viaEmail", Convert.ToString(bid.BidviaEmail)); 
+            Bid.Add("IsActive", Convert.ToString(true));
+            Bid.Add("IsDeleted", Convert.ToString(false));
+            Bid.Add("CreatedDate", Convert.ToString(DateTime.Now));
+            Bid.Add("ModifiedDate", Convert.ToString(DateTime.Now));
+
+            bidID =  DAL.insert(Bid, "Bids");
+
+            return bidID; 
+        }
+
+        #endregion
+
     }
 }

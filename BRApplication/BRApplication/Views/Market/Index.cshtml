@@ -207,7 +207,8 @@
             },
             type: 'POST',
             success: function (result) {
-                $("#fblink").html("<a href=\"" + result + "\">" + result + "</a>");
+                alert(result); 
+                $("#fblink" + postID).html("<a href=\"" + result + "\">" + result + "</a>");
                 FacebookDialog();
                 
             }

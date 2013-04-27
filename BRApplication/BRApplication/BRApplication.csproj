@@ -198,6 +198,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\EmailUtil.cs" />
     <Compile Include="Utility\RegexUtil.cs" />
+    <Compile Include="Utility\UserProfileUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\effects\stroll\stroll.css" />
@@ -304,6 +305,8 @@
     <Content Include="Views\Posting\Partial Views\BookList_Partial.cshtml" />
     <Content Include="Views\Account\Partial Views\_ManagePostsPartial.cshtml" />
     <Content Include="Views\Account\ManagePosts.cshtml" />
+    <Content Include="Views\Posting\Partial Views\_PosterRepsonsePartial.cshtml" />
+    <Content Include="Views\Posting\Partial Views\_ContactPreferencePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

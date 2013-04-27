@@ -1,0 +1,11 @@
+﻿@model BRApplication.Models.MarketPost
+
+<div id="mdlEmail@(Model.PostID)" title="Contact Email Address" class="none mdlEmail">
+    Please enter an email the buyer can contact you with to buy your textbook. <br/><br/>
+     @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
+    <input id="btnSellSave" class="btn-sell-save" type="button" value="Submit" />
+</div>
+<div id="mdlFacebook@(Model.PostID)" class="none">
+    Please contact @Model.PostedBy through their facebook profile: <br /><br />
+    <div id="fblink" class="fbLink">&nbsp;</div>
+</div>

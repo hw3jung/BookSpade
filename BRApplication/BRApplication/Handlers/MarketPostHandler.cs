@@ -41,13 +41,15 @@ namespace BRApplication.Handlers
                         string isbn = textbook.ISBN;
                         string author = textbook.Author;
                         string bookImageURL = textbook.BookImageURL;
-                        List<Bid> bids = new List<Bid>();
+                        List<Bid> bids = BidHandler.getBids(postID); 
 
-                        MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
-                        marketPost.profileID = profileID;
-                        marketPost.PostID = postID;
-                        marketPost.email = email;
-                        marketPost.viaEmail = viaEmail; 
+                        MarketPost marketPost = new MarketPost(
+                            title, isBuy, course, 
+                            condition, postedBy, datePosted, 
+                            isbn, author, bookImageURL, 
+                            price, bids, email,
+                            viaEmail, profileID, postID);
+ 
                         marketPosts.Add(marketPost);
                     }
                 }
@@ -150,14 +152,15 @@ namespace BRApplication.Handlers
                     string isbn = textbook.ISBN;
                     string author = textbook.Author;
                     string bookImageURL = textbook.BookImageURL;
-                    List<Bid> bids = new List<Bid>();
+                    List<Bid> bids = BidHandler.getBids(postID); 
 
-                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
-                    marketPost.profileID = profileID;
-                    marketPost.email = email;
-                    marketPost.PostID = postID;
-                    marketPost.viaEmail = viaEmail; 
-
+                    MarketPost marketPost = new MarketPost(
+                        title, isBuy, course, 
+                        condition, postedBy, datePosted,
+                        isbn, author, bookImageURL,
+                        price, bids, email, 
+                        viaEmail, profileID, postID
+                     );
                     marketPosts.Add(marketPost);
                 }
             }
@@ -202,13 +205,14 @@ namespace BRApplication.Handlers
                     string isbn = textbook.ISBN;
                     string author = textbook.Author;
                     string bookImageURL = textbook.BookImageURL;
-                    List<Bid> bids = new List<Bid>();
+                    List<Bid> bids = BidHandler.getBids(postID); 
 
-                    MarketPost marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
-                    marketPost.profileID = profileID;
-                    marketPost.email = email;
-                    marketPost.PostID = postID;
-                    marketPost.viaEmail = viaEmail;
+                    MarketPost marketPost = new MarketPost(
+                        title, isBuy, course, 
+                        condition, postedBy, datePosted,
+                        isbn, author, bookImageURL, 
+                        price, bids, email,
+                        viaEmail, profileID, postID);
 
                     allMarketPosts.Add(marketPost);
                 }
@@ -258,11 +262,12 @@ namespace BRApplication.Handlers
                     IEnumerable<Bid> bids = BidHandler.getBids(postID);
                     bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
-                    marketPost = new MarketPost(title, isBuy, course, condition, postedBy, datePosted, isbn, author, bookImageURL, price, bids);
-                    marketPost.profileID = profileID;
-                    marketPost.PostID = postID;
-                    marketPost.email = email;
-                    marketPost.viaEmail = viaEmail; 
+                    marketPost = new MarketPost(
+                        title, isBuy, course, 
+                        condition, postedBy, datePosted, 
+                        isbn, author, bookImageURL, 
+                        price, bids, email, 
+                        viaEmail, profileID, postID);
                 }
             }
             catch (Exception ex)

@@ -73,12 +73,14 @@ namespace BRApplication.Controllers
 
         #region LoadDetailPost
 
-        [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult LoadDetailPost()
+        public ActionResult LoadDetailPost(int postID)
         {
-            MarketPost marketPost = (MarketPost)Session["marketPost"];
+            MarketPost marketPost = MarketPostHandler.getMarketPost(postID);
             return View("Index", marketPost); 
         }
+        #endregion
+
+        #region SaveBook
 
         [HttpPost]
         public ActionResult SaveBook(string isbn, 
@@ -103,14 +105,7 @@ namespace BRApplication.Controllers
             int bookId = TextbookHandler.insert(newBook);
 
             string accesstoken = Convert.ToString(Session["AccessToken"]);
-
-            FacebookClient client = new FacebookClient(accesstoken);
-
-            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
-            string FacebookID = Convert.ToString(user["id"]);
-
-            UserProfile profile = AccountHandler.getUserProfile_Facebook(FacebookID);
-
+            UserProfile profile = AccountHandler.getUserProfile_Facebook(UserProfileUtil.getFacebookID(accesstoken));
 
             if (bookId >= 0)
             {
@@ -137,32 +132,44 @@ namespace BRApplication.Controllers
         {
             int textbookID = TextbookHandler.getTextbookID(course, title);
 
-            //Retrieve current user's facebook ID using the facebooktoken
-
-            string accesstoken = Convert.ToString(Session["AccessToken"]); 
-
-            FacebookClient client = new FacebookClient(accesstoken); 
-
-            IDictionary<string, object> user = (IDictionary<string, object>)client.Get("me"); //get the current user
-            string FacebookID = Convert.ToString(user["id"]);  
             
-            UserProfile profile =  AccountHandler.getUserProfile_Facebook(FacebookID);
+            
+            string accesstoken = Convert.ToString(Session["AccessToken"]);
+            int ProfileID = UserProfileUtil.getProfileID(accesstoken); 
 
-            bool success = false;
-
-            if (email != String.Empty)
-            {
-                success = AccountHandler.updateUserProfile_Email(FacebookID, email);
-            }
-
-            Post newPost = new Post(profile.ProfileID, textbookID, isBuy, price, condition, email != "");
+            AccountHandler.updateUserProfile_Email(ProfileID, email);
+            
+            Post newPost = new Post(ProfileID, textbookID, isBuy, price, condition, email != "");
             int postID = PostHandler.insert(newPost);
 
-           
             PostHandler.getPostID(newPost);              
           
             return Json(postID);
 
+        }
+
+        #endregion
+
+        #region CreateBid
+        
+        public JsonResult CreateBid(int postID, int bid, string email)
+        {
+            string AccessToken = Convert.ToString(Session["AccessToken"]);
+            UserProfile profile = UserProfileUtil.getUserProfile(AccessToken);
+
+            Bid newBid = new Bid(postID, profile.ProfileID, profile.Name, bid, email != string.Empty); 
+
+            int bidID = BidHandler.createBid(newBid);
+
+            if (bidID >= 0)
+            {
+                return Json(new { profileName = profile.Name, BidID = bidID });
+            }
+            else
+            {
+                Console.Write("ERROR:  An error occured in creating the bid --- For Post: " + postID + " with Bid Price: " + bid);
+                return Json(false); 
+            }
         }
 
         #endregion

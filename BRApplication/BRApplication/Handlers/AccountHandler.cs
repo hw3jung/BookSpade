@@ -118,9 +118,37 @@ namespace BRApplication.Handlers
 
         #endregion
 
+        #region getProfileIDByFacebook
+
+        public static int getProfileID_Facebook(string facebookID)
+        {
+            int profileID = -1; 
+
+            try
+            {
+                DataAccessLayer DAL = new DataAccessLayer();
+                DataTable dt = DAL.select(String.Format("FacebookID = '{0}'", facebookID), "UserProfile");
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+
+                    profileID = Convert.ToInt32(row["ProfileID"]); 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("ERROR: An error occured in retrieving the user profile --- " + ex.Message);
+            }
+
+            return profileID;
+        }
+
+        #endregion
+
         #region updateUserProfile_Email
 
-        public static bool updateUserProfile_Email(string facebookID, string Email)
+        public static bool updateUserProfile_Email(int ProfileID, string Email)
         {
             bool success = false;
 
@@ -130,7 +158,7 @@ namespace BRApplication.Handlers
                 Profile.Add("Email", Email); 
 
                 DataAccessLayer DAL = new DataAccessLayer();
-                DAL.update("UserProfile", String.Format("FacebookID = '{0}'", facebookID), Profile);
+                DAL.update("UserProfile", String.Format("ProfileID = '{0}'", ProfileID), Profile);
 
             }
             catch (Exception ex)

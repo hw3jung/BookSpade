@@ -13,30 +13,26 @@ namespace BRApplication.Models
         // Foreign Key PostID
         public int PostID { get; set; }
 
-        // Foreign Key Buyer's Profile ID
-        public int BuyerID { get; set; }
-
-        // Foreign Key Seller's Profile ID
-        public int SellerID { get; set; }
-
-        public string Buyer { get; set; }
-        public string Seller { get; set; }
+        public int BidderID { get; set; }
+        
+        public string Bidder { get; set; }
 
         public decimal BidPrice { get; set; }
 
+        public bool BidviaEmail { get; set; }
+
         public Bid (int postID, 
-                    int buyerID, 
-                    int sellerID,
-                    string buyer,
-                    string seller,
-                    decimal bidPrice)
+                    int bidderID,
+                    string bidder,
+                    decimal bidPrice,
+                    bool bidviaEmail
+            )
         {
             this.PostID = postID;
-            this.BuyerID = buyerID;
-            this.SellerID = sellerID;
-            this.Buyer = buyer;
-            this.Seller = seller;
+            this.BidderID = bidderID;
+            this.Bidder = bidder;
             this.BidPrice = bidPrice;
+            this.BidviaEmail = bidviaEmail; 
         }
     }
 }

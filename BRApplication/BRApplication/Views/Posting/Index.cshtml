@@ -1,5 +1,7 @@
 ﻿@model BRApplication.Models.MarketPost
 
+@Html.Partial("_ContactPreferencePartial")
+
 <div id="mdlLoginRequest" title="Login Request" class="none">
     You must login to proceed! <br /><br />
     <div class="fbLink">
@@ -19,13 +21,14 @@
     Success! The poster has been notified and will contact you soon.
 </div>
 <div id="mdlFailedToMail" title="Oops!" class="none">
-    The poster could not be contact with the given email address, please try again. 
+    The poster could not be contacted with the given email address, please try again. 
 </div>
+
 
 <div class="none" id="PostedBy">@Model.PostedBy</div>
 <div class="none" id="bookTitle">@Model.Title</div>
 <div class="none" id="profileID">@Model.profileID</div>
-<div class="none" id="email">@Model.email</div>
+<div class="none" id="email">@Model.viaEmail</div>
 <div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
 
@@ -91,23 +94,13 @@
                 <li class="label">Offer</li>
                 <li class="value">
                     <div>
-                        @Html.TextBox("txtBidPrice")
-                        <input id="btnBid" type="submit" value="Submit" />
+                        @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                        <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
                     </div>
                 </li>
             </ul>
         </div>
         <div class="BidBox" id="bidBox" style="display:none;">
-            <div class="BidHeader">
-                Current List of Bids for this Posting:
-                <table>
-                    <tr>
-                        <td> Buyer </td>
-                        <td> Seller </td>
-                        <td> Price </td>
-                    </tr>
-                </table>
-            </div>
             @Html.Partial("Bid_Partial", Model)
         </div>
         <div class="DvSubmit">
@@ -125,13 +118,41 @@
 @section Script {
     <script type="text/ecmascript">
         $(function () {
+
+            $(":radio[name=Pref]").change(function () {
+                if ($(this).val() == 'True') {
+                    $("#divContactEmail").show();
+                } else {
+                    $("#divContactEmail").val("");
+                    $("#divContactEmail").hide();
+                }
+            });
+
+            var currentUser = CurrentUserID();
+            var postedBy = "@(Model.profileID)";
+          
+            if (postedBy == currentUser) {
+                $("#dvNegotiate").hide();
+                $("#DvSubmit").hide();
+                $(".poster").show();
+                $("#bidBox").show();
+            }
+
+            $(".poster-btn-buy").click(function () {
+                var bidID = $(this).attr("bidID");
+                posterBuyNow(bidID); 
+            });
+
+            $(".poster-btn-sell").click(function () {
+                var bidID = $(this).attr("bidID");
+                posterSellNow(bidID);
+            });
+
             $('#cbNegotiationPrice').click(function () {
                 if ($(this).is(':checked')) {
-                    //$("#btnBid").show();
                     $("#dvNegotiate").show();
                     $("#bidBox").show();
                 } else {
-                    //$("#btnBid").hide();
                     $("#dvNegotiate").hide();
                     $("#bidBox").hide();
                 }
@@ -142,7 +163,7 @@
                 var LoginStatus = $("#LoginStatus").text();
 
                 if (LoginStatus == "True") {
-                    if (email) {
+                    if (email == "True") {
                         EmailDialog();
                     } else {
                         FacebookLink();
@@ -158,7 +179,7 @@
                 var LoginStatus = $("#LoginStatus").text();
 
                 if (LoginStatus == "True") {
-                    if (email) {
+                    if (email == "True") {
                         EmailDialog();
                     } else {
                         FacebookLink();
@@ -168,7 +189,85 @@
                 }
             });
 
+            $("#btnBid").click(function () {
+                var LoginStatus = $("#LoginStatus").text();
+                
+                if (LoginStatus == "True") {
+                    var postID = $(this).attr("postID");
+                    ContactPrefDialog(postID);
+                } else {
+                    LoginRequestDialog();
+                }
+            }); 
         });
+
+        function posterBuyNow(bidID) {
+
+        }
+
+        function posterSellNow(bidID) {
+
+        }
+
+        function ContactPrefDialog(postID) {
+            $("#SubmitDialog").dialog({
+                height: 500,
+                width: 550,
+                modal: true,
+                buttons: {
+                    "Bid": function () {
+                        NewBid(postID);
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
+
+        function CurrentUserID() {
+            var userID = -1;
+
+            $.ajax({
+                url: '@Url.Action("GetCurrentUserID", "Account")',
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    userID = result; 
+                 }
+            });
+
+            return userID; 
+        }
+
+        function NewBid(postID) {
+
+            var bid = $("#txtBidPrice").val();
+            var email = $("#txtContactEmail").val();
+
+            var isBuy = "@(Model.IsBuy)";
+
+            $.ajax({
+                url: '@Url.Action("CreateBid", "Posting")',
+                data: {
+                    postID: postID,
+                    bid: bid,
+                    email: email
+                },
+                type: 'POST',
+                success: function (result) { 
+                    if (isBuy == "True") {
+                        $("#tblBid > tbody:last").append(
+                            "<tr><td>" + result.profileName + "</td><td>" + bid + "</td><td class=\"none poster\"><input id=\"btnPosterBuyNow" + result.BidID + "\" bidID=\""+ result.BidID +"\" type=\"submit\" class=\"poster-btn-buy\" value=\"BUY NOW\" /></td></tr>"
+                            );
+                    } else {
+                        $("#tblBid > tbody:last").append(
+                            "<tr><td>" + result.profileName + "</td><td>" + bid + "</td><td class=\"none poster\"><input id=\"btnPosterSellNow " + result.BidID + "\" bidID=\"" + result.BidID + "\" type=\"submit\" class=\"poster-btn-sell\" value=\"SELL NOW\" /></td></tr>"
+                            );
+                    }
+                }
+            });
+        }
 
         function EmailDialog() {
             $("#mdlEmail").dialog({
@@ -247,7 +346,7 @@
                 },
                 type: 'POST',
                 success: function (result) {
-                    $("#fblink").text(result);
+                    $("#fblink").html("<a href=\"" + result + "\">" + result + "</a>");
                     FacebookDialog();
                 }
             });
