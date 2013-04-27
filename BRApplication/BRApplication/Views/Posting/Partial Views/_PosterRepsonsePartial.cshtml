@@ -1,11 +1,28 @@
 ﻿@model BRApplication.Models.MarketPost
 
-<div id="mdlEmail@(Model.PostID)" title="Contact Email Address" class="none mdlEmail">
-    Please enter an email the buyer can contact you with to buy your textbook. <br/><br/>
-     @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
-    <input id="btnSellSave" class="btn-sell-save" type="button" value="Submit" />
+<div id="mdlBidSuccess" title="Success!"  class="none">
+    Success! The bidder has been notified and will contact you soon.
 </div>
-<div id="mdlFacebook@(Model.PostID)" class="none">
-    Please contact @Model.PostedBy through their facebook profile: <br /><br />
-    <div id="fblink" class="fbLink">&nbsp;</div>
+
+<div id="mdlGoodBid" title="Success!"  class="none">
+    Success! The bid has been made. 
 </div>
+
+<div id="mdlBadBid" title="Oops!" class="none">
+   Please ensure that your bid is unique from those already made for this book.
+</div>
+
+@foreach (var bid in Model.Bids)
+{
+    <div id="mdlEmail@(bid.BidID)" title="Contact Email Address" class="none mdlEmail">
+        Please enter an email @(bid.Bidder) can contact you with. <br/><br/>
+         @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
+        <input id="btnSave@(bid.BidID)" data-IsBuy="@(Model.IsBuy)" class="btn-save-email" type="button" value="Submit" />
+    </div>
+
+    <div id="mdlFacebook@(bid.BidID)" class="none">
+        Please contact @(bid.Bidder) through their facebook profile: <br /><br />
+        <div id="fblink@(bid.BidID)" class="fbLink">&nbsp;</div>
+    </div>
+    
+}
