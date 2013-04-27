@@ -17,22 +17,24 @@ namespace BRApplication.Models
         
         public string Bidder { get; set; }
 
-        public decimal BidPrice { get; set; }
+        public int BidPrice { get; set; }
 
         public bool BidviaEmail { get; set; }
 
         public Bid (int postID, 
                     int bidderID,
                     string bidder,
-                    decimal bidPrice,
-                    bool bidviaEmail
+                    int bidPrice,
+                    bool bidviaEmail,
+                    int BidID
             )
         {
             this.PostID = postID;
             this.BidderID = bidderID;
             this.Bidder = bidder;
             this.BidPrice = bidPrice;
-            this.BidviaEmail = bidviaEmail; 
+            this.BidviaEmail = bidviaEmail;
+            this.BidID = BidID; 
         }
     }
 }

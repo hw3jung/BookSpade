@@ -27,12 +27,12 @@ namespace BRApplication.Handlers
 
                     DataTable buyerDt = DAL.select(String.Format("profileID = '{0}'", bidderID), "UserProfile");
                     DataRow buyerRow = buyerDt.Rows[0];
-                    
+                    int bidID = Convert.ToInt32(row["BidID"]);
                     string bidder = Convert.ToString(buyerRow["Name"]);
-                    decimal bidPrice = Convert.ToDecimal(row["BidPrice"]);
+                    int bidPrice = Convert.ToInt32(row["BidPrice"]);
                     bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
-                    Bid bid = new Bid(postID, bidderID, bidder, bidPrice, viaEmail);
+                    Bid bid = new Bid(postID, bidderID, bidder, bidPrice, viaEmail, bidID);
                     bids.Add(bid);
                 }
             }
@@ -52,6 +52,14 @@ namespace BRApplication.Handlers
         {
             int bidID = -1;
             DataAccessLayer DAL = new DataAccessLayer();
+
+            DataTable bidDupPrices = DAL.select(String.Format("BidPrice = '{0}'", bid.BidPrice), "Bids");
+            
+            if (bidDupPrices.Rows.Count > 0)
+            {
+                return bidID; 
+            }
+
             Dictionary<string, string> Bid = new Dictionary<string, string>();
 
             Bid.Add("BidPrice", Convert.ToString(bid.BidPrice));

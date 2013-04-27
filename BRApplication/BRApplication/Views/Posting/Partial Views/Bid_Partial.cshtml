@@ -11,14 +11,15 @@
         </thead>
         <tbody>
             @{
+              
                 foreach (var bid in Model.Bids) {
                     <tr>
                         <td>@(bid.Bidder)</td>
                         <td>@(bid.BidPrice)</td>
                         @if (Model.IsBuy) {
-                            <td class="none poster"><input id="btnPosterBuyNow@(bid.BidID)" bidID="@(bid.BidID)" viaEmail="@(bid.BidviaEmail)" class="poster-btn-buy" type="submit" value="BUY NOW" /></td>
+                            <td class="none poster"><input id="btnPosterBuyNow@(bid.BidID)" class="poster-btn-buy" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="BUY NOW" />@(bid.BidviaEmail)</td>
                         } else {
-                            <td class="none poster"><input id="btnPosterSellNow@(bid.BidID)" bidID="@(bid.BidID)" viaEmail="@(bid.BidviaEmail)" class="poster-btn-sell" type="submit" value="SELL NOW" /></td>
+                            <td class="none poster"><input id="btnPosterSellNow@(bid.BidID)" class="poster-btn-sell" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="SELL NOW" />@(bid.BidviaEmail)</td>
                         }
                     </tr>   
                 }

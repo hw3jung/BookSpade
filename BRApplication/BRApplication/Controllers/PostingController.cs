@@ -157,19 +157,13 @@ namespace BRApplication.Controllers
             string AccessToken = Convert.ToString(Session["AccessToken"]);
             UserProfile profile = UserProfileUtil.getUserProfile(AccessToken);
 
-            Bid newBid = new Bid(postID, profile.ProfileID, profile.Name, bid, email != string.Empty); 
 
+            Bid newBid = new Bid(postID, profile.ProfileID, profile.Name, bid, email != string.Empty, -1); 
             int bidID = BidHandler.createBid(newBid);
+            newBid.BidID = bidID; 
 
-            if (bidID >= 0)
-            {
-                return Json(new { profileName = profile.Name, BidID = bidID });
-            }
-            else
-            {
-                Console.Write("ERROR:  An error occured in creating the bid --- For Post: " + postID + " with Bid Price: " + bid);
-                return Json(false); 
-            }
+            return Json(new { profileName = profile.Name, BidID = bidID });
+            
         }
 
         #endregion
