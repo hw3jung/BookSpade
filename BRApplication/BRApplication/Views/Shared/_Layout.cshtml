@@ -169,6 +169,24 @@
         <div class="sidebar">
             <a class="body">Create Your Own Posting</a>
         </div>*@
+        <div id="mdlLoginRequest" title="Login Request" class="none">
+            You must login to proceed! <br /><br />
+            <div class="fbLink">
+                @Html.ActionLink("Login with Facebook", "Facebook", "Account") 
+            </div>
+        </div>
+        <div id="reportBug" title="Report a Bug" class="none mdlEmail" style="display:none;">
+            Please enter a description of the bug you would like to report <br/><br/>
+            <textarea class="bugmsg" style="width:90%;height:200px;"></textarea><br/>
+            <input id="" class="btn-submit" type="button" style="width:auto; height:auto;" value="Submit" />
+        </div>
+        <div id="reportSuccess" title="Success!"  class="none">
+            Thank you for reporting the bug. We will get the problem resolved as soon as possible.
+        </div>
+        <div id="reportFail" title="Oops!" class="none">
+            There was an error in submitting your bug report message, please try again. 
+        </div>
+        <div id="LoginStatus" class="none">@(Request.IsAuthenticated && Session["AccessToken"] != null)</div>
 
         @*Adds in BODY below Header*@
         <div class="body">
@@ -192,6 +210,8 @@
                 <li>@Html.ActionLink("About", "About", "Home")</li>
 
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                <li><a href="#" class="reportbug">Report a Bug</a></li>
             </ul>
 
             @*REMOVE EVENTUALLY
@@ -201,5 +221,88 @@
 
         </footer>
         @RenderSection("scripts", required: false)
+
+        <script type="text/ecmascript">
+            $(function () {
+                $(document).on('click', '.reportbug', function () {
+                    var LoginStatus = $("#LoginStatus").text();
+                    if (LoginStatus == "True") {
+                        ReportBugDialog();
+                    }
+                    else {
+                        LoginRequestDialog();
+                    }
+                });
+            });
+
+            function ReportBugDialog() {
+                $("#reportBug").dialog({
+                    height: 550,
+                    width: 800,
+                    modal: true,
+                    buttons: [{
+                        text: "Cancel",
+                        "class": 'EmailCancel',
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }]
+                });
+            }
+
+            function LoginRequestDialog() {
+                $("#mdlLoginRequest").dialog({
+                    height: 200,
+                    width: 500,
+                    modal: true
+                });
+            }
+
+            $(document).on('click', '.btn-submit', function () {
+
+                var bugmsg = $(this).siblings('.bugmsg').val();
+
+                $.ajax({
+                    url: '@Url.Action("ReportABug", "Home")',
+                        data: {
+                            BugMsg: bugmsg
+                        },
+                        type: 'POST',
+                        success: function (result) {
+                            if (result) {
+                                SuccessDialog(this);
+                            } else {
+                                FailDialog(this);
+                            }
+                        }
+                    });
+                });
+
+                    function SuccessDialog(dialog) {
+                        $("#reportSuccess").dialog({
+                            height: 300,
+                            width: 500,
+                            modal: true,
+                            buttons: {
+                                "OK": function () {
+                                    $(".ui-dialog-content").dialog("close");
+                                }
+                            }
+                        });
+                    }
+
+                    function FailDialog() {
+                        $("#reportFail").dialog({
+                            height: 300,
+                            width: 500,
+                            modal: true,
+                            buttons: {
+                                "OK": function () {
+                                    $(".ui-dialog-content").dialog("close");
+                                }
+                            }
+                        });
+                    }
+            </script>
     </body>
 </html>

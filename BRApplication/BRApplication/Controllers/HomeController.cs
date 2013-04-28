@@ -7,7 +7,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
-using Facebook; 
+using Facebook;
+using BRApplication.Handlers; 
 
 namespace BRApplication.Controllers
 {
@@ -68,6 +69,18 @@ namespace BRApplication.Controllers
             ViewBag.Message = "Your contact page. This is Johnny";
 
             return View();
+        }
+
+        #endregion
+
+        #region ReportABug
+
+        [HttpPost]
+        public ActionResult ReportABug(string BugMsg)
+        {
+            bool success = HomeHandler.SendBugReportEmail(BugMsg);
+
+            return Json(success);
         }
 
         #endregion

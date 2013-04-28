@@ -178,6 +178,7 @@
     <Compile Include="Handlers\AccountHandler.cs" />
     <Compile Include="Handlers\BidHandler.cs" />
     <Compile Include="Handlers\CourseInfoHandler.cs" />
+    <Compile Include="Handlers\HomeHandler.cs" />
     <Compile Include="Handlers\MarketPostHandler.cs" />
     <Compile Include="Handlers\PostHandler.cs" />
     <Compile Include="Handlers\TextbookHandler.cs" />
