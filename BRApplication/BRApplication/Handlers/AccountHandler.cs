@@ -155,7 +155,7 @@ namespace BRApplication.Handlers
             try
             {
                 Dictionary<string, string> Profile = new Dictionary<string,string>();
-                Profile.Add("Email", Email); 
+                Profile.Add("Email", String.Format("'{0}'", Email)); 
 
                 DataAccessLayer DAL = new DataAccessLayer();
                 DAL.update("UserProfile", String.Format("ProfileID = '{0}'", ProfileID), Profile);

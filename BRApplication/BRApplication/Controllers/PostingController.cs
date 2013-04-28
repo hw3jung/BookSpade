@@ -141,9 +141,8 @@ namespace BRApplication.Controllers
             
             Post newPost = new Post(ProfileID, textbookID, isBuy, price, condition, email != "");
             int postID = PostHandler.insert(newPost);
+            newPost.PostID = postID; 
 
-            PostHandler.getPostID(newPost);              
-          
             return Json(postID);
 
         }

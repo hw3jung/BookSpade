@@ -213,6 +213,7 @@
                     },
                     type: 'POST',
                     success: function (result) {
+                   
                         var link = "@(Url.Action("Index", "Posting", new {postID = 1}))"
                         document.location.href = link.replace(1, result);
                     }
@@ -242,7 +243,7 @@
                 },
                 type: 'POST',
                 success: function (result) {
-                    var link = "@(Url.Action("Index", "", new {postID = 1}))"
+                    var link = "@(Url.Action("Index", "Posting", new {postID = 1}))"
                     document.location.href = link.replace(1, result); 
                 }
             });

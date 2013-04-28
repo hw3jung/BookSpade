@@ -94,11 +94,11 @@
 
 
         $(document).on('click', '.btn-sell', function () {
-
+           
             postID = $(this).attr('postID');
             var email = $("#email" + postID).text();
             var LoginStatus = $("#LoginStatus").text();
-           
+            
             if (LoginStatus == "True") {
                 if (email == "True") {
                     EmailDialog();
@@ -198,9 +198,9 @@
     });
 
     function FacebookLink() {
-
+     
       var profileID = $("#profileID" + postID).text();
-
+      
         $.ajax({
             url: '@Url.Action("GetFacebookLink", "Market")',
             data: {
