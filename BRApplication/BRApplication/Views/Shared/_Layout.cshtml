@@ -124,19 +124,23 @@
         </script>
     </head>
 
-
+        @* global header *@
         <header>
-            <div id="headerCell">
-                <div id="headerWrapper">
-                    <div id="headLeft">
-                        <a href="@Url.Action("Index", "Home")"><img src="@(Url.Content("~/Images/logo_bookspade_white.png"))" /></a>
-	                </div>
+            <div id="headerWrapper">
+                <div id="logoWrapper">
+                    <a href="@Url.Action("Index", "Home")"><img src="@(Url.Content("~/Images/logo-booksInSpade.png"))" /></a>
+	            </div>
 
+                <div id="loginWrapper">
                     <section id="login">
                         <div >@Html.Partial("_LoginPartial")</div>
                     </section>
                 </div>
             </div>
+
+
+
+
 
         @*REMOVE EVENTUALLY
         <div class="content-wrapper">
@@ -163,12 +167,6 @@
 
     <body>
         @*Header appears at the top of every page*@
-
-
-        @*REMOVE EVENTUALLY
-        <div class="sidebar">
-            <a class="body">Create Your Own Posting</a>
-        </div>*@
         <div id="mdlLoginRequest" title="Login Request" class="none">
             You must login to proceed! <br /><br />
             <div class="fbLink">

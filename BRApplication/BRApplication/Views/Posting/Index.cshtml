@@ -34,61 +34,150 @@
 
 
 <div class="PostContainer">
-   
+    <div class="detailpostWrapper shadow roundBorder-bottomRight">
+        <div class="MarketPost">
+
+            <div class="leftmarketpostWrapper">
+
+                @* book image *@
+                <div class="bookimageWrapper">
+                    <div class="squareFill"></div>
+
+                    <div class="BookImage">
+                        <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image">
+                    </div>
+
+                    @* book price *@
+					<div class="bookpriceWrapper">
+                        <div class="MarketBuyPrice">
+                            $@Model.Price 
+                        </div>
+					</div>
+                </div>
+
+                @* links below book image *@
+                <div class="marketpostQuicklinks">
+			        <div class="marketBtn">
+                        <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />
+                    </div>
+
+                    <div class="marketBtn">
+                        Negotiate a price 
+
+                        <input type="checkbox" id="cbNegotiationPrice" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightmarketpostWrapper roundBorder-bottomRight">
+                <div class="MarketPostDetail">
+                    <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
+        
+                    <div>
+                        <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+                        <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+                        <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+                        <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
+                        <span class="marketValue datePosted">@Model.datePosted</span>
+                    </div>
+
+
+                    <div class="DetailLine negotiate" id="dvNegotiate" style="display: none;">
+                        <ul>
+                            <li class="label">Bid</li>
+                            <li class="value">
+                                <div>
+                                    @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                                    <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="BidBox" id="bidBox" style="display: none;">
+                        @Html.Partial("Bid_Partial", Model)
+                    </div>
+
+                    <div class="DvSubmit">
+                        @if (Model.IsBuy)
+                        {
+                            <input id="btnBuy" class="btn-sell negotiate" type="submit" value="Sell" />  
+                        }
+                        else
+                        {
+                            <input id="btnSell" class="btn-buy negotiate" type="submit" value="Buy" />
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+@*  OLD FUGLY VERSION
+
     <div class="post">
         <div class="PostHeader">
             <img src="@Url.Content("~/Content/Images/BookStack.png")" alt="BookStack"/>&nbsp
             @Model.Title
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Course</li>
                 <li class="value">@Model.Course</li>
             </ul>
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Condition</li>
                 <li class="value">@Model.Condition</li>
             </ul>
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Posted by</li>
                 <li class="value">@Model.PostedBy</li>
             </ul>
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Date Posted</li>
                 <li class="value">@Model.datePosted</li>
             </ul>
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">ISBN</li>
                 <li class="value">@Model.ISBN</li>
             </ul>
-        </div>       
+        </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Author</li>
                 <li class="value">@Model.Author</li>
             </ul>
         </div>
         <div class="DetailLine">
-            <ul> 
+            <ul>
                 <li class="label">Price</li>
                 <li class="value">$@Model.Price</li>
             </ul>
-        </div>       
+        </div>
         <div class="DetailLine negotiate">
             <ul>
                 <li class="label">Negotiate a price?</li>
-                <li class="value"><input type="checkbox" id="cbNegotiationPrice"/></li>
+                <li class="value">
+                    <input type="checkbox" id="cbNegotiationPrice" /></li>
             </ul>
         </div>
-        <div class="DetailLine negotiate" id="dvNegotiate" style="display:none;">
+        <div class="DetailLine negotiate" id="dvNegotiate" style="display: none;">
             <ul>
                 <li class="label">Bid</li>
                 <li class="value">
@@ -99,11 +188,12 @@
                 </li>
             </ul>
         </div>
-        <div class="BidBox" id="bidBox" style="display:none;">
+        <div class="BidBox" id="bidBox" style="display: none;">
             @Html.Partial("Bid_Partial", Model)
         </div>
         <div class="DvSubmit">
-            @if (Model.IsBuy) {
+            @if (Model.IsBuy)
+            {
                 <input id="btnBuy" class="btn-sell negotiate" type="submit" value="Sell" />  
             }
             else
@@ -112,6 +202,9 @@
             }
         </div>
     </div>
+*@
+
+
 </div>
 
 @section Script {
