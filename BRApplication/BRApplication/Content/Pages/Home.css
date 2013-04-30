@@ -5,7 +5,7 @@
 body {
     width: 100%;
     height: 100%;
-    background: url('../Images/bg_pattern.jpg') #FFF;
+    background: url('../Images/bg_pattern.jpg') #333;
 }
 
 div {
@@ -67,23 +67,12 @@ div {
 
 .buttonBuySell{
 	width: 40%;
-	/*background-color: #878787;*/
-    padding: 1% 0.8% 1% 0.8%;
+	background-color: #333333;
+    padding: 1% 0% 1% 0%;
     display: inline-block;
-	margin-right: 2%;
+	margin: 0;
 	text-align: center;
     cursor: pointer;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-khtml-border-radius: 8px;
-	border-radius: 8px;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
-    z-index: 999999;
 }
 
 .buttonBuySell a, a:link, a:active, a:visited{
@@ -92,13 +81,10 @@ div {
 	text-decoration: none;
 }
 
-.buttonBuySell:hover { 
-    color: #666;
-    background: #f47c20;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
-	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
-}
+    .buttonBuySell:hover { 
+        color: #fff;
+        background: #36a9e1;
+    }
 
 #needToBuySell {
     font: 1.5em arial bold;
@@ -109,11 +95,9 @@ div {
     z-index: 99995;
 }
 
-.inset { text-shadow:#fff 0px 1px 0, #000 0 -1px 0;}
-
 #description {
-    font: 2em arial bold;
-    color: #666;
+    font: 2em calibri bold;
+    color: #ccc;
     margin-bottom: 1.5em;
 }
 
