@@ -190,7 +190,7 @@
 	input {
 		background: transparent;
         border: 0;
-		color: #fff;
+		color: #333;
 		font: 1em calibri;
         font-weight: bold;
 		margin: 0;
@@ -1206,7 +1206,11 @@ tr.pager td {
 /******************************************************************/
 /******************* detail post containers ***********************/
 /******************************************************************/
- 
+
+    .btn-sell, .btn-buy {
+        color: #fff;
+    }
+
     .detailpostWrapper {
         width: 98%;
 		min-width: 24em;
