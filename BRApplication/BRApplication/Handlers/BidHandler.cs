@@ -15,6 +15,7 @@ namespace BRApplication.Handlers
         public static List<Bid> getBids(int postID)
         {
             List<Bid> bids = new List<Bid>();
+            bids.Clear(); 
 
             try
             {
@@ -53,7 +54,7 @@ namespace BRApplication.Handlers
             int bidID = -1;
             DataAccessLayer DAL = new DataAccessLayer();
 
-            DataTable bidDupPrices = DAL.select(String.Format("BidPrice = '{0}'", bid.BidPrice), "Bids");
+            DataTable bidDupPrices = DAL.select(String.Format("BidPrice = '{0}' AND PostID = '{1}'", bid.BidPrice, bid.PostID), "Bids");
             
             if (bidDupPrices.Rows.Count > 0)
             {

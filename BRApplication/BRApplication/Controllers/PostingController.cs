@@ -91,7 +91,8 @@ namespace BRApplication.Controllers
                                      bool isBuy,
                                      int price,
                                      string condition,
-                                     string email)
+                                     string email,
+                                     bool IsNegotiable)
         {
             int courseID = CourseInfoHandler.getCourseID(course);
             if (courseID == -1)
@@ -109,7 +110,7 @@ namespace BRApplication.Controllers
 
             if (bookId >= 0)
             {
-                return SavePost(profile.ProfileID, newBook.CourseName, newBook.Title, isBuy, price, condition, email);
+                return SavePost(profile.ProfileID, newBook.CourseName, newBook.Title, isBuy, price, condition, email, IsNegotiable);
             }
             else
             {
@@ -128,7 +129,8 @@ namespace BRApplication.Controllers
                                      bool isBuy, 
                                      int price, 
                                      string condition,
-                                     string email)
+                                     string email,
+                                     bool IsNegotiable)
         {
             int textbookID = TextbookHandler.getTextbookID(course, title);
 
@@ -139,7 +141,7 @@ namespace BRApplication.Controllers
 
             AccountHandler.updateUserProfile_Email(ProfileID, email);
             
-            Post newPost = new Post(ProfileID, textbookID, isBuy, price, condition, email != "");
+            Post newPost = new Post(ProfileID, textbookID, isBuy, price, condition, email != "", IsNegotiable);
             int postID = PostHandler.insert(newPost);
             newPost.PostID = postID; 
 

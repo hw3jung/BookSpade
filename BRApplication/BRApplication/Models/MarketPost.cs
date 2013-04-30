@@ -17,7 +17,8 @@ namespace BRApplication.Models
         public string BookImageURL { get; set; }
         public int Price { get; set; }
         public DateTime datePosted { get; set; }
-        public IEnumerable<Bid> Bids { get; set; }
+        public IList<Bid> Bids { get; set; }
+        public bool IsNegotiable { get; set; }
         public string email { get; set; }
         public bool viaEmail {get; set;}
         public int profileID { get; set; }
@@ -33,8 +34,9 @@ namespace BRApplication.Models
             string isbn, 
             string author, 
             string bookImageURL, 
-            int price, 
-            IEnumerable<Bid> bids,
+            int price,
+            IList<Bid> bids,
+            bool isNegotiable,
             string Email,
             bool viaEmail,
             int profileID,
@@ -56,6 +58,7 @@ namespace BRApplication.Models
             this.viaEmail = viaEmail;
             this.profileID = profileID;
             this.PostID = postID;
+            this.IsNegotiable = isNegotiable; 
         }
     }
 }

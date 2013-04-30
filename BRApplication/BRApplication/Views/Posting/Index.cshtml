@@ -60,12 +60,6 @@
 			        <div class="marketBtn">
                         <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />
                     </div>
-
-                    <div class="marketBtn">
-                        Negotiate a price 
-
-                        <input type="checkbox" id="cbNegotiationPrice" />
-                    </div>
                 </div>
             </div>
 
@@ -81,8 +75,8 @@
                         <span class="marketValue datePosted">@Model.datePosted</span>
                     </div>
 
-
-                    <div class="DetailLine negotiate" id="dvNegotiate" style="display: none;">
+                @if (Model.IsNegotiable) {       
+                    <div class="DetailLine" id="dvNegotiate">
                         <ul>
                             <li class="label">Bid</li>
                             <li class="value">
@@ -93,20 +87,20 @@
                             </li>
                         </ul>
                     </div>
+                }
 
-
-                    <div class="BidBox" id="bidBox" style="display: none;">
+                    <div class="BidBox" id="bidBox">
                         @Html.Partial("Bid_Partial", Model)
                     </div>
 
                     <div class="DvSubmit">
                         @if (Model.IsBuy)
                         {
-                            <input id="btnBuy" class="btn-sell negotiate" type="submit" value="Sell" />  
+                            <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
                         }
                         else
                         {
-                            <input id="btnSell" class="btn-buy negotiate" type="submit" value="Buy" />
+                            <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
                         }
                     </div>
 
@@ -169,36 +163,34 @@
                 <li class="label">Price</li>
                 <li class="value">$@Model.Price</li>
             </ul>
+
         </div>
-        <div class="DetailLine negotiate">
-            <ul>
-                <li class="label">Negotiate a price?</li>
-                <li class="value">
-                    <input type="checkbox" id="cbNegotiationPrice" /></li>
-            </ul>
-        </div>
-        <div class="DetailLine negotiate" id="dvNegotiate" style="display: none;">
-            <ul>
-                <li class="label">Bid</li>
-                <li class="value">
-                    <div>
-                        @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
-                        <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="BidBox" id="bidBox" style="display: none;">
+        @if (Model.IsNegotiable) {       
+            <div id="dvNegotiate" class="DetailLine" >
+                <ul>
+                    <li class="label">Bid</li>
+                    <li class="value">
+                        <div>
+                            @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                            <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        } 
+       
+        <div id="bidBox" class="BidBox">
             @Html.Partial("Bid_Partial", Model)
         </div>
+        
         <div class="DvSubmit">
             @if (Model.IsBuy)
             {
-                <input id="btnBuy" class="btn-sell negotiate" type="submit" value="Sell" />  
+                <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
             }
             else
             {
-                <input id="btnSell" class="btn-buy negotiate" type="submit" value="Buy" />
+                <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
             }
         </div>
     </div>
@@ -222,13 +214,18 @@
 
             var currentUser = CurrentUserID();
             var postedBy = "@(Model.profileID)";
-            var IsUserPoster = currentUser == postedBy; 
+            var IsUserPoster = currentUser == postedBy;
+            var BidsCount = @(Model.Bids.Count()); 
+            var IsNegotiable = "@(Model.IsNegotiable)"; 
+
+            if (IsNegotiable == "True" && BidsCount == 0) {
+                $("#bidBox").hide(); 
+            }
 
             if (IsUserPoster) {
-                $(".negotiate").hide();
-                $("#DvSubmit").hide();
+                $("#dvNegotiate").hide();
+                $(".DvSubmit").hide();
                 $(".poster").show();
-                $("#bidBox").show();
             }
 
             $(".poster-btn-buy").click(function () {
@@ -305,15 +302,15 @@
                 });
             }
 
-            $('#cbNegotiationPrice').click(function () {
-                if ($(this).is(':checked')) {
-                    $("#dvNegotiate").show();
-                    $("#bidBox").show();
-                } else {
-                    $("#dvNegotiate").hide();
-                    $("#bidBox").hide();
-                }
-            });
+        //    $('#cbNegotiationPrice').click(function () {
+        //        if ($(this).is(':checked')) {
+        //            $("#dvNegotiate").show();
+        //            $("#bidBox").show();
+        //        } else {
+        //            $("#dvNegotiate").hide();
+        //            $("#bidBox").hide();
+        //        }
+        //    });
 
             $(document).on('click', '.btn-buy', function () {
                 var email = $("#email").text();
@@ -397,6 +394,7 @@
             var email = $("#txtContactEmail").val();
 
             var isBuy = "@(Model.IsBuy)";
+            
       
             $.ajax({
                 url: '@Url.Action("CreateBid", "Posting")',
@@ -418,6 +416,9 @@
                                 "<tr><td>" + result.profileName + "</td><td>" + bid + "</td><td class=\"none poster\"><input id=\"btnPosterSellNow " + result.BidID + "\" data-bidID=\"" + result.BidID + "\" type=\"submit\" class=\"poster-btn-sell\" value=\"SELL NOW\" /></td></tr>"
                                 );
                         }
+
+                        $("#bidBox").show(); 
+
                     } else {
                         BadBidDialog(this); 
                     }

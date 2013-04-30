@@ -1,29 +1,27 @@
 ﻿@model BRApplication.Models.MarketPost
 
-<div class="BidLine">
-    <table id="tblBid">
-        <thead>
-            <tr>
-                <td>Bidder</td>
-                <td>Bid Price</td>
-                <td class="none poster">Action</td>
-            </tr>
-        </thead>
-        <tbody>
-            @{
+        <table id="tblBid">
+            <thead>
+                <tr>
+                    <td>Bidder</td>
+                    <td>Bid Price</td>
+                    <td class="none poster">Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
               
-                foreach (var bid in Model.Bids) {
-                    <tr>
-                        <td>@(bid.Bidder)</td>
-                        <td>@(bid.BidPrice)</td>
-                        @if (Model.IsBuy) {
-                            <td class="none poster"><input id="btnPosterBuyNow@(bid.BidID)" class="poster-btn-buy" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="BUY NOW" /></td>
-                        } else {
-                            <td class="none poster"><input id="btnPosterSellNow@(bid.BidID)" class="poster-btn-sell" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="SELL NOW" /></td>
-                        }
-                    </tr>   
+                    foreach (var bid in Model.Bids) {
+                        <tr>
+                            <td>@(bid.Bidder)</td>
+                            <td>@(bid.BidPrice)</td>
+                            @if (Model.IsBuy) {
+                                <td class="none poster"><input id="btnPosterBuyNow@(bid.BidID)" class="poster-btn-buy" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="BUY NOW" /></td>
+                            } else {
+                                <td class="none poster"><input id="btnPosterSellNow@(bid.BidID)" class="poster-btn-sell" data-bidID="@(bid.BidID)" data-viaEmail="@(bid.BidviaEmail)" data-bidderID="@(bid.BidderID)"  type="submit" value="SELL NOW" /></td>
+                            }
+                        </tr>   
+                    }
                 }
-            }
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>

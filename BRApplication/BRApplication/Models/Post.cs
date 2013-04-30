@@ -22,27 +22,31 @@ namespace BRApplication.Models
         public bool viaEmail { get; set; }
 
         public DateTime ExpiryDate { get; set; }
-        
+        public bool IsNegotiable { get; set; }
+ 
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+       
 
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
-
+        
 
         public Post(int profileID, 
                     int textbookID, 
                     bool isBuy, 
                     int price,
                     string condition,
-                    bool viaemail)
+                    bool viaemail,
+                    bool isNegotiable)
         {
             this.ProfileID = profileID;
             this.TextBookID = textbookID;
             this.IsBuy = isBuy;
             this.Price = price;
             this.Condition = condition;
-            this.viaEmail = viaemail; 
+            this.viaEmail = viaemail;
+            this.IsNegotiable = isNegotiable; 
 
             DateTime now = DateTime.Now;
             this.ExpiryDate = now.AddMonths(8);

@@ -23,14 +23,15 @@ namespace BRApplication.Handlers
 
                     foreach (DataRow row in dt.Rows)
                     {
-                        bool isBuy = Convert.ToBoolean(row["IsBuy"]);
-                        string condition = Convert.ToString(row["BookCondition"]);
-                        int profileID = Convert.ToInt32(row["ProfileID"]);
-                        DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
-                        int price = Convert.ToInt32(row["Price"]);
                         int postID = Convert.ToInt32(row["PostID"]);
-                        bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
-
+                        int profileID = Convert.ToInt32(row["ProfileID"]);
+                        int price = Convert.ToInt32(row["Price"]);
+                        bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                        bool viaEmail = Convert.ToBoolean(row["viaEmail"]);
+                        bool isNegotiable = Convert.ToBoolean(row["IsNegotiable"]);
+                        string condition = Convert.ToString(row["BookCondition"]);
+                        DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                        
                         UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                         string postedBy = UserProfile.Name;
                         string email = UserProfile.Email; 
@@ -41,13 +42,14 @@ namespace BRApplication.Handlers
                         string isbn = textbook.ISBN;
                         string author = textbook.Author;
                         string bookImageURL = textbook.BookImageURL;
+                        
                         List<Bid> bids = BidHandler.getBids(postID); 
 
                         MarketPost marketPost = new MarketPost(
                             title, isBuy, course, 
                             condition, postedBy, datePosted, 
                             isbn, author, bookImageURL, 
-                            price, bids, email,
+                            price, bids, isNegotiable, email,
                             viaEmail, profileID, postID);
  
                         marketPosts.Add(marketPost);
@@ -134,13 +136,16 @@ namespace BRApplication.Handlers
                 foreach (DataRow row in dt.Rows)
                 {
                     int textBookID = Convert.ToInt32(row["TextBookID"]);
-                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
-                    string condition = Convert.ToString(row["BookCondition"]);
                     int profileID = Convert.ToInt32(row["ProfileID"]);
-                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     int price = Convert.ToInt32(row["Price"]);
                     int postID = Convert.ToInt32(row["PostID"]);
-                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
+                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]);
+                    bool isNegotiable = Convert.ToBoolean(row["IsNegotiable"]);
+                    string condition = Convert.ToString(row["BookCondition"]);
+                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                    
+                    
 
                     UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                     string postedBy = UserProfile.Name;
@@ -158,7 +163,7 @@ namespace BRApplication.Handlers
                         title, isBuy, course, 
                         condition, postedBy, datePosted,
                         isbn, author, bookImageURL,
-                        price, bids, email, 
+                        price, bids, isNegotiable, email, 
                         viaEmail, profileID, postID
                      );
                     marketPosts.Add(marketPost);
@@ -186,15 +191,18 @@ namespace BRApplication.Handlers
 
                 foreach (DataRow row in dt.Rows)
                 {
+
                     int textBookID = Convert.ToInt32(row["TextBookID"]);
-                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
-                    string condition = Convert.ToString(row["BookCondition"]);
                     int profileID = Convert.ToInt32(row["ProfileID"]);
-                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
                     int price = Convert.ToInt32(row["Price"]);
                     int postID = Convert.ToInt32(row["PostID"]);
-                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
-
+                    bool viaEmail = Convert.ToBoolean(row["viaEmail"]);
+                    bool isNegotiable = Convert.ToBoolean(row["IsNegotiable"]);
+                    bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                    string condition = Convert.ToString(row["BookCondition"]);
+                    
+                    DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
+                    
                     UserProfile UserProfile = AccountHandler.getUserProfile(profileID);
                     string postedBy = UserProfile.Name;
                     string email = UserProfile.Email; 
@@ -211,7 +219,7 @@ namespace BRApplication.Handlers
                         title, isBuy, course, 
                         condition, postedBy, datePosted,
                         isbn, author, bookImageURL, 
-                        price, bids, email,
+                        price, bids, isNegotiable, email,
                         viaEmail, profileID, postID);
 
                     allMarketPosts.Add(marketPost);
@@ -256,17 +264,18 @@ namespace BRApplication.Handlers
                     string bookImageURL = textbook.BookImageURL;
 
                     bool isBuy = Convert.ToBoolean(row["IsBuy"]);
+                    bool isNegotiable = Convert.ToBoolean(row["IsNegotiable"]);
                     string condition = Convert.ToString(row["BookCondition"]);
                     int price = Convert.ToInt32(row["Price"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
-                    IEnumerable<Bid> bids = BidHandler.getBids(postID);
+                    IList<Bid> bids = BidHandler.getBids(postID);
                     bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     marketPost = new MarketPost(
                         title, isBuy, course, 
                         condition, postedBy, datePosted, 
                         isbn, author, bookImageURL, 
-                        price, bids, email, 
+                        price, bids, isNegotiable, email, 
                         viaEmail, profileID, postID);
                 }
             }
