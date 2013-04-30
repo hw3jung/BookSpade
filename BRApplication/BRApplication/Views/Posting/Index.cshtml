@@ -57,8 +57,21 @@
 
                 @* links below book image *@
                 <div class="marketpostQuicklinks">
+
 			        <div class="marketBtn">
-                        <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />
+
+
+                     <div class="DvSubmit">
+                        @if (Model.IsBuy)
+                        {
+                            <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
+                        }
+                        else
+                        {
+                            <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
+                        }
+                    </div>
+@*                        <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />*@
                     </div>
                 </div>
             </div>
@@ -92,19 +105,6 @@
                     <div class="BidBox" id="bidBox">
                         @Html.Partial("Bid_Partial", Model)
                     </div>
-
-                    <div class="DvSubmit">
-                        @if (Model.IsBuy)
-                        {
-                            <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
-                        }
-                        else
-                        {
-                            <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
-                        }
-                    </div>
-
-
                 </div>
             </div>
         </div>

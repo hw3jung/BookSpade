@@ -190,8 +190,9 @@
 	input {
 		background: transparent;
         border: 0;
-		color: #333;
-		font-size: 1em;
+		color: #fff;
+		font: 1em calibri;
+        font-weight: bold;
 		margin: 0;
 	}
 
@@ -1277,7 +1278,9 @@ tr.pager td {
     /*-- DvSubmit is specific to the detail posting page submit area --*/
      .DvSubmit {
         width:100%; 
-        text-align:right; 
+        text-align: center;
+        color: #fff;
+        font-weight: bold; 
     }
 	
 
