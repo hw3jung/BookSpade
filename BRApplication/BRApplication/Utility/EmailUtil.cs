@@ -17,9 +17,9 @@ namespace BRApplication.Utility
 
         public static void Mail(string email, string subject, string body)
         {
-            WebMail.EnableSsl = true; 
+            WebMail.EnableSsl = false; 
             WebMail.SmtpServer = "smtpout.secureserver.net";
-            WebMail.SmtpPort = 465;
+            WebMail.SmtpPort = 80;
             WebMail.UserName = "info@bookspade.com";
             WebMail.Password = "SpadeIt";
             WebMail.Send(
