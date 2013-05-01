@@ -10,14 +10,14 @@ namespace BRApplication.Handlers
 {
     public class HomeHandler
     {
-        public static bool SendBugReportEmail(string BugMessage)
+        public static bool SendBugReportEmail(string BugMessage, int bugNumber)
         {
             bool success = false;
 
             try
             {
-                string bookSpadeAdminEmail = "asma.patel@hotmail.com";
-                EmailUtil e = new EmailUtil(bookSpadeAdminEmail, "", BugMessage);
+                string bookSpadeAdminEmail = "info@bookspade.com";
+                EmailUtil e = new EmailUtil(bookSpadeAdminEmail, "User Reported Bug: #" + bugNumber, BugMessage);
                 success = true;
             }
             catch (Exception e)

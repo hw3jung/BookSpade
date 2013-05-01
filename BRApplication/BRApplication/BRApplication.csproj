@@ -206,8 +206,10 @@
     <Content Include="Content\effects\stroll\stroll.min.css" />
     <Content Include="Content\Images\bg_pattern.jpg" />
     <Content Include="Content\Images\BookStack.png" />
+    <Content Include="Content\Images\bs_btn_login.png" />
     <Content Include="Content\Images\login-with-facebook.png" />
     <Content Include="Content\Images\MarketBuy.png" />
+    <Content Include="Content\Images\marketpriceBG.png" />
     <Content Include="Content\Images\MarketSell.png" />
     <Content Include="Content\Images\StaticImage.jpg" />
     <Content Include="Content\Pages\Home.css" />
@@ -238,11 +240,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\themes\orangy\images\Thumbs.db" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Images\bg_pattern.jpg" />
+    <Content Include="Images\bookspadeText.png" />
+    <Content Include="Images\fb_button-login.png" />
+    <Content Include="Images\homeImage_bookStand.png" />
     <Content Include="Images\load.gif" />
-    <Content Include="Images\logo_bookspade_text.png" />
-    <Content Include="Images\logo_bookspade_white.png" />
-    <Content Include="Images\pic_Home.png" />
+    <Content Include="Images\logo-booksInSpade.png" />
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.1.custom.js" />

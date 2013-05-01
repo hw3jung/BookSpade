@@ -5,11 +5,14 @@ using System.Web;
 using BRApplication.Models;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Text; 
 
 namespace BRApplication.Handlers
 {
     public class CourseInfoHandler
     {
+        #region Insert 
+
         public static int insert(CourseInfo newCourseInfo)
         {
             int id = -1;
@@ -39,6 +42,10 @@ namespace BRApplication.Handlers
             return id; 
         }
 
+        #endregion
+
+        #region getCourseInfo
+
         public static CourseInfo getCourseInfo(int courseID)
         {
             CourseInfo courseInfo = null;
@@ -66,6 +73,10 @@ namespace BRApplication.Handlers
             return courseInfo;
         }
 
+        #endregion
+
+        #region getCourseID
+
         public static int getCourseID(string courseName)
         {
             int courseID = -1;
@@ -88,6 +99,10 @@ namespace BRApplication.Handlers
             return courseID;
         }
 
+        #endregion
+
+        #region getCourseIDs
+
         public static int[] getCourseIDs(string courseName)
         {
             List<int> courseIDs = new List<int>();
@@ -99,20 +114,20 @@ namespace BRApplication.Handlers
                 string[] result = Regex.Split(courseName, pattern);
 
                 string coursePrefix = result[1];
-                string courseNumber = String.Empty;
+                StringBuilder courseNumber = new StringBuilder(); 
                 for (int i = 2; i < result.Length; i++)
                 {
-                    courseNumber += result[i];
+                    courseNumber.Append(result[i]);
                 }
 
-                String whereClause;
-                if (courseNumber == String.Empty)
+                string whereClause = String.Empty; 
+                if (courseNumber.Equals(String.Empty))
                 {
                     whereClause = String.Format("CourseName LIKE '%{0}%'", coursePrefix);
                 }
                 else
                 {
-                    whereClause = String.Format("CourseName LIKE '%{0}%{1}%'", coursePrefix, courseNumber);
+                    whereClause = String.Format("CourseName LIKE '%{0}%{1}%'", coursePrefix, courseNumber.ToString());
                 }
 
                 DataAccessLayer DAL = new DataAccessLayer();
@@ -133,11 +148,18 @@ namespace BRApplication.Handlers
             return courseIDs.ToArray();
         }
 
+        #endregion
+
+        #region getCourseName
+
         public static string getCourseName(int courseID)
         {
             CourseInfo course = getCourseInfo(courseID);
 
             return course.CourseName;
         }
+
+        #endregion
+
     }
 }

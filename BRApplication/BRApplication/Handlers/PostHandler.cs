@@ -25,9 +25,10 @@ namespace BRApplication.Handlers
                     post.Add("TextBookID", Convert.ToString(newPost.TextBookID));
                     post.Add("IsBuy", Convert.ToString(newPost.IsBuy));
                     post.Add("Price", Convert.ToString(newPost.Price));
-                    post.Add("viaEmail", Convert.ToString(newPost.viaEmail)); 
+                    post.Add("viaEmail", Convert.ToString(newPost.viaEmail));
                     post.Add("BookCondition", newPost.Condition);
                     post.Add("ExpiryDate", Convert.ToString(newPost.ExpiryDate));
+                    post.Add("IsNegotiable", Convert.ToString(newPost.IsNegotiable)); 
                     post.Add("IsActive", "1");
                     post.Add("IsDeleted", "0");
                     post.Add("CreatedDate", Convert.ToString(DateTime.Now));

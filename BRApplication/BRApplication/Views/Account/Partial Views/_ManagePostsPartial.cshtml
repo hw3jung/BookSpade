@@ -10,11 +10,7 @@
         <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
     </div>
     <div class="DeleteMarketPostDetail">
-         @using (Html.BeginForm("LoadDetailPost", "Post"))
-         {
-             Session["marketPost"] = Model;
-            @(Html.ActionLink(Model.Title, "LoadDetailPost", "Posting"))
-         }
+        <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@(Model.Title)</a>
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
             <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>

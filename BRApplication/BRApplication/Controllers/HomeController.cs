@@ -12,8 +12,10 @@ using BRApplication.Handlers;
 
 namespace BRApplication.Controllers
 {
+
     public class HomeController : Controller
     {
+        static int bugNumber = 0;
         #region Index
 
         public ActionResult Index()
@@ -78,7 +80,10 @@ namespace BRApplication.Controllers
         [HttpPost]
         public ActionResult ReportABug(string BugMsg)
         {
-            bool success = HomeHandler.SendBugReportEmail(BugMsg);
+            bool success = HomeHandler.SendBugReportEmail(BugMsg, bugNumber);
+            if (success) {
+                bugNumber++;
+            }
 
             return Json(success);
         }

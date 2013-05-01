@@ -17,7 +17,7 @@ namespace BRApplication.Models
         public string BookImageURL { get; set; }
         public int Price { get; set; }
         public DateTime datePosted { get; set; }
-        public IList<Bid> Bids { get; set; }
+        public List<Bid> Bids = new List<Bid>(); 
         public bool IsNegotiable { get; set; }
         public string email { get; set; }
         public bool viaEmail {get; set;}
@@ -35,7 +35,7 @@ namespace BRApplication.Models
             string author, 
             string bookImageURL, 
             int price,
-            IList<Bid> bids,
+            List<Bid> bids,
             bool isNegotiable,
             string Email,
             bool viaEmail,

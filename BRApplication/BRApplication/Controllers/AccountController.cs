@@ -156,7 +156,7 @@ namespace BRApplication.Controllers
         #endregion
 
         #region GetCurrentUserID
-
+        
         public JsonResult GetCurrentUserID()
         {
             if (Session["AccessToken"] != null)

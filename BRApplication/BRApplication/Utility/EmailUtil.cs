@@ -17,16 +17,16 @@ namespace BRApplication.Utility
 
         public static void Mail(string email, string subject, string body)
         {
-            WebMail.EnableSsl = true; 
-            WebMail.SmtpServer = "smtp.live.com";
-            WebMail.SmtpPort = 587;
-            WebMail.UserName = "asma.patel@hotmail.com";
-            WebMail.Password = "Bubbletea1207";
+            WebMail.EnableSsl = false; 
+            WebMail.SmtpServer = "smtpout.secureserver.net";
+            WebMail.SmtpPort = 80;
+            WebMail.UserName = "info@bookspade.com";
+            WebMail.Password = "SpadeIt";
             WebMail.Send(
                 email,
                 subject,
                 body,
-                from: "asma.patel@hotmail.com"
+                from: "info@bookspade.com"
             );
         }
     }

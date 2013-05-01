@@ -12,11 +12,12 @@
    Please ensure that your bid is unique from those already made for this book.
 </div>
 
-@foreach (var bid in Model.Bids)
+
+@foreach (BRApplication.Models.Bid bid in Model.Bids)
 {
     <div id="mdlEmail@(bid.BidID)" title="Contact Email Address" class="none mdlEmail">
         Please enter an email @(bid.Bidder) can contact you with. <br/><br/>
-         @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
+            @Html.TextBox("txtRespondantEmail", "", new { @class = "txtRespondantEmail" })
         <input id="btnSave@(bid.BidID)" data-IsBuy="@(Model.IsBuy)" class="btn-save-email" type="button" value="Submit" />
     </div>
 
@@ -24,5 +25,4 @@
         Please contact @(bid.Bidder) through their facebook profile: <br /><br />
         <div id="fblink@(bid.BidID)" class="fbLink">&nbsp;</div>
     </div>
-    
 }

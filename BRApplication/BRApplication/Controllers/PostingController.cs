@@ -18,6 +18,7 @@ namespace BRApplication.Controllers
 
         #region Index
 
+        //[OutputCache(Duration = 86400, VaryByParam = "none")]
         public ActionResult Index(int postID)
         {
             MarketPost marketPost = MarketPostHandler.getMarketPost(postID);

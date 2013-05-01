@@ -9,6 +9,8 @@ namespace BRApplication.Handlers
 {
     public class TextbookHandler
     {
+        #region insert 
+
         public static int insert(Textbook newBook)
         {
             int id = -1; 
@@ -44,6 +46,10 @@ namespace BRApplication.Handlers
             return id; 
         }
 
+        #endregion
+
+        #region getTextbookID
+
         public static int getTextbookID(string course, string title)
         {
             int textbookID = -1;
@@ -67,6 +73,10 @@ namespace BRApplication.Handlers
 
             return textbookID;
         }
+
+        #endregion
+
+        #region getTextbook
 
         public static Textbook getTextbook(int textbookID)
         {
@@ -102,6 +112,10 @@ namespace BRApplication.Handlers
             return textbook;
         }
 
+        #endregion
+
+        #region getAllTextbooks
+
         public static IEnumerable<Textbook> getAllTextbooks()
         {
             List<Textbook> allTextbooks = new List<Textbook>();
@@ -135,6 +149,10 @@ namespace BRApplication.Handlers
             return allTextbooks;
         }
 
+        #endregion
+
+        #region getTextbooksByISBN
+
         public static IEnumerable<Textbook> getTextbooksByISBN(string isbn)
         {
             List<Textbook> textbooks = new List<Textbook>();
@@ -167,6 +185,10 @@ namespace BRApplication.Handlers
 
             return textbooks;
         }
+
+        #endregion
+
+        #region getTextbooksByCourse
 
         public static IEnumerable<Textbook> getTextbooksByCourse(string courseName)
         {
@@ -205,6 +227,10 @@ namespace BRApplication.Handlers
             return textbooks;
         }
 
+        #endregion
+
+        #region getTextbooksByTitle
+
         public static IEnumerable<Textbook> getTextbooksByTitle(string title)
         {
             List<Textbook> textbooks = new List<Textbook>();
@@ -238,6 +264,10 @@ namespace BRApplication.Handlers
             return textbooks;
         }
 
+        #endregion
+
+        #region getTextbookIDsByISBN
+
         public static int[] getTextbookIDsByISBN(string isbn)
         {
             List<int> textbookIDs = new List<int>();
@@ -264,6 +294,10 @@ namespace BRApplication.Handlers
 
             return textbookIDs.ToArray();
         }
+
+        #endregion
+
+        #region getTextbookIDsByCourse
 
         public static int[] getTextbookIDsByCourse(string courseName)
         {
@@ -294,6 +328,10 @@ namespace BRApplication.Handlers
             return textbookIDs.ToArray();
         }
 
+        #endregion
+
+        #region getTextbookIDsByTitle
+
         public static int[] getTextbookIDsByTitle(string title)
         {
             List<int> textbookIDs = new List<int>();
@@ -318,12 +356,20 @@ namespace BRApplication.Handlers
             return textbookIDs.ToArray();
         }
 
+        #endregion
+
+        #region getCourseName
+
         public static string getCourseName(int textBookID)
         {
             Textbook textbook = getTextbook(textBookID);
 
             return textbook.CourseName;
         }
+
+        #endregion
+
+        #region getTextbookTitle
 
         public static string getTextbookTitle(int textBookID)
         {
@@ -332,6 +378,10 @@ namespace BRApplication.Handlers
             return textbook.Title;
         }
 
+        #endregion
+
+        #region getISBN
+
         public static string getISBN(int textBookID)
         {
             Textbook textbook = getTextbook(textBookID);
@@ -339,11 +389,18 @@ namespace BRApplication.Handlers
             return textbook.ISBN;
         }
 
+        #endregion
+
+        #region getAuthor
+
         public static string getAuthor(int textBookID)
         {
             Textbook textbook = getTextbook(textBookID);
 
             return textbook.Author;
         }
+
+        #endregion
+
     }
 }
