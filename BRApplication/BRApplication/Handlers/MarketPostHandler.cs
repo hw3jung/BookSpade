@@ -268,7 +268,7 @@ namespace BRApplication.Handlers
                     string condition = Convert.ToString(row["BookCondition"]);
                     int price = Convert.ToInt32(row["Price"]);
                     DateTime datePosted = Convert.ToDateTime(row["CreatedDate"]);
-                    IList<Bid> bids = BidHandler.getBids(postID);
+                    List<Bid> bids = BidHandler.getBids(postID);
                     bool viaEmail = Convert.ToBoolean(row["viaEmail"]); 
 
                     marketPost = new MarketPost(

@@ -40,7 +40,7 @@ namespace BRApplication.Handlers
                 /* Testing Update */
                 Dictionary<string, string> d = new Dictionary<string, string>();
                 d.Add("StatusName", "'asma_rox'");
-                dal.update("TransactionStatus", "StatusName = 'asma_sux'", d);
+                dal.update("TransactionStatus", "StatusName = 'kevin_sux'", d);
                 /* Manually go into SQL Server to see if the row is correctly updated */
 
                 /* Testing Delete */

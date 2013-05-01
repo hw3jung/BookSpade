@@ -14,9 +14,9 @@ namespace BRApplication.Handlers
 
         public static List<Bid> getBids(int postID)
         {
+            
             List<Bid> bids = new List<Bid>();
-            bids.Clear(); 
-
+            
             try
             {
                 DataAccessLayer DAL = new DataAccessLayer();

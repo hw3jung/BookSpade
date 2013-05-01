@@ -6,6 +6,7 @@ using BRApplication.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
+using System.Text; 
 
 namespace BRApplication.Handlers
 {
@@ -25,38 +26,39 @@ namespace BRApplication.Handlers
             {
                 try
                 {
-                    string insertCommand = "INSERT INTO " + TableName + " ( ";
+                    StringBuilder insertCommand = new StringBuilder("INSERT INTO ");
+                    insertCommand.Append(TableName).Append(" ( "); //faster than using + concatenation
                     bool first = true;
                     foreach (var column in ColumnValuePairs)
 	                {
                         if (first)
                         {
-                            insertCommand += column.Key;
+                            insertCommand.Append(column.Key);
                             first = false;
                         }
                         else
                         {
-                            insertCommand += (", " + column.Key);
+                            insertCommand.Append(", ").Append(column.Key);
                         }
 	                }
 
-                    insertCommand += " ) VALUES ( ";
+                    insertCommand.Append(" ) VALUES ( ");
                     first = true;
                     foreach (var column in ColumnValuePairs)
 	                {
                         if (first)
                         {
-                            insertCommand += ("@" + column.Key);
+                            insertCommand.Append("@").Append(column.Key);
                             first = false;
                         }
                         else
                         {
-                            insertCommand += (", @" + column.Key);
+                            insertCommand.Append(", @").Append(column.Key);
                         }
 	                }
-                    insertCommand += " )";
+                    insertCommand.Append(" )");
                    
-                    command.CommandText = insertCommand + " SELECT SCOPE_IDENTITY()";
+                    command.CommandText = insertCommand.Append(" SELECT SCOPE_IDENTITY()").ToString();
                     foreach (var pair in ColumnValuePairs)
                     {
                         command.Parameters.AddWithValue("@" + pair.Key, pair.Value);
@@ -92,32 +94,31 @@ namespace BRApplication.Handlers
             SqlCommand cmd = conn.CreateCommand();
             try
             {
-                string selectCommand = "SELECT ";
+                StringBuilder selectCommand = new StringBuilder();
+                selectCommand.Append("SELECT "); 
 
                 int i = 0;
                 int numColumns = ColumnNames.Count();
                 while (i < numColumns)
                 {
-                    selectCommand += ColumnNames[i];
+                    selectCommand.Append(ColumnNames[i]);
                     if ((i + 1) == numColumns) break;
-
-                    selectCommand += ", ";
+                    selectCommand.Append(", ");
                     i++;
                 }
 
-                selectCommand += " FROM {0}";
+                selectCommand.Append(" FROM ").Append(TableName);
                 
                 if (WhereClause != "")
                 {
-                    selectCommand = selectCommand + " WHERE " + WhereClause;
+                    selectCommand.Append(" WHERE ").Append(WhereClause);
                 }
                 int temp = Array.IndexOf(WhiteListOfTableNames, TableName);
                 if (temp < 0)
                 {
                     throw new Exception();
                 }
-                string ct = String.Format(selectCommand, TableName);
-                cmd.CommandText = ct;
+                cmd.CommandText = selectCommand.ToString();
                 conn.Open();
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -184,34 +185,28 @@ namespace BRApplication.Handlers
             command = conn.CreateCommand();
             try
             {
-                string updateCommand = "UPDATE {0} SET ";
-                updateCommand = string.Format(updateCommand, TableName);
-
+                StringBuilder updateCommand = new StringBuilder("UPDATE ").Append(TableName).Append(" SET ");
+               
                 bool first = true;
                 foreach (var column in newColumnValues)
                 {
                     if (first)
                     {
-                        updateCommand += column.Key;
-                        updateCommand += "=";
-                        updateCommand += column.Value;
+                        updateCommand.Append(column.Key).Append("=").Append(column.Value);
                         first = false;
                     }
                     else
                     {
-                        updateCommand += ", ";
-                        updateCommand += column.Key;
-                        updateCommand += "=";
-                        updateCommand += column.Value;
+                        updateCommand.Append(", ").Append(column.Key).Append("=").Append(column.Value);
                     }
                 }
 
-                if (WhereClause != "")
+                if (WhereClause != String.Empty)
                 {
-                    updateCommand = updateCommand + " WHERE " + WhereClause;
+                    updateCommand = updateCommand.Append(" WHERE ").Append(WhereClause);
                 }
 
-                command.CommandText = updateCommand;
+                command.CommandText = updateCommand.ToString();
                 conn.Open();
                 command.ExecuteNonQuery();
             }
