@@ -107,7 +107,10 @@
                                     <li class="label">Bid</li>
                                     <li class="value">
                                         <div>
-                                            @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                                            <div id="bidinputField">
+                                                @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                                            </div>
+
                                             <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
                                         </div>
                                     </li>
