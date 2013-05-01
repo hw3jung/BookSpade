@@ -191,33 +191,6 @@
             @RenderBody()
         </div>
 
-        @*Footer appears on bottom of every page*@
-        <footer>
-            <!--Links and legal disclaimer goes here-->
-            <ul>
-                <li>BookSpade &copy; @DateTime.Now.Year</li>
-                
-@*                <li><a href="#">FAQs</a></li>
-                
-                <li><a href="#">Contact</a></li>
-
-                <li><a href="#">About</a></li>*@
-
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-                <li><a href="#" class="reportbug">Report a Bug</a></li>
-            </ul>
-
-            @*REMOVE EVENTUALLY
-            <span class="copyright">
-                @DateTime.Now.Year - BookSpade
-            </span>*@
-
-        </footer>
         @RenderSection("scripts", required: false)
 
         <script type="text/ecmascript">
@@ -303,4 +276,26 @@
                     }
             </script>
     </body>
+
+    @*Footer appears on bottom of every page*@
+    <footer>
+        <!--Links and legal disclaimer goes here-->
+        <ul>
+            <li>BookSpade &copy; @DateTime.Now.Year</li>
+
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+            <li><a href="#" class="reportbug">Report a Bug</a></li>
+        </ul>
+
+        @*REMOVE EVENTUALLY
+        <span class="copyright">
+            @DateTime.Now.Year - BookSpade
+        </span>*@
+
+    </footer>
 </html>

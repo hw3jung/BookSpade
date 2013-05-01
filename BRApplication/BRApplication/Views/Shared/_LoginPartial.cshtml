@@ -3,7 +3,9 @@
 {
 
     <div id="facebook-logoff" class="fbContainer">
-        Hello, @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account")!
+
+        @Html.ActionLink("My Exchanges", "ManagePosts", "Account") |
+@*      View @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account") |*@
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) 
         {
             @Html.AntiForgeryToken()

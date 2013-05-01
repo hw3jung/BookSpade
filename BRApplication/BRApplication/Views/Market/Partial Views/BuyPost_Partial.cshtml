@@ -41,9 +41,7 @@
 
             @* links below book image *@
             <div class="marketpostQuicklinks">
-			    <div class="marketBtn">
-                    <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">More Details</a>
-			    </div>
+                <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))"><div class="marketBtn">More Details</div></a>
 
 			    <div class="marketBtn">
                     <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />
@@ -53,14 +51,28 @@
 
         <div class="rightmarketpostWrapper roundBorder-bottomRight">
             <div class="MarketPostDetail">
-                <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
-        
                 <div>
+                    <span class="marketLabel">Title: </span><span class="marketValue">@Model.Title</span>
+
+                    <br />
+
                     <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+
+                    <br />
+
                     <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+                    
+                    <br />
+                    
                     <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+                    
+                    <br />
+
                     <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
-                    <span class="marketValue datePosted">@Model.datePosted</span>
+                    
+                    <br />
+
+                    <span class="marketLabel">Posted on: </span><span class="marketValue datePosted">@Model.datePosted</span>
                 </div>
             </div>
         </div>

@@ -78,17 +78,51 @@
 
             <div class="rightmarketpostWrapper roundBorder-bottomRight">
                 <div class="MarketPostDetail">
-                    <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@Model.Title</a>
-        
                     <div>
+                        <span class="marketLabel">Title: </span><span class="marketValue">@Model.Title</span>
+
+                        <br />
+
                         <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
+
+                        <br />
+
                         <span class="marketLabel">Course: </span><span class="marketValue">@Model.Course</span>
+                    
+                        <br />
+                    
                         <span class="marketLabel">Condition: </span><span class="marketValue">@Model.Condition</span>
+                    
+                        <br />
+
                         <span class="marketLabel">ISBN: </span><span class="marketValue">@Model.ISBN </span>
-                        <span class="marketValue datePosted">@Model.datePosted</span>
+                    
+                        <br />
+
+                        <span class="marketLabel">Posted on: </span><span class="marketValue datePosted">@Model.datePosted</span>
+            
+                        @if (Model.IsNegotiable) {       
+                            <div class="DetailLine" id="dvNegotiate">
+                                <ul>
+                                    <li class="label">Bid</li>
+                                    <li class="value">
+                                        <div>
+                                            @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                                            <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    
+                    
+                    
                     </div>
 
-                @if (Model.IsNegotiable) {       
+
+
+
+@*                @if (Model.IsNegotiable) {       
                     <div class="DetailLine" id="dvNegotiate">
                         <ul>
                             <li class="label">Bid</li>
@@ -100,7 +134,7 @@
                             </li>
                         </ul>
                     </div>
-                }
+                }*@
 
                     <div class="BidBox" id="bidBox">
                         @Html.Partial("Bid_Partial", Model)
