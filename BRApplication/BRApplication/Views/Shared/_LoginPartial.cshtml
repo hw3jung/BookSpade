@@ -4,7 +4,7 @@
 
     <div id="facebook-logoff" class="fbContainer">
 
-        @Html.ActionLink("My Exchanges", "ManagePosts", "Account") |
+        @Html.ActionLink("My Account", "ManagePosts", "Account") |
 @*      View @Html.ActionLink(User.Identity.Name, "ManagePosts", "Account") |*@
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) 
         {

@@ -3,6 +3,10 @@
 <div id="mdlConfirmation@(Model.PostID)" class="none">Delete this post? <br /> WARNING: This action is permanent</div>
 
 <div id="MarketPost@(Model.PostID)" class="DeleteMarketPost" style="width:100%">
+
+
+
+
     <div class="DeleteMarketPostPrice">
         @Model.Price 
     </div>
@@ -10,6 +14,8 @@
         <img src="@Url.Content("~/Content/Images/StaticImage.jpg")" alt="Book Image" width="68px" height="68px" />
     </div>
     <div class="DeleteMarketPostDetail">
+
+
         <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))">@(Model.Title)</a>
         <div>
             <span class="marketLabel">Author: </span><span class="marketValue">@Model.Author</span>
@@ -19,8 +25,16 @@
         <div>
             <span class="marketValue datePosted">@Model.datePosted</span>
         </div>
+
+
     </div>
     <div class="dvBtnDelete">
         <input id="btnDelete" class="btn-delete" type="button" postID="@(Model.PostID)" profileID="@(Model.profileID)" value="X" />
     </div>
+
+
+
+
+
+
 </div>
