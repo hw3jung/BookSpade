@@ -16,10 +16,10 @@ namespace BRApplication.Handlers
             try
             {
                 DataAccessLayer DAL = new DataAccessLayer();
-                DataTable dt = DAL.select(String.Format("ProfileID = '{0}' AND TextBookID = '{1}' AND IsBuy = '{2}'", newPost.ProfileID, newPost.TextBookID, newPost.IsBuy), "Posts");
+               // DataTable dt = DAL.select(String.Format("ProfileID = '{0}' AND TextBookID = '{1}' AND IsBuy = '{2}'", newPost.ProfileID, newPost.TextBookID, newPost.IsBuy), "Posts");
 
-                if (dt == null || dt.Rows.Count == 0)
-                {
+               // if (dt == null || dt.Rows.Count == 0)
+               // {
                     Dictionary<string, string> post = new Dictionary<string, string>();
                     post.Add("ProfileID", Convert.ToString(newPost.ProfileID));
                     post.Add("TextBookID", Convert.ToString(newPost.TextBookID));
@@ -35,7 +35,7 @@ namespace BRApplication.Handlers
                     post.Add("ModifiedDate", Convert.ToString(DateTime.Now));
         
                     id = DAL.insert(post, "Posts");
-                }
+              //  }
             }
             catch (Exception ex)
             {

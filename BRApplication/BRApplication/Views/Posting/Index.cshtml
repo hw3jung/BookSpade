@@ -1,5 +1,15 @@
 ﻿@model BRApplication.Models.MarketPost
 
+<style type="text/css">
+    .BidBox {
+        display:block;
+    }
+    .BidBox ul {
+        list-style:none;
+    }
+
+</style>
+
 @Html.Partial("_ContactPreferencePartial")
 @Html.Partial("_PosterRepsonsePartial")
 
@@ -56,24 +66,36 @@
                 </div>
 
                 @* links below book image *@
-                <div class="marketpostQuicklinks">
-
-			        <div class="marketBtn">
-
-
-                     <div class="DvSubmit">
-                        @if (Model.IsBuy)
-                        {
-                            <input id="btnBuy" class="btn-sell" type="submit" value="Sell" />  
+                @{
+                    
+                    if (!Model.IsNegotiable){
+                            if (Model.IsBuy)
+                            {<div class="marketpostQuicklinks btn-sell">
+                                <div class="marketBtn">
+                                    <div class="DvSubmit">
+                                        <input id="btnBuy" type="submit" value="Sell" />
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="marketpostQuicklinks btn-buy">
+                                <div class="marketBtn">
+                                    <div class="DvSubmit">
+                                        <input id="btnSell" type="submit" value="Buy" />
+                                    </div>
+                                </div>
+                            </div>
+                            }
                         }
-                        else
-                        {
-                            <input id="btnSell" class="btn-buy" type="submit" value="Buy" />
-                        }
-                    </div>
-@*                        <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />*@
-                    </div>
-                </div>
+                    }
+                      @*                        <input class="btn-sell" id="btnSellNow" type="button" postID="@(Model.PostID)" value="Sell Now" />*@
+                @*
+                                
+                    <div class="marketpostQuicklinks">
+                    <a href="@(Url.Action("LoadDetailPost", "Posting", new { postID = Model.PostID }))"><div class="marketBtn">More Details</div></a>     
+                    </div>*@
             </div>
 
             <div class="rightmarketpostWrapper roundBorder-bottomRight">
@@ -101,52 +123,27 @@
 
                         <span class="marketLabel">Posted on: </span><span class="marketValue datePosted">@Model.datePosted</span>
             
-                        @if (Model.IsNegotiable) {       
-                            <div class="DetailLine" id="dvNegotiate">
-                                <ul>
-                                    <li class="label">Bid</li>
-                                    <li class="value">
-                                        <div>
-                                            <div id="bidinputField">
-                                                @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
-                                            </div>
-
-                                            <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
-                                        </div>
-                                    </li>
-                                </ul>
+                        @if (Model.IsNegotiable)
+                        {       
+                            <div id="dvNegotiate">
+                               <span class="marketLabel">Bid: </span>
+                               <span id="bidinputField" class="marketvalue">
+                                    @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
+                               </span>
+                               <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
                             </div>
                         }
-                    
-                    
-                    
+                        <div class="BidBox" id="bidBox">
+                            @Html.Partial("Bid_Partial", Model)
+                        </div>
                     </div>
 
-
-
-
-@*                @if (Model.IsNegotiable) {       
-                    <div class="DetailLine" id="dvNegotiate">
-                        <ul>
-                            <li class="label">Bid</li>
-                            <li class="value">
-                                <div>
-                                    @Html.TextBox("txtBidPrice", "", new { @class = "txtRespondantEmail" })
-                                    <input id="btnBid" type="submit" postID ="@(Model.PostID)" value="Submit" />
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                }*@
-
-                    <div class="BidBox" id="bidBox">
-                        @Html.Partial("Bid_Partial", Model)
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 
 
 
@@ -234,7 +231,7 @@
 *@
 
 
-</div>
+
 
 @section Script {
     <script type="text/javascript">

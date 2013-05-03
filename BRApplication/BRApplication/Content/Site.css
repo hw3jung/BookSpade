@@ -1530,20 +1530,7 @@ tr.pager td {
 /*-- Buy/Sell Post Partial (Modal Dialog)--- */
 /*-- Detail Post ----------------------------*/
 
-#btnSave {
-    height: 40px;
-    width: 110px;
-    text-align: center;
-}
 
-.EmailCancel {
-    width: 80px;
-    height: 40px;
-    text-align:center;
-    padding:5px;
-    padding-left: 10px;
-      
-}
 
 /*------------------------------------------ */
 
