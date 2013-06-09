@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<BRApplication.Models.Textbook>
 
-
 <div id="SubmitDialog" title="Contact Preference">
     <div id="ContactPref">
         <div class="PrefDetail">
@@ -51,23 +50,33 @@
             <a href="javscript:void(0)" class="link">Cannot find your book? Click Here</a>
         </div>
     </div>
-    <div class="hidden">
-        @Html.Partial("AddBook_Partial");
-    </div>
+    <form id="NewBookForm" autocomplete="off">
+        <div class="hidden">
+            @Html.Partial("AddBook_Partial");
+        </div>
+    </form>
 </div>
 
-<div class="AddPost">
-    Make the price negotiable <input type="checkbox" id="cbNegotiationPrice"/>
-    <input id="Price" class="InputGradient Info" type="text" placeholder="Price ($)" />
-    <input id="SubmitButton" type="button" value="Add Post" />
-</div>
-<div class="PostType">
-    <select id="PostType">
-        <option value="Buy" selected>Buy</option>
-        <option value="Sell">Sell</option>
-    </select>
-    <input id="Condition" class="InputGradient Info" type="text" placeholder="Condition" />
-</div>
+<form id="CommonFields" autocomplete="off">
+    <div class="AddPost">
+        Make the price negotiable <input type="checkbox" id="cbNegotiationPrice"/>
+        <input id="Price" class="InputGradient Info" type="text" placeholder="Price ($)" onkeydown="return FilterInputByDigits(event)" />
+        <input id="SubmitButton" type="button" value="Add Post" />
+    </div>
+    <div class="PostType">
+            <select id="PostType">
+                <option value="Buy" selected>Buy</option>
+                <option value="Sell">Sell</option>
+            </select>
+            <select id="Condition" class="InputGradient Info" >
+                <option value="" disabled selected>Condition</option>
+                <option value="Like New">Like New</option>
+                <option value="Good">Good</option>
+                <option value="Not Bad">Not Bad</option>
+                <option value="Salvageable">Salvageable</option>
+            </select>    
+    </div>
+</form>
 
 <script type="text/javascript">
     //Must come after definition of the 'ul' element that we are binding to
@@ -122,6 +131,84 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        var newBookForm = $("#NewBookForm");
+        newBookForm.validate({
+            errorClass: "errormessage",
+            onkeyup: false,
+            onfocusout: false,
+            errorClass: 'error',
+            validClass: 'valid',
+            rules: {
+                Title: {
+                    required: true,
+                    minlength: 5,
+                    title: true
+                },
+                Author: {
+                    author: true
+                },
+                Course: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 10,
+                    course: true
+                },
+                ISBN: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 13,
+                    isbn: true
+                },
+                BookImageURL: {
+                    url: true
+                }
+            },
+            errorPlacement: function (error, element) {
+                // Set positioning based on the elements position in the form
+                var elem = $(element),
+                    corners = ['left center', 'right center'],
+                    flipIt = elem.parents('span.right').length > 0;
+
+                // Check we have a valid error message
+                if (!error.is(':empty')) {
+                    // Apply the tooltip only if it isn't valid
+                    elem.filter(':not(.valid)').qtip({
+                        overwrite: false,
+                        content: error,
+                        position: {
+                            my: corners[flipIt ? 0 : 1],
+                            at: corners[flipIt ? 1 : 0],
+                            viewport: $(window)
+                        },
+                        show: {
+                            event: false,
+                            ready: true
+                        },
+                        hide: false,
+                        style: {
+                            classes: 'qtip-red' // Make it red... the classic error colour!
+                        }
+                    })
+
+                    // If we have a tooltip on this element already, just update its content
+                    .qtip('option', 'content.text', error);
+                }
+
+                    // If the error is empty, remove the qTip
+                else { elem.qtip('destroy'); }
+            },
+            success: $.noop, // Odd workaround for errorPlacement not firing!
+        })
+    });
+
+    function ValidateFields() {
+        var newBookForm = $("#NewBookForm");
+        return newBookForm.validate().form();
+    }
+</script>
+
 
 @section scripts {
     <script src="@Url.Content("~/Scripts/ToolTip.js")" type="text/javascript"></script>
@@ -137,17 +224,18 @@
             });
 
             $("#SubmitButton").click(function () {
-                if (!$("li.selected").length && !addBook) {
-                    ErrorDialog();
-                } else {
-                    ContactPrefDialog();
+                if (ValidateFields()) {
+                    if (!$("li.selected").length && !addBook) {
+                        ErrorDialog();
+                    } else {
+                        ContactPrefDialog();
+                    }
                 }
             });
         });
 
 
         function CommonFields() {
-
             var isBuy = $("#PostType").val() == "Buy";
             var price = $("#Price").val().trim();
             var condition = $("#Condition").val().trim();
@@ -254,5 +342,25 @@
             });
         }
     </script> 
-   
+    <script type="text/javascript">
+        $(function () {
+            $(".AddPost").tooltip();
+            $(".PostType").tooltip();
+        });
+
+        // Validation Checks
+        
+        function FilterInputByDigits(event) {
+            var keyCode = ('which' in event) ? event.which : event.keyCode;
+
+            isNumeric = (keyCode >= 48 /* KeyboardEvent.DOM_VK_0 */ && keyCode <= 57 /* KeyboardEvent.DOM_VK_9 */) ||
+                        (keyCode >= 96 /* KeyboardEvent.DOM_VK_NUMPAD0 */ && keyCode <= 105 /* KeyboardEvent.DOM_VK_NUMPAD9 */);
+
+            // keyCode = 8 => backspace, keyCode = 46 => delete
+            modifiers = (event.altKey || event.ctrlKey || event.shiftKey || keyCode == 8 || keyCode == 46);
+
+            return isNumeric || modifiers;
+        }
+    </script>
+    
 }
